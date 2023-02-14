@@ -1,0 +1,259 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+:root {
+  --primary-color: #0d7000;
+  --light-grey-border: rgb(226, 226, 226);
+  --font-white: white;
+  --bacground-gray: #f8f7f7;
+  --background-white: white;
+  --font-dark: rgb(41, 41, 41);
+  --light-dark: rgb(105, 105, 105);
+  --dark-grey-background: #313131;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+}
+
+body {
+  background: var(--bacground-gray);
+}
+
+p {
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
+}
+
+p.evaluation-instructions {
+  color: #000;
+  background-color: #b8e663;
+  border-radius: 10px;
+  padding: 5px;
+}
+p.evaluation-field {
+  color: #000;
+}
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navbar {
+  padding: 15px 10px;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 40px 0;
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: var(--primary-color);
+  color: #fff;
+  position: sticky;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  transition: all 0.3s;
+  overflow: scroll;
+}
+
+#sidebar.active {
+  margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+  padding: 20px 20px 5px 20px;
+  background: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.sidebar-header img {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  width: 140px;
+  height: 140px;
+}
+.sidebar-header h3 {
+  font-size: 1.3rem;
+  margin: 10px 0;
+}
+#sidebar ul {
+  margin: auto;
+  padding-left: 10%;
+}
+#sidebar ul p {
+  color: #fff;
+  padding: 0 10px;
+  margin-bottom: 5px;
+  font-weight: 800;
+}
+
+#sidebar ul li a {
+  padding: 7px 10px;
+  font-size: 1.1em;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  justify-content: center;
+  align-items: left;
+}
+#sidebar ul li a .icon {
+  padding: 5px 0;
+  text-align: center;
+}
+#sidebar ul li a span {
+  margin-left: 4px;
+}
+
+#sidebar ul li a:hover {
+  color: rgb(154, 154, 154);
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+  color: #fff;
+  background-color: var(--primary-color);
+}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: var(--primary-color);
+}
+
+ul.CTAs {
+  padding: 20px;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+a.download {
+  background: #fff;
+  color: var(--primary-color);
+}
+
+a.article,
+a.article:hover {
+  background: var(--primary-color) !important;
+  color: #fff !important;
+}
+/* ---------------------------------------------------
+    Navbar STYLE
+----------------------------------------------------- */
+.navbar-bg-blue {
+  background-color: #f1f8ff;
+}
+.btn-burger {
+  background-color: #fff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+  width: 100%;
+  padding: 0;
+  min-height: 5vh;
+  transition: all 0.3s;
+  position: relative;
+  padding-bottom: 4vh;
+}
+#main-content {
+  display: block;
+  height: auto;
+  width: 100%;
+  padding: 0 20px;
+}
+
+#main-content .page-title {
+  border-bottom: 1px solid var(--light-grey-border);
+  padding: 10px 0 5px 20px;
+}
+
+/* ---------------------------------------------------
+    FOOTER STYLE
+----------------------------------------------------- */
+footer {
+  background-color: none;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0 0 0;
+  text-align: center;
+}
+footer div p {
+  margin: 0;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -250px;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #sidebarCollapse span {
+    display: none;
+  }
+}
