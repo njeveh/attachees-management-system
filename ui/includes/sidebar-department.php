@@ -45,5 +45,10 @@
                 <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
                 <span>Rec Letters</span></a>
         </li>
+        <li>
+            <a href="<?php echo BASE_URL . "/pages/department-reporting" ?>">
+                <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
+                <span>Reporting</span></a>
+        </li>
     </ul>
 </nav>
