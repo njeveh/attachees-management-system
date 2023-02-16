@@ -65,33 +65,13 @@ include_once (ROOT_PATH.'/includes/header.php');
                             </div>
                         </div>
 
-                        <!-- PROFESSIONAL SUMMARY -->
+                       <!-- PROFESSIONAL SUMMARY -->
                         <div class="mb-3 container">
                         <h4>Professional Summary</h4>
                             <textarea class="form-control" id="professionalSummary" rows="5"  disabled></textarea>
                         </div>
                         
-                        <!-- WORK HISTORY -->
-                        <div class="container">
-                        <h4>Work History</h4>
-                            <div class="row">
-                                <div class="mb-3 col">
-                                <label for="jobTitle" class="form-label">Job Title</label>
-                                <input type="text" class="form-control" id="jobTitle" disabled>
-                            </div>
-
-                            <div class="mb-3 col">
-                                <label for="startDate" class="form-label">Start Date</label>
-                                <input type="date" class="form-control" id="startDate" disabled>
-                            </div>
-
-                            <div class="mb-3 col">
-                                <label for="endDate" class="form-label">EndDate</label>
-                                <input type="date" class="form-control" id="endDate" disabled>
-                            </div>
-                            </div>
-                        </div>
-
+                        
                         <!-- EDUCATION -->
                         <div class="container">
                         <h4>Education</h4>
@@ -114,18 +94,39 @@ include_once (ROOT_PATH.'/includes/header.php');
                         </div>
 
                         <!-- SKILLS -->
-                        <div class="container">
+                        <div class="container mb-5">
                         <h4>Skills</h4>
-                            <div class="row">
-                                <p class="col">Lorem ipsum</p>
-                                <p class="col">Lorem ipsum</p>
-                            </div>
-                            <div class="row">
-                                <p class="col">Lorem ipsum</p>
-                                <p class="col">Lorem ipsum</p>
-                            </div>
+                            <div>
+                               <textarea class="form-control" id="skills" rows="5"  disabled></textarea>
+                           </div>
                         </div>
+                       <!-- REFEREES -->
 
+                        <div class="container">
+                            <h4>Referees</h4>
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label for="refName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="refName" disabled>
+                                    </div>
+
+                                    <div class="mb-3 col">
+                                        <label for="refInstitution" class="form-label">Institution</label>
+                                        <input type="text" class="form-control" id="refInstitution" disabled>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="mb-3 col">
+                                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" id="phoneNumber" disabled>
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label for="refEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="refEmail" disabled>
+                                    </div>
+                                </div>
+                            </div>
                         
                     <div class="container text-right mb-3">
                     <a href="<?php echo BASE_URL . "/pages/bio-data/edit-bio-data.php"?>" class="btn btn-primary">Edit Bio-Data</a>
