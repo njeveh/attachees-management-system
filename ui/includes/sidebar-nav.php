@@ -46,20 +46,25 @@
                 <span class="icon"><i class="fas fa-bookmark" style="width: 10%;"></i></span>
                 <span>Saved</span></a>
         </li>
-        <li>
-            <a href="<?php echo BASE_URL . "/pages/logbook/index.php" ?>">
-                <span class="icon"><i class="fas fa-address-book" style="width: 10%;"></i></span>
-                <span>Logbook</span></a>
-        </li>
+        
         <li>
             <a href="<?php echo BASE_URL . "/pages/program-evaluation/index.php" ?>">
                 <span class="icon"><i class="fas fa-star" style="width: 10%;"></i></span>
                 <span>Evaluation</span></a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL . "/pages/downloads/index.php" ?>">
+            <a href="#downloadsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <span class="icon"><i class="fas fa-download" style="width: 10%;"></i></span>
-                <span>Downloads</span></a>
+                <span>Downloads</span>
+            </a>
+            <ul class="collapse list-unstyled" id="downloadsSubmenu">
+                <li>
+                    <a href="<?php echo BASE_URL . "/pages/downloads/application-response-letter.php" ?>">Application response letter</a>
+                </li>
+                <li>
+                    <a href="<?php echo BASE_URL . "/pages/downloads/recommendation-letter.php" ?>">Recommendation letter</a>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>

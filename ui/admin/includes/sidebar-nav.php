@@ -43,6 +43,19 @@
                 <span class="icon"><i class="fas fa-link" style="width: 10%;"></i></span>
                 <span>Attachment Programmes</span></a>
         </li>
+        <p>NOTIFICATIONS</p>
+        <li>
+            <a href="<?php echo BASE_URL . "/admin/pages/notifications/index.php" ?>">
+                <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
+                <span>Notifications</span></a>
+        </li>
+        <p>APPLICATIONS</p>
+        <li>
+            <a href="<?php echo BASE_URL . "/admin/pages/applications/index.php" ?>">
+                <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
+                <span>Applications</span></a>
+        </li>
+
         <p>MAIL</p>
         <li>
             <a href="<?php echo BASE_URL . "/admin/pages/mail/index.php" ?>">

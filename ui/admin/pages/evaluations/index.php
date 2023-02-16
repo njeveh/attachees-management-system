@@ -31,6 +31,7 @@ include(ROOT_PATH . '/includes/header.php')
                             <div class="form-group evaluations-filter ml-5">
                                 <label for="department">Filter by Department:</label>
                                 <select class="form-control" id="department">
+                                    <option>All departments</option>
                                     <option>Department 1</option>
                                     <option>Department 2</option>
                                     <option>Department 3</option>

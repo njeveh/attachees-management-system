@@ -26,11 +26,22 @@ include(ROOT_PATH . '/includes/header.php')
                         <div class="download-form-container">
                             <div class="form-group">
                                 <label for="cohort">Cohort:</label>
-                                <input type="text" class="form-control" id="cohort">
+                                <select class="form-control" id="cohort">
+                                    <option>All cohorts</option>
+                                    <option>Cohort 1</option>
+                                    <option>Cohort 2</option>
+                                    <option>Cohort 3</option>
+                                    <option>Cohort 4</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Year:</label>
+                                <input type="text" class="form-control" id="year">
                             </div>
                             <div class="form-group">
                                 <label for="department">Department:</label>
                                 <select class="form-control" id="department">
+                                    <option>All departments</option>
                                     <option>Department 1</option>
                                     <option>Department 2</option>
                                     <option>Department 3</option>

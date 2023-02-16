@@ -124,7 +124,7 @@ include "./controllers/application.php";
                                         </div>
                                         <div class="post-action">
                                             <button type="button" data-toggle="modal" data-target="#myModal">View</button>
-                                            <p class="sm-text">01 - jan-2020</p>
+                                            <p class="sm-text">01 - jan -2020</p>
                                         </div>
                                     </div>
                                 <?php endfor; ?>

@@ -242,6 +242,17 @@ footer div p {
   margin: 0;
 }
 
+
+/* ---------------------------------------------------
+    reporting confirmation page
+----------------------------------------------------- */
+
+div.search-area {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */

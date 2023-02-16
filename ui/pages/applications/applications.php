@@ -44,8 +44,8 @@ include_once(ROOT_PATH . '/includes/header.php');
                                 <div class="mb-3">
                                     <h4>Upload Documents</h4>
                                     <div class="mb-3">
-                                        <label for="requestLetter" class="form-label">Request Letter</label>
-                                        <input class="form-control" type="file" id="requestLetter" required>
+                                        <label for="applicationLetter" class="form-label">Application Letter</label>
+                                        <input class="form-control" type="file" id="applicationLetter" required>
                                     </div>
 
                                     <div class="mb-3">
