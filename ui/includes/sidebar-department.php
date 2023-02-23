@@ -17,6 +17,13 @@
         </li>
 
         <li>
+            <a href="<?php echo BASE_URL . "/pages/department-notifications" ?>">
+                <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
+                <span>Notifications</span>
+            </a>
+        </li>
+
+        <li>
             <a href="<?php echo BASE_URL . "/pages/new-advert" ?>">
                 <span class="icon"><i class="fas fa-plus-circle" style="width: 10%;"></i></span>
                 <span>New Advert</span>
@@ -36,19 +43,32 @@
             </a>
         </li>
         <li>
-            <a href="<?php echo BASE_URL . "/pages/programmes" ?>">
-                <span class="icon"><i class="fas fa-bookmark" style="width: 10%;"></i></span>
-                <span>Programmes</span></a>
-        </li>
-        <li>
-            <a href="<?php echo BASE_URL . "/pages/recommendation-letters" ?>">
-                <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
-                <span>Rec Letters</span></a>
-        </li>
-        <li>
             <a href="<?php echo BASE_URL . "/pages/department-reporting" ?>">
                 <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
                 <span>Reporting</span></a>
+        </li>
+        <li>
+            <a href="<?php echo BASE_URL . "/pages/teams" ?>">
+                <span class="icon"><i class="fas fa-users" style="width: 10%;"></i></span>
+                <span>Teams</span></a>
+        </li>
+        <li>
+            <a href="#recLettersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <span class="icon"><i class="fas fa-bars" style="width: 10%;"></i></span>
+                <span>Rec Letters</span>
+            </a>
+            <ul class="collapse list-unstyled" id="recLettersSubmenu">
+                <li>
+                    <a href="<?php echo BASE_URL . "/pages/recommendation-letters" ?>">
+                        <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
+                        <span>View Letters</span></a>
+                </li>
+                <li>
+                    <a href="<?php echo BASE_URL . "/pages/recommendation-letters/send-rec-letters.php" ?>">
+                        <span class="icon"><i class="fas fa-envelope" style="width: 10%;"></i></span>
+                        <span>Upload Letters</span></a>
+                </li>
+            </ul>
         </li>
     </ul>
 </nav>

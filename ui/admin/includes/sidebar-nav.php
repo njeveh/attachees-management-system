@@ -80,5 +80,12 @@
                 <span class="icon"><i class="fas fa-download" style="width: 10%;"></i></span>
                 <span>Generate Evaluations</span></a>
         </li>
+        <p>REPORTS</p>
+        <li>
+            <a href="<?php echo BASE_URL . "/admin/pages/reports/generate-reports.php" ?>">
+                <span class="icon"><i class="fas fa-bars" style="width: 10%;"></i></span>
+                <span>Reports</span>
+            </a>
+        </li>
     </ul>
 </nav>

@@ -65,49 +65,59 @@ include_once(ROOT_PATH . '/includes/header.php');
                                 </div>
                             </div>
 
-                       <!-- PROFESSIONAL SUMMARY -->
-                        <div class="mb-3 container">
-                        <h4>Professional Summary</h4>
-                            <textarea class="form-control" id="professionalSummary" rows="5" ></textarea>
-                        </div>
-                        
-                        
-                        <!-- EDUCATION -->
-                        <div class="container">
-                        <h4>Education</h4>
-                            <div class="row">
-                                <div class="mb-3 col">
-                                <label for="educationLevel" class="form-label">Level of Education</label>
-                                <input type="text" class="form-control" id="educationLevel">
+                            <!-- PROFESSIONAL SUMMARY -->
+                            <div class="mb-3 container">
+                                <h4>Professional Summary</h4>
+                                <textarea class="form-control" id="professionalSummary" rows="5"></textarea>
                             </div>
 
-                            <div class="mb-3 col">
-                                <label for="edstartDate" class="form-label">From</label>
-                                <input type="date" class="form-control" id="edstartDate">
+
+                            <!-- EDUCATION -->
+                            <div class="container">
+                                <h4>Education</h4>
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label for="educationLevel" class="form-label">Level of Education</label>
+                                        <input type="text" class="form-control" id="educationLevel">
+                                    </div>
+
+                                    <div class="mb-3 col">
+                                        <label for="edstartDate" class="form-label">From</label>
+                                        <input type="date" class="form-control" id="edstartDate">
+                                    </div>
+
+                                    <div class="mb-3 col">
+                                        <label for="edendDate" class="form-label">To</label>
+                                        <input type="date" class="form-control" id="edendDate">
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="mb-3 col">
-                                <label for="edendDate" class="form-label">To</label>
-                                <input type="date" class="form-control" id="edendDate">
+                            <!-- SKILLS -->
+                            <div class="container mb-5">
+                                <h4>Skills</h4>
+                                <div>
+                                    <textarea class="form-control" id="skills" rows="5"></textarea>
+                                </div>
                             </div>
-                            </div>
-                        </div>
+                            <!-- REFEREES -->
 
-                        <!-- SKILLS -->
-                        <div class="container mb-5">
-                        <h4>Skills</h4>
-                            <div>
-                               <textarea class="form-control" id="skills" rows="5" ></textarea>
-                           </div>
-                        </div>
-                       <!-- REFEREES -->
-
-                        <div class="container">
-                            <h4>Referees</h4>
+                            <div class="container">
+                                <h4>Referees</h4>
                                 <div class="row">
                                     <div class="mb-3 col">
                                         <label for="refName" class="form-label">Name</label>
                                         <input type="text" class="form-control" id="refName">
+                                    </div>
+                                    <div class="mb-3 col">
+                                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" class="form-control" id="phoneNumber">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col">
+                                        <label for="refEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="refEmail">
                                     </div>
 
                                     <div class="mb-3 col">
@@ -116,14 +126,13 @@ include_once(ROOT_PATH . '/includes/header.php');
                                     </div>
                                 </div>
                                 <div class="row">
-
                                     <div class="mb-3 col">
-                                        <label for="phoneNumber" class="form-label">Phone Number</label>
-                                        <input type="text" class="form-control" id="phoneNumber">
+                                        <label for="refPosition" class="form-label">Position in the Institution</label>
+                                        <input type="text" class="form-control" id="refPosition">
                                     </div>
                                     <div class="mb-3 col">
-                                        <label for="refEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="refEmail">
+                                        <label for="refRelationship" class="form-label">Relationship</label>
+                                        <input type="text" class="form-control" id="refRelationship">
                                     </div>
                                 </div>
                             </div>

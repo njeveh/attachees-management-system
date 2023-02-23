@@ -2,7 +2,7 @@
 include '../../config.php';
 include(ROOT_PATH . '/includes/header.php')
 ?>
-<title>Programme</title>
+<title>Team</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@ include(ROOT_PATH . '/includes/header.php')
                 ?>
                 <div id="main-content">
                     <div class="page-title">
-                        <h3>Programme</h3>
+                        <h3>Team</h3>
                     </div>
                     <section>
                         <div class="mt-3">
