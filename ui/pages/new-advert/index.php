@@ -34,6 +34,46 @@ include(ROOT_PATH . '/includes/header.php')
                                     <label for="description" class="form-label">Description</label>
                                     <textarea class="form-control" id="description" rows="5" required></textarea>
                                 </div>
+                                <div class="mb-3">
+                                    <h4>General Requirements</h4>
+                                    <ol id="general-requirements-container">
+                                        <li class="mb-3" id="0">
+                                            <textarea class="form-control mb-3" name="gen_req[]" rows="2" required></textarea>
+                                        </li>
+                                    </ol>
+                                    <div class="container text-right mb-3">
+                                        <button class="btn btn-success" id="add-advert-gen-requirement-input-field-btn" type="button">
+                                            Add input field
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <h4>Professional Requirements</h4>
+                                    <ol id="prof-requirements-container">
+                                        <li class="mb-3" id="0">
+                                            <textarea class="form-control mb-3" name="prof_req[]" rows="2" required></textarea>
+                                        </li>
+                                    </ol>
+                                    <div class="container text-right mb-3">
+                                        <button class="btn btn-success" id="add-advert-prof-requirement-input-field-btn" type="button">
+                                            Add input field
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <h4>Responsibilites of Intern</h4>
+                                    <ol id="intern-responsibilities-container">
+                                        <li class="mb-3" id="0">
+                                            <textarea class="form-control mb-3" name="intern_responsibilities[]" rows="2" required></textarea>
+                                        </li>
+                                    </ol>
+                                    <div class="container text-right mb-3">
+                                        <button class="btn btn-success" id="add-advert-intern-responsibility-input-field-btn" type="button">
+                                            Add input field
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="form-group flex-column mb-3">
                                     <label for="advert-year">Year:</label>
                                     <select class="form-control" id="advert-year">

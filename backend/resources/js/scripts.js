@@ -80,9 +80,7 @@ $(document).ready(function () {
             <li class="mb-3" id="${i}">
               <div class="input-group mb-3">
                 <textarea class="form-control mb-3" name="gen_req[]" rows="2" required></textarea>
-                <div class="input-group-append">
                   <button type="button" class="btn btn-danger remove-req-input-field-btn mb-3" id="gen-req-remove-btn-${i}"><span><i class="fa fa-times"></i></span></button>
-                </div>
               </div>
             </li>
           `;
@@ -97,9 +95,7 @@ $(document).ready(function () {
             <li class="mb-3" id="${i}">
               <div class="input-group mb-3">
                 <textarea class="form-control mb-3" name="prof_req[]" rows="2" required></textarea>
-                <div class="input-group-append">
                   <button type="button" class="btn btn-danger remove-req-input-field-btn mb-3" id="prof-req-remove-btn-${i}"><span><i class="fa fa-times"></i></span></button>
-                </div>
               </div>
             </li>
           `;
@@ -114,9 +110,7 @@ $(document).ready(function () {
             <li class="mb-3" id="${i}">
               <div class="input-group mb-3">
                 <textarea class="form-control mb-3" name="intern_responsibilities[]" rows="2" required></textarea>
-                <div class="input-group-append">
                   <button type="button" class="btn btn-danger remove-req-input-field-btn mb-3" id="prof-req-remove-btn-${i}"><span><i class="fa fa-times"></i></span></button>
-                </div>
               </div>
             </li>
           `;
