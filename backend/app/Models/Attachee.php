@@ -18,7 +18,7 @@ class Attachee extends Model
      */
     protected $fillable = [
         'user_id', 'national_id', 'first_name', 'second_name',
-        'institution', 'department_id',
+        'institution', 'department_id', 'year', 'cohort',
         'engagement_level',/** 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
             * 3=>accepted_offer, 4=>reported, 5=>terminated_before_completion, 6=>'completed'.
             */

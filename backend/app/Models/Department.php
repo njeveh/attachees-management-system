@@ -17,7 +17,7 @@ class Department extends Model
      */
     protected $fillable = [
         'name',
-        'description',
+        'description', 'email', 'department_head', 'phone',
     ];
 
     /**

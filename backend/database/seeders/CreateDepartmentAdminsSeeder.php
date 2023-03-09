@@ -15,28 +15,28 @@ class CreateDepartmentAdminsSeeder extends Seeder
     {
         $department_admins = [
             [
-                'user_id' => 10,
+                'user_id' => 1,
                 'department_id' => 1,
                'first_name'=>'ICT Department',
                'last_name'=>'JKUAT',
                'phone_number'=>'+254700011111',
             ],
             [
-                'user_id' => 12,
+                'user_id' => 3,
                 'department_id' => 1,
                'first_name'=>'Department admin',
                'last_name'=>'JKUAT',
                'phone_number'=>'+254703311112',
             ],
             [
-                'user_id' => 11,
+                'user_id' => 2,
                 'department_id' => 2,
                'first_name'=>'DIPCA ADMIN',
                'last_name'=>'JKUAT',
                'phone_number'=>'+254722011144',
             ],
             [
-                'user_id' => 13,
+                'user_id' => 4,
                 'department_id' => 3,
                'first_name'=>'Central Services Admin',
                'last_name'=>'JKUAT',

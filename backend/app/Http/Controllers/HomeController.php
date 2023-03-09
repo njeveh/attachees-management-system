@@ -86,4 +86,14 @@ return view('attachee.home');
     {
         return view('dipca.home');
     }
+
+    /**
+     * Show the application dipca admin dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function showguestHomePage()
+    {
+        return view('dipca.home');
+    }
 }

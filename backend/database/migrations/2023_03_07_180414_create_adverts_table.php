@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignIdFor(Department::class)->nullable(false)
             ->constrained()->cascadeOnDelete();
             $table->string('reference_number')->nullable(false)->default('JKUAT#ANoNyMoUs');
-            $table->string('title')->nullable(false);
-            $table->text('description');
+            $table->string('title')->nullable(false)->fulltext('title');
+            $table->text('description')->fulltext('description');
             $table->string('year')->nullable(false);
             $table->smallInteger('cohort1_vacancies');
             $table->smallInteger('cohort2_vacancies');

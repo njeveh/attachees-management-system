@@ -16,6 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name')->nullable(false);
             $table->string('description')->nullable(false);
+            $table->string('Department_head')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone');
         });
     }
 

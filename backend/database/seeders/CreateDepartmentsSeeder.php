@@ -17,14 +17,23 @@ class CreateDepartmentsSeeder extends Seeder
             [
                'name'=>'ICT Department',
                'description'=>'ict departmet',
+               'department_head' => 'Ict department Head',
+               'email' => 'ict.department@jkuat.ac.ke',
+               'phone' => '+254711122233'
             ],
             [
                'name'=>'Dipca',
                'description'=>'dipca',
+                'department_head' => 'Dipca Head',
+               'email' => 'dipca.department@jkuat.ac.ke',
+               'phone' => '+254711122244'
             ],
             [
                'name'=>'Central Services',
                'description'=>'central services',
+               'department_head' => 'Central Services Head',
+               'email' => 'central.department@jkuat.ac.ke',
+               'phone' => '+254711122255'
             ],
         ];
     

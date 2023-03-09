@@ -684,7 +684,9 @@ footer {
 footer div p {
   margin: 0;
 }
-
+.advert {
+  padding-top: 120px;
+}
 
 /* ---------------------------------------------------
     reporting confirmation page

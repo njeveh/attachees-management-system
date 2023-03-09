@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('first_name')->nullable(false);
             $table->string('second_name')->nullable(false);
             $table->string('institution')->nullable(false);
+            $table->string('year'); //the finacial/academic year they are attached
+            $table->unsignedTinyInteger('cohort'); //1,2,3,4
             $table->foreignIdFor(Department::class)->nullable();
             /**
              * 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,

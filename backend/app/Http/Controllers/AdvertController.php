@@ -117,7 +117,7 @@ class AdvertController extends Controller
     /**
      * Display department adverts.
      */
-    public function showDepartmentadverts(Request $request)
+    public function showDepartmentAdverts(Request $request)
     {
         $adverts = $request->user()->departmentAdmin->department->adverts;
         return view('departments.view-adverts', ['data' => $adverts]);
@@ -126,13 +126,38 @@ class AdvertController extends Controller
     /**
      * Display specified department advert.
      */
-    public function showDepartmentadvert($id)
+    public function showDepartmentAdvert($id)
     {
         $advert = Advert::find($id);
         $gen_reqs = $advert->accompaniments->where('type', 'general_requirement');
         $prof_reqs = $advert->accompaniments->where('type', 'professional_requirement');
         $responsibilities = $advert->accompaniments->where('type', 'intern_responsibility');
          return view('departments.view-advert', ['advert' => $advert, 'gen_reqs' => $gen_reqs,
+        'prof_reqs' => $prof_reqs, 'responsibilities' => $responsibilities,]);
+    }
+
+    /**
+     * Display all adverts to central services.
+     */
+    public function showCentralServicesAdvertsView(Request $request)
+    {
+        $approved_adverts = Advert::where('approval_status', 'approved')->get();
+        $disapproved_adverts = Advert::where('approval_status', 'disapproved')->get();
+        $pending_adverts = Advert::where('approval_status', 'pending approval')->get();
+        return view('central_services.view-adverts', ['approved_adverts' => $approved_adverts,
+    'disapproved_adverts' => $disapproved_adverts, 'pending_adverts' => $pending_adverts]);
+    }
+
+    /**
+     * Display a specific advert on central services.
+     */
+    public function centralServicesViewAdvert($id)
+    {
+        $advert = Advert::find($id);
+        $gen_reqs = $advert->accompaniments->where('type', 'general_requirement');
+        $prof_reqs = $advert->accompaniments->where('type', 'professional_requirement');
+        $responsibilities = $advert->accompaniments->where('type', 'intern_responsibility');
+         return view('central_services.view-advert', ['advert' => $advert, 'gen_reqs' => $gen_reqs,
         'prof_reqs' => $prof_reqs, 'responsibilities' => $responsibilities,]);
     }
     /**

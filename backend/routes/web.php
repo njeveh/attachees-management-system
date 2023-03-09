@@ -4,6 +4,9 @@ use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomePageController;
+use App\Models\Advert;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome.page');
+Route::get('/', [WelcomePageController::class, 'index'])->name('welcome.page');
+Route::get('/adverts/{id}', [WelcomePageController::class, 'show'])->name('guest.view_advert');
 Route::get('/registration-successful', function () {
     return view('notifications.registration-success');
 })->name('registration.success');
@@ -82,4 +84,6 @@ All Central services Routes List
 Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-history'])->group(function () {
   
     Route::get('/central-services/home', [HomeController::class, 'centralServicesHome'])->name('central_services.home');
+    Route::get('/central-services/view-adverts', [AdvertController::class, 'showCentralServicesAdvertsView'])->name('central_services.view_adverts');
+    Route::get('/central-services/view-advert/{id}', [AdvertController::class, 'centralServicesViewAdvert'])->name('central_services.view_advert');
 });

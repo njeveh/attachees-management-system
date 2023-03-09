@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(Advert::class);
-            $table->string('value')->nullable(false);
+            $table->string('value')->nullable(false)->fulltext('value');
             $table->string('type')->nullable(false); //general_requirement || professional_requirement || intern_responsibility.
         });
     }
