@@ -32,21 +32,21 @@ class AdvertController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info('here we go');
         // if ($request->user()->can('create', Advert::class)) {
-            $request->validate([
+            $validated = $request->validate([
                 'title' => ['required', 'string'],
                 'description' => ['required', 'string'],
                 'year' => ['required',],
+                'how_to_apply' => ['required', 'string'],
                 'cohort1_vacancies' => ['required', 'min:0', 'numeric'],
                 'cohort2_vacancies' => ['required', 'min:0', 'numeric'],
                 'cohort3_vacancies' => ['required', 'min:0', 'numeric'],
                 'cohort4_vacancies' => ['required', 'min:0', 'numeric'],
+                'prof_reqs.*' =>['required'],
+                'gen_reqs.*' =>['required'],
+                'intern_responsibilities.*' =>['required'],
             ]);
-            Log::info('here we go again');
-            // $accompaniments = collect($request->only('gen_req', 'prof_req', 'intern_responsibilities'));
             $department = $request->user()->departmentAdmin->department;
-            Log::info($department);
             DB::beginTransaction();
                 try{
                     $advert = Advert::create([
@@ -54,14 +54,14 @@ class AdvertController extends Controller
                         'department_id' => $department->id,
                         'description' => $request->description,
                         'year' => $request->year,
+                        'how_to_apply' => $request->how_to_apply,
                         'cohort1_vacancies' => $request->cohort1_vacancies,
                         'cohort2_vacancies' => $request->cohort2_vacancies,
                         'cohort3_vacancies' => $request->cohort3_vacancies,
                         'cohort4_vacancies' => $request->cohort4_vacancies,
                     ]);
-                    Log::info($advert);
-                    if ($request->filled('gen_req')){
-                        $gen_reqs = $request->gen_req;
+                    if ($request->filled('gen_reqs')){
+                        $gen_reqs = $request->gen_reqs;
                         foreach($gen_reqs as $gen_req){
                             AdvertAccompaniment::create([
                                 'advert_id' => $advert->id,
@@ -70,8 +70,8 @@ class AdvertController extends Controller
                             ]);
                         }
                     }
-                    if ($request->filled('prof_req')){
-                        $prof_reqs = $request->prof_req;
+                    if ($request->filled('prof_reqs')){
+                        $prof_reqs = $request->prof_reqs;
                         foreach($prof_reqs as $prof_req){
                             AdvertAccompaniment::create([
                                 'advert_id' => $advert->id,
@@ -95,7 +95,6 @@ class AdvertController extends Controller
             $advert->save();
                 } catch (\Exception $e) {
                     DB::rollBack();
-                    Log::info($e);
                     return back()->with('error', 'Sorry!! Something went wrong.')->withInput();
                 }
                 return redirect('/departments/view-advert/'.$advert->id);

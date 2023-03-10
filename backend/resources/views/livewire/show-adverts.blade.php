@@ -6,26 +6,23 @@
     </header>
     <section class="search-section">
         <div class="search-form">
-            <form action="">
-                <div>
+            <form action="" class="py-3 d-flex justify-content-center flex-wrap">
+                <div class="mx-2 my-2">
                     <input wire:model="search" type="text" placeholder="Search for attachment">
                 </div>
-                <div class="college-filter">
-                    <label class="filter-dropdown" for="filter-drop">
-                        <select class="" id="styledSelect1" name="department-options">
-                            <option value="">
-                                All departments
-                            </option>
-                            @if ($departments->count() > 0)
-                                @foreach ($departments as $department)
-                                    <option value={{ $department->name }}>
-                                        {{ $department->name }}
-                                    </option>
-                                @endforeach
-                            @endif
-                        </select>
-
-                    </label>
+                <div class="college-filter mx-2 my-2">
+                    <select class="form-select" id="styledSelect1" wire:model="department">
+                        <option value="0">
+                            All departments
+                        </option>
+                        @if ($department_objects->count() > 0)
+                            @foreach ($department_objects as $department_object)
+                                <option value={{ $department_object->id }}>
+                                    {{ $department_object->name }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
             </form>
         </div>
@@ -35,18 +32,22 @@
                     <div>
                         <p>Filter by departments</p>
                         <div class="school-filter-list">
-                            <?php for ($i = 0; $i < 15; $i++) : ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Default checkbox
-                                </label>
-                            </div>
-                            <?php endfor; ?>
+                            @if ($department_objects->count() > 0)
+                                @foreach ($department_objects as $department_object)
+                                    <div class="form-check">
+                                        <input wire:model="departments.{{ $department_object->id }}"
+                                            class="form-check-input" type="checkbox"
+                                            value="{{ $department_object->id }}" id="flexCheckDefault">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            {{ $department_object->name }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
-                    <div class="filters-reset">
-                        <button>Reset filters</button>
+                    <div wire:click="resetFilters()" class="filters-reset">
+                        <button type="reset">Reset filters</button>
                     </div>
                 </div>
                 <div class="content-display">
@@ -82,3 +83,15 @@
         </div>
     </section>
 </div>
+
+{{-- $currentDate = date('Y-m-d');
+$currentDate = date('Y-m-d', strtotime($currentDate));
+   
+$startDate = date('Y-m-d', strtotime("01/09/2019"));
+$endDate = date('Y-m-d', strtotime("01/10/2019"));
+   
+if (($currentDate >= $startDate) && ($currentDate <= $endDate)){
+    echo "Current date is between two dates";
+}else{
+    echo "Current date is not between two dates";  
+} --}}

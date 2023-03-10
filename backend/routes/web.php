@@ -5,6 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomePageController;
+use App\Http\Livewire\CentralServices\AdvertView;
+use App\Http\Livewire\CentralServices\EditAdvert;
+use App\Http\Livewire\Departments\DepartmentAdvertView;
+use App\Http\Livewire\Departments\DepartmentEditAdvert;
 use App\Models\Advert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -72,7 +76,8 @@ Route::middleware(['auth', 'user-access:department_admin',  'prevent-back-histor
     Route::get('/departments/create-new-advert', [AdvertController::class, 'create'])->name('departments.new_advert_form');
     Route::post('/departments/create-new-advert', [AdvertController::class, 'store'])->name('departments.new_advert_create');
     Route::get('/departments/view-adverts', [AdvertController::class, 'showDepartmentAdverts'])->name('departments.view_adverts');
-    Route::get('/departments/view-advert/{id}', [AdvertController::class, 'showDepartmentAdvert'])->name('departments.view_advert');
+    Route::get('/departments/view-advert/{id}', DepartmentAdvertView::class)->name('departments.view_advert');
+    Route::get('/departments/edit-advert/{id}', DepartmentEditAdvert::class)->name('departments.edit_advert');
 
 });
   
@@ -85,5 +90,6 @@ Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-h
   
     Route::get('/central-services/home', [HomeController::class, 'centralServicesHome'])->name('central_services.home');
     Route::get('/central-services/view-adverts', [AdvertController::class, 'showCentralServicesAdvertsView'])->name('central_services.view_adverts');
-    Route::get('/central-services/view-advert/{id}', [AdvertController::class, 'centralServicesViewAdvert'])->name('central_services.view_advert');
+    Route::get('/central-services/view-advert/{id}', AdvertView::class)->name('central_services.view_advert');
+    Route::get('/central-services/edit-advert/{id}', EditAdvert::class)->name('central_services.edit_advert');
 });

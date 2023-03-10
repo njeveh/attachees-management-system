@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
     <div class="" style="height:100vh;padding:50px 0 0 0 ;">
         <div class="container" style="position:relative;">
             <div class="row col-md-4 col-md-offset-3 card shadow-lg p-4 mb-5 bg-white rounded" style="margin:auto;">
@@ -67,4 +66,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>

@@ -10,10 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>
-        @section('title')
-        @show
-    </title>
+    <title>{{ $title ?? config('app.name', 'IAMIS') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -27,16 +24,12 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ico">
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
-    {{-- <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     @livewireStyles
 </head>
 
 <body>
     <div id="app">
-        @yield('content')
+        {{ $slot }}
     </div>
     @livewireScripts
 </body>

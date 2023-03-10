@@ -9,32 +9,48 @@ use Livewire\Component;
 class ShowAdverts extends Component
 {
     public $search = '';
-    public $name;
+    public $department;
+    public $departments;
+    public $department_objects;
 
+    public function mount()
+    {
+        $this->department_objects = Department::all();
+    }
     public function render()
     {
         /**
          * whereLike is a query builder macro defined on /Providers/AppserviceProvider boot method
          * 
         */
-        $departments = Department::all();
         $adverts = Advert::whereLike(['title', 'description','reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
-        ->get();
-        return view('livewire.show-adverts', ['adverts' => $adverts, 'departments' => $departments]);
+                ->when($this->department, function ($query, $department) {
+                    return $query->where('department_id', $department);
+                })
+                ->when($this->departments, function ($query, $departments) {
+                    return $query->whereIn('department_id', $departments);
+                })
+                ->where('approval_status', 'approved')->where('is_active', 1)
+                ->get();
+        return view('livewire.show-adverts', ['adverts' => $adverts, 'departments' => $this->department_objects]);
     }
 
     // public function updatingSearch()
     // {
     //     $this->resetPage();
     // }
+
+    public function updatedDepartments()
+    {
+        if (!is_array($this->departments)) return;
+            $this->departments = array_filter($this->departments, function ($department) {
+            return $department != false;
+        });
+    }
     public function resetFilters()
     {
+        $this->reset('departments');
         $this->reset('search');
-    
-        // $this->reset(['search', 'isActive']);
-        // // Will reset both the search AND the isActive property.
-    
-        // $this->resetExcept('search');
-        // // Will only reset the isActive property (any property but the search property).
+        $this->reset('department');
     }
 }

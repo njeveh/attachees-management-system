@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
     <div class="wrapper">
         <!-- Sidebar  -->
         <x-central-services-side-nav-links />
@@ -104,7 +103,7 @@
                                             <th scope="row">{{ $disapproved_advert->reference_number }}</th>
                                             <td>{{ $disapproved_advert->title }}</td>
                                             <td>{{ date_format($disapproved_advert->created_at, 'Y-M-d') }}</td>
-                                            <td>Approved</td>
+                                            <td>Disapproved</td>
                                             <td><a
                                                     class="btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $disapproved_advert->id }}">View
                                                     Advert</a></td>
@@ -120,4 +119,4 @@
         </div>
 
     </div>
-@endsection
+</x-app-layout>

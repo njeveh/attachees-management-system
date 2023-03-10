@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
     <div class="content-wrapper">
         <main class="content">
             <div id="main-page-nav">
@@ -88,4 +87,4 @@
         </main>
         <x-footer />
     </div>
-@endsection
+</x-app-layout>

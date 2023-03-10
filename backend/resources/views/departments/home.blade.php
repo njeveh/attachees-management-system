@@ -1,5 +1,4 @@
-@extends('layouts.app')
-@section('content')
+<x-app-layout>
     <div class="wrapper">
         <!-- Sidebar  -->
         <x-department-admin-side-nav-links />
@@ -10,4 +9,4 @@
         </div>
 
     </div>
-@endsection
+</x-app-layout>

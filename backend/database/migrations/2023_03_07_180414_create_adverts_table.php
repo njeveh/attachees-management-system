@@ -25,6 +25,11 @@ return new class extends Migration
             $table->smallInteger('cohort2_vacancies');
             $table->smallInteger('cohort3_vacancies');
             $table->smallInteger('cohort4_vacancies');
+            $table->text('how_to_apply')->nullable();
+            $table->string('author');
+            $table->string('last_updated_by');
+            $table->string('last_approval_action_done_by');
+            $table->string('last_activation_action_done_by');
             $table->string('approval_status')->nullable(false)->default('pending approval'); // pending_approval || approved || disapproved
             $table->unsignedTinyInteger('is_active')->nullable(false)->default(0);
 

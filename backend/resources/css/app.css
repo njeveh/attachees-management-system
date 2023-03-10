@@ -125,20 +125,16 @@ header {
 .search-section .search-form {
   position: relative;
   z-index: 10;
-  margin-top: -30px;
+  margin-top: -50px;
   height: 60px;
 }
 .search-section {
   padding-bottom: 5vh;
 }
 .search-form form {
-  height: inherit;
+  height: fit-content;
   margin: auto;
-  padding: 0 10px;
-  width: 80vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  width: 90vw;
   align-items: center;
   background-color: var(--font-white);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
@@ -148,16 +144,12 @@ header {
 .search-form form input {
   width: 50vw;
   line-height: 5vh;
-  margin-right: 20px;
   border: none;
-  margin-left: 1vw;
 }
 .search-form .college-filter {
-  width: 20vw;
-  margin-right: 20px;
-  padding-left: 10px;
-  border-left: 1px solid var(--light-grey-border);
+  /* width: 20vw; */
 }
+/*
 .college-filter label {
   min-width: 15vw;
   margin-bottom: 0;
@@ -181,15 +173,8 @@ header {
   width: 100%;
   font-size: 14px;
   color: var(--);
-}
+} */
 
-.search-button {
-  background-color: var(--primary-color);
-  border-radius: 7px;
-  padding: 5px 20px;
-  border: none;
-  color: var(--font-white);
-}
 .search-display > div {
   display: flex;
   flex-direction: row;

@@ -18,9 +18,10 @@ class Advert extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'department_id', 'title', 'reference_number',
+        'department_id', 'title', 'reference_number', 'author', 'last_updated_by',
+        'last_approval_action_done_by', 'last_activation_action_done_by',
         'description', 'year', 'cohort1_vacancies',
-        'cohort2_vacancies', 'cohort3_vacancies', 'cohort4_vacancies', 'approval_status', //pending_approval || approved || disapproved
+        'cohort2_vacancies', 'cohort3_vacancies', 'cohort4_vacancies', 'how_to_apply', 'approval_status', //pending_approval || approved || disapproved
         'is_active' // 0 || 1
     ];
 
