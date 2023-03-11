@@ -23,7 +23,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/test', function(){
+    return(view('test'));
+})->name('welcome.page');
 Route::get('/', [WelcomePageController::class, 'index'])->name('welcome.page');
 Route::get('/adverts/{id}', [WelcomePageController::class, 'show'])->name('guest.view_advert');
 Route::get('/registration-successful', function () {

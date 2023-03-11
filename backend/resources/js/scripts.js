@@ -124,10 +124,7 @@ $(document).ready(function () {
   $(document).on("click", ".remove-req-input-field-btn", function(){
     $(this).parentsUntil("ol").remove();
   });
-        //  window.addEventListener('approved', (event) => {
-        //      //  alert('approved')
-        //      $("#myModal").modal('show');
-        //  })
+
 });
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields

@@ -85,38 +85,19 @@ main {
 header {
   padding-top: 5vh;
 }
-.showcase::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: inset 120px 100px 250px #00000053,
-    inset -120px -100px 250px #0000009e;
-}
-.showcase {
-  height: 43vh;
-  width: 100%;
+.carousel {
   position: relative;
-  background: url("../../public/assets/static/istockphoto-1204089458-170667a.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 20% 85%;
 }
-.showcase .hero-text {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  margin: auto;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  color: var(--font-white);
+
+.carousel .carousel-item {
+  height: 50vh;
+}
+
+.carousel-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 50vh;
 }
 
 /* ---------------------------------------------------
@@ -146,34 +127,6 @@ header {
   line-height: 5vh;
   border: none;
 }
-.search-form .college-filter {
-  /* width: 20vw; */
-}
-/*
-.college-filter label {
-  min-width: 15vw;
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.college-filter select {
-  border: none;
-  outline: none;
-  background: transparent;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-bottom: 1px solid var(--light-grey-border);
-  border-radius: 0;
-  padding: 10px 0;
-  margin: 0;
-  display: block;
-  width: 100%;
-  font-size: 14px;
-  color: var(--);
-} */
 
 .search-display > div {
   display: flex;
@@ -199,12 +152,16 @@ header {
   border-radius: 4px;
 }
 .content-display {
+  position: relative;
   flex: 3;
   border-radius: 4px;
   padding: 10px 20px;
   background-color: var(--background-white);
   width: 100%;
   overflow-y: scroll;
+}
+.home-page-buttons {
+  margin-top: 10px;
 }
 .job-posts {
   margin-top: 10px;
@@ -213,12 +170,10 @@ header {
   margin-top: 30px;
 }
 .job-list .job-item {
-  display: flex;
+  /* display: flex;
   height: fit-content;
-  flex-direction: row;
+  flex-direction: row; */
   border-bottom: 1px solid var(--light-grey-border);
-  padding-bottom: 10px;
-  margin-top: 20px;
 }
 .job-item .organization-logo {
   width: auto;
@@ -258,11 +213,11 @@ header {
   font-size: larger;
 }
 .job-item .post-action {
-  flex: 1;
+  /* flex: 1;
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: space-between;
+  justify-content: space-between; */
 }
 .job-item .sm-text {
   color: var(--light-dark);
@@ -697,4 +652,44 @@ div.search-area {
   #sidebarCollapse span {
     display: none;
   }
+  div.home-page-buttons {
+  margin-top: 70px;
+}
+  #side-menu {
+    margin-left: -250px;
+  }
+  #side-menu.active {
+    margin-left: 0;
+  }
+}
+
+
+.posts-wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#side-menu {
+  min-width: 250px;
+  max-width: 250px;
+  position: relative;
+  transition: all 0.3s;
+  overflow: scroll;
+}
+
+  #side-menu {
+    margin-left: -250px;
+  }
+  #side-menu.active {
+    margin-left: 20px;
+  }
+  #side-menu-collapse {
+    position: absolute;
+    top: 5;
+    right: 0;
+  }
+
+    .home-page-buttons {
+  margin-top: 30px;
 }

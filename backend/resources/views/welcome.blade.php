@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <main>
+    <div class="content-wrapper">
         <div id="main-page-nav">
             <nav class="navbar">
                 <a href="#">
@@ -58,9 +58,61 @@
                 </div>
             </nav>
         </div>
-        @livewire('show-adverts')
+        <main class="pb-5">
+            <!-- Carousel -->
+            <div id="home-page-carousel" class="carousel slide" data-bs-ride="carousel">
+
+                <!-- Indicators/dots -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#home-page-carousel" data-bs-slide-to="0"
+                        class="active indicator"></button>
+                    <button type="button" data-bs-target="#home-page-carousel" data-bs-slide-to="1"
+                        class="indicator"></button>
+                    <button type="button" data-bs-target="#home-page-carousel" data-bs-slide-to="2"
+                        class="indicator"></button>
+                </div>
+
+                <!-- The slideshow/carousel -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="/assets/static/istockphoto-1204089458-170667a.jpg" alt="Los Angeles"
+                            class="d-block w-100">
+                        <div class="carousel-caption">
+                            <h1>Find Attachment Opportunites</h1>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/assets/static/istockphoto-1204089458-170667a.jpg" alt="Chicago"
+                            class="d-block w-100">
+                        <div class="carousel-caption">
+                            <h1>Find Attachment Opportunites</h1>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/assets/static/istockphoto-1204089458-170667a.jpg" alt="New York"
+                            class="d-block w-100">
+                        <div class="carousel-caption">
+                            <h1>Find Attachment Opportunites</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Left and right controls/icons -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#home-page-carousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#home-page-carousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            {{-- end of couresel --}}
+            @livewire('show-adverts')
+        </main>
+
         <x-footer />
-    </main>
+    </div>
     @livewireScripts
 </body>
 

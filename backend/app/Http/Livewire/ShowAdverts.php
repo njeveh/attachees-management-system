@@ -9,13 +9,15 @@ use Livewire\Component;
 class ShowAdverts extends Component
 {
     public $search = '';
-    public $department;
+    public $department_id;
     public $departments;
     public $department_objects;
+    public $side_menu_class;
 
     public function mount()
     {
         $this->department_objects = Department::all();
+        $this->side_menu_class = '';
     }
     public function render()
     {
@@ -24,11 +26,11 @@ class ShowAdverts extends Component
          * 
         */
         $adverts = Advert::whereLike(['title', 'description','reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
-                ->when($this->department, function ($query, $department) {
-                    return $query->where('department_id', $department);
+                ->when($this->department_id, function ($query, $department_id) {
+                    return $query->where('department_id', $department_id);
                 })
                 ->when($this->departments, function ($query, $departments) {
-                    return $query->whereIn('department_id', $departments);
+                    return $query->orWhereIn('department_id', $departments);
                 })
                 ->where('approval_status', 'approved')->where('is_active', 1)
                 ->get();
@@ -51,6 +53,13 @@ class ShowAdverts extends Component
     {
         $this->reset('departments');
         $this->reset('search');
-        $this->reset('department');
+        $this->reset('department_id');
+    }
+    public function toggleClass(){
+        if ($this->side_menu_class == ''){
+            $this->side_menu_class = 'active';
+        }else{
+            $this->side_menu_class = '';
+        }
     }
 }
