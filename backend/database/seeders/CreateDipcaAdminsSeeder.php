@@ -15,7 +15,7 @@ class CreateDipcaAdminsSeeder extends Seeder
     {
         $dipca_admins = [
             [
-                'user_id' => 11,
+                'user_id' => 6,
                 'first_name'=>'DIPCA ADMIN',
                 'last_name'=>'JKUAT',
                 'phone_number'=>'+254722011144',

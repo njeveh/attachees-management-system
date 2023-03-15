@@ -1,8 +1,7 @@
-@extends('layouts.app')
-@section('title')
-    Register
-@endsection
-@section('content')
+<x-app-layout>
+    <x-slot:title>
+        {{ __('Registration') }}
+    </x-slot:title>
     <div class="content-wrapper">
         <main class="content my-5">
             <div class="card shadow-lg m-auto p-5 bg-white rounded col-md-5 col-md-offset-3">
@@ -59,8 +58,9 @@
                         <div class="form-group mb-3">
                             <label for="email">{{ __('Email Address') }}</label>
 
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" placeholder="Enter your Email Address" required
+                            <input id="email" type="email"
+                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                value="{{ old('email') }}" placeholder="Enter your Email Address" required
                                 autocomplete="email">
 
                             @error('email')
@@ -102,8 +102,9 @@
                         <div class="form-group mb-3">
                             <label for="password-confirm">{{ __('Confirm Password') }}</label>
 
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                placeholder="Confirm your Password" required autocomplete="new-password">
+                            <input id="password-confirm" type="password" class="form-control"
+                                name="password_confirmation" placeholder="Confirm your Password" required
+                                autocomplete="new-password">
                         </div>
                         <div class="d-flex justify-content-end my-3" style=" border-radius:20%; ">
                             <button type="submit" class="btn btn-primary" style="color:white; background-color:green;">
@@ -119,4 +120,4 @@
         </main>
         <x-footer />
     </div>
-@endsection
+</x-app-layout>

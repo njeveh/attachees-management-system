@@ -1,8 +1,7 @@
-@extends('layouts.app')
-@section('title')
-    Registration Success
-@endsection
-@section('content')
+<x-app-layout>
+    <x-slot:title>
+        {{ __('Registration Success') }}
+    </x-slot:title>
     <div class="content-wrapper">
         <main class="content my-5">
             <div class="card shadow-lg m-auto p-5 bg-white rounded col-md-5 col-md-offset-3">
@@ -16,7 +15,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="alert alert-success">Your Account has been successfully created. Click on the button below
+                    <div class="alert alert-success">Your Account has been successfully created. Click on the button
+                        below
                         to login to your account.
                     </div>
                     <div>
@@ -27,4 +27,4 @@
         </main>
         <x-footer />
     </div>
-@endsection
+</x-app-layout>

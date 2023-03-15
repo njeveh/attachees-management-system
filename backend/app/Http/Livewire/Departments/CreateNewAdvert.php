@@ -103,7 +103,8 @@ class CreateNewAdvert extends Component
         $this->validate();
         DB::beginTransaction();
             try{
-                $this->department = auth()->user()->departmentAdmin->department;
+                $user = auth()->user();
+                $this->department = $user->departmentAdmin->department;
                 $this->advert = Advert::create([
                     'title' => $this->title,
                     'department_id' => $this->department->id,
@@ -114,6 +115,7 @@ class CreateNewAdvert extends Component
                     'cohort2_vacancies' => $this->cohort2_vacancies,
                     'cohort3_vacancies' => $this->cohort3_vacancies,
                     'cohort4_vacancies' => $this->cohort4_vacancies,
+                    'author' => $user->departmentAdmin->first_name . ' ' . $user->departmentAdmin->last_name
                 ]);
                 if (count($this->gen_reqs)){
                     $this->gen_reqs->map(function($gen_req, $key){

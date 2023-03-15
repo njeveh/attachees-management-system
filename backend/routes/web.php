@@ -1,14 +1,19 @@
 <?php
 
 use App\Http\Controllers\AdvertController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AttacheeBiodataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomePageController;
+use App\Http\Livewire\Attachee\Apply;
+use App\Http\Livewire\Attachee\ViewApplication;
 use App\Http\Livewire\CentralServices\AdvertView;
 use App\Http\Livewire\CentralServices\EditAdvert;
 use App\Http\Livewire\Departments\DepartmentAdvertView;
 use App\Http\Livewire\Departments\DepartmentEditAdvert;
+use App\Http\Livewire\HomePage;
 use App\Models\Advert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +30,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/test', function(){
     return(view('test'));
-})->name('welcome.page');
-Route::get('/', [WelcomePageController::class, 'index'])->name('welcome.page');
+});
+Route::get('/', HomePage::class)->name('welcome.page');
 Route::get('/adverts/{id}', [WelcomePageController::class, 'show'])->name('guest.view_advert');
 Route::get('/registration-successful', function () {
     return view('notifications.registration-success');
@@ -55,6 +60,14 @@ All Attachee Routes List
 Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history'])->group(function () {
   
     Route::get('/attachee/home', [HomeController::class, 'attacheeHome'])->name('attachee.home');
+    Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
+    Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
+    Route::get('/attachee/biodata', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
+    Route::get('/attachee/my-applications', [ApplicationController::class, 'getAttacheeApplications'])->name('attachee.applications');
+    Route::get('/attachee/my-applications/{id}/view-application', ViewApplication::class);
+    // Route::get('/application/uploads/success', function(){
+    //     return view('attachee.application-success');
+    // })->name('application_uploads.success');
 });
   
 /*------------------------------------------

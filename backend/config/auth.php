@@ -40,10 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'department-admin' => [
-            'driver' => 'session',
-            'provider' => 'department_admins',
-        ],
 
     ],
 
@@ -68,11 +64,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-
-        'department_admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\DepartmentAdmin::class,
         ],
 
         // 'users' => [
@@ -108,12 +99,6 @@ return [
             'throttle' => 60,
         ],
 
-        'department_admins' => [
-            'provider' => 'department_admins',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
     ],
 
     /*

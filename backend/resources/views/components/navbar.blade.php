@@ -1,26 +1,19 @@
-@props([
-    'user',
-])
-<nav class="navbar navbar-expand-lg navbar-light navbar-bg-blue" style="
+<nav class="navbar navbar-expand-lg navbar-light navbar-bg-blue"
+    style="
         position: sticky;
         top: 0;
         z-index: 1000;
 ">
     <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="btn btn-burger">
+        <button type="button" id="sidenav-btn" class="btn btn-burger sidenavCollapse display">
             <i class="fas fa-bars"></i>
         </button>
-        {{-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button> --}}
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="btn btn-dark d-inline-block d-lg-none ms-auto" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
             <i class="fas fa-align-justify"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            {{-- <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav me-auto">
-
-            </ul> --}}
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

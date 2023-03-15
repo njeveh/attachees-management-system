@@ -60,7 +60,8 @@
                     </div>
                 </div>
                 <div class="panel panel-footer text-center">
-                    <small>Don't have an account? <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                    <small>Don't have an account? <a
+                            href="{{ route('attachee.registration') }}">{{ __('Register') }}</a>
                     </small>
                 </div>
             </div>

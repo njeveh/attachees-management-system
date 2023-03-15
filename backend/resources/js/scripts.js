@@ -1,6 +1,7 @@
 $(document).ready(function () {
-  $("#sidebarCollapse").on("click", function () {
-    $("#sidebar").toggleClass("active");
+  $(".sidenavCollapse").on("click", function () {
+    $("#sidenav").toggleClass("active");
+    $("#sidenav-btn").toggleClass("display");
   });
 // add an extra education input block
   $("#add-education-input-fields-btn").click(function(){

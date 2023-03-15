@@ -14,11 +14,13 @@
   --dark-grey-background: #313131;
 }
 
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
+  font-size: 16px;
 }
 p {
   margin: 0;
@@ -41,7 +43,20 @@ main {
   color: white !important;
   z-index: 1000;
 }
-#main-page-nav h5 {
+#guest-nav {
+    background-color: var(--primary-color);
+  color: white !important;
+}
+.guest-content-wrapper {
+  height: 100%;
+  position: relative;
+  margin-top: 85px;
+}
+.navbar-brand .logo-brand .logo img {
+    height: 45px;
+    width: 45px;
+}
+#guest-nav h5 {
   margin: 0;
 }
 #main-page-nav img {
@@ -64,16 +79,15 @@ main {
   margin-right: 0.5vw;
 }
 
-#main-page-nav .nav-buttons a {
+#guest-nav .nav-buttons a {
   background-color: transparent;
   border: none;
-  margin: 0px 10px;
   font-size: 1.2rem;
   color: var(--font-white);
   cursor: pointer;
   text-decoration: none;
 }
-#main-page-nav .nav-buttons a:hover {
+#guest-nav .nav-buttons a:hover {
   color: var(--light-grey-border);
 }
 .nav-buttons .login-button {
@@ -166,16 +180,13 @@ header {
 .job-posts {
   margin-top: 10px;
 }
-.job-list {
+.items-list {
   margin-top: 30px;
 }
-.job-list .job-item {
-  /* display: flex;
-  height: fit-content;
-  flex-direction: row; */
+.items-list .list-item {
   border-bottom: 1px solid var(--light-grey-border);
 }
-.job-item .organization-logo {
+.list-item .organization-logo {
   width: auto;
   height: auto;
   display: flex;
@@ -183,13 +194,13 @@ header {
   align-items: center;
   margin-right: 1vw;
 }
-.job-item .organization-logo img {
+.list-item .organization-logo img {
   padding: 5px;
   max-width: 60px;
   max-height: 60px;
   display: flex;
 }
-.job-item .organization-details {
+.list-item .organization-details {
   flex: 3;
   display: flex;
   flex-direction: row;
@@ -212,14 +223,7 @@ header {
   font-weight: 500;
   font-size: larger;
 }
-.job-item .post-action {
-  /* flex: 1;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: space-between; */
-}
-.job-item .sm-text {
+.list-item .sm-text {
   color: var(--light-dark);
   font-weight: 500;
   font-size: 0.8em;
@@ -451,7 +455,7 @@ a:focus {
   align-items: stretch;
 }
 
-#sidebar {
+#sidenav {
   min-width: 250px;
   max-width: 250px;
   background: var(--primary-color);
@@ -464,40 +468,45 @@ a:focus {
   overflow: scroll;
 }
 
-#sidebar.active {
+#sidenav.active {
   margin-left: -250px;
 }
-
-#sidebar .sidebar-header {
+#sidenav-btn {
+  display: inline;
+}
+/* #sidenav-btn.display {
+  display: none;
+} */
+#sidenav .sidenav-header {
   padding: 20px 20px 5px 20px;
   background: var(--primary-color);
   display: flex;
   flex-direction: column;
   text-align: center;
 }
-.sidebar-header img {
+.sidenav-header a img {
   margin: auto;
   justify-content: center;
   align-items: center;
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
 }
-.sidebar-header h3 {
+.sidenav-header h3 {
   font-size: 1.3rem;
   margin: 10px 0;
 }
-#sidebar ul {
+#sidenav ul {
   margin: auto;
   padding-left: 10%;
 }
-#sidebar ul p {
+#sidenav ul p {
   color: #fff;
   padding: 0 10px;
   margin-bottom: 5px;
   font-weight: 800;
 }
 
-#sidebar ul li a {
+#sidenav ul li a {
   padding: 7px 10px;
   font-size: 1.1em;
   display: block;
@@ -506,19 +515,19 @@ a:focus {
   justify-content: center;
   align-items: left;
 }
-#sidebar ul li a .icon {
+#sidenav ul li a .icon {
   padding: 5px 0;
   text-align: center;
 }
-#sidebar ul li a span {
+#sidenav ul li a span {
   margin-left: 4px;
 }
 
-#sidebar ul li a:hover {
+#sidenav ul li a:hover {
   color: rgb(154, 154, 154);
 }
 
-#sidebar ul li.active > a,
+#sidenav ul li.active > a,
 a[aria-expanded="true"] {
   color: #fff;
   background-color: var(--primary-color);
@@ -624,9 +633,6 @@ footer {
 footer div p {
   margin: 0;
 }
-.advert {
-  padding-top: 120px;
-}
 
 /* ---------------------------------------------------
     reporting confirmation page
@@ -638,19 +644,34 @@ div.search-area {
   align-items: flex-end;
 }
 
+
+/* ---------------------------------------------------
+    Advert View Page
+----------------------------------------------------- */
+
+.advert-view-main {
+  margin-top: 30px;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
 
 @media (max-width: 768px) {
-  #sidebar {
+  #sidenav {
     margin-left: -250px;
   }
-  #sidebar.active {
+  #sidenav.active {
     margin-left: 0;
   }
-  #sidebarCollapse span {
+  #sidenavCollapse span {
     display: none;
+  }
+  #sidenav-btn {
+    display: none;
+  }
+  #sidenav-btn.display {
+    display: inline;
   }
   div.home-page-buttons {
   margin-top: 70px;
@@ -661,6 +682,14 @@ div.search-area {
   #side-menu.active {
     margin-left: 0;
   }
+
+* {
+  font-size: 15px;
+}
+#guest-nav h5 {
+  margin: 0;
+  font-size: 15px;
+}
 }
 
 
@@ -693,3 +722,42 @@ div.search-area {
     .home-page-buttons {
   margin-top: 30px;
 }
+
+.feedback-card-footer-link a {
+  color: blue;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.feedback-card-footer-link a:hover {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+/* .update-form {
+  display: none;
+}
+.update-form.active {
+  display: block;
+} */
+
+.update-form {
+  transition: all 0.3s;
+}
+
+.info-card {
+  background-color: #f1f8ff;
+}
+
+.banner {
+  background-color: var(--primary-color)
+}
+
+.btn-success {
+  background-color: var(--primary-color) !important
+}
+
+/* input:focus {
+  outline: none;
+} */

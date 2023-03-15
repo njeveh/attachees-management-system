@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attachee extends Model
 {
@@ -57,4 +58,43 @@ class Attachee extends Model
         return $this->hasMany(Application::class);
     }
 
+    /**
+     * get biodata associated with this attcahee
+     */
+    public function attacheeBiodata(): HasOne
+    {
+        return $this->hasOne(AttacheeBiodata::class);
+    }
+
+    /**
+     * get skills associated with this attcahee
+     */
+    public function attacheeSkills(): HasMany
+    {
+        return $this->hasMany(AttacheeSkill::class);
+    }
+
+    /**
+     * get emergency contacts associated with this attcahee
+     */
+    public function attacheeEmergencyContacts(): HasMany
+    {
+        return $this->hasMany(AttacheeEmergencyContact::class);
+    }
+    
+    /**
+     * get education levels associated with this attcahee
+     */
+    public function attacheeEducationLevels(): HasMany
+    {
+        return $this->hasMany(AttacheeEducationLevel::class);
+    }
+
+    /**
+     * get the referees associated with this attcahee
+     */
+    public function attacheeReferees(): Hasmany
+    {
+        return $this->hasmany(AttacheeReferee::class);
+    }
 }

@@ -42,25 +42,23 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {   
-        $input = $request->all();
-     
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
-     
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-        {
+ 
+        if (Auth::guard('web')->attempt($credentials)) {
+            $request->session()->regenerate();
             if (auth()->user()->type == 'department_admin') {
-                return redirect()->route('departments.home');
+                return redirect()->intended('/departments/home');
             }else if (auth()->user()->type == 'attachee') {
-                return redirect()->route('attachee.home');
+                return redirect()->intended('/attachee/home');
             }else if (auth()->user()->type == 'dipca_admin') {
-                return redirect()->route('dipca.home');
+                return redirect()->intended('/dipca/home');
             }else if (auth()->user()->type == 'central_services_admin') {
-                return redirect()->route('central_services.home');
+                return redirect()->intended('/central-services/home');
             }else{
-                return redirect()->route('home');
+                return redirect()->intended(route('home'));
             }
         }else{
              // if unsuccessful, then redirect back to the login with the form data

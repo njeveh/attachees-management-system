@@ -18,12 +18,12 @@
                     <a href="#">View Profile</a>
                 </li>
                 <li>
-                    <a href="#">View Bio-data</a>
+                    <a href="{{ route('attachee.biodata') }}">Biodata</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('attachee.applications') }}">
                 <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>
                 <span>Applications</span>
             </a>
@@ -34,12 +34,6 @@
                 <span>Notifications</span>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-bookmark" style="width: 10%;"></i></span>
-                <span>Saved</span></a>
-        </li>
-
         <li>
             <a href="#">
                 <span class="icon"><i class="fas fa-star" style="width: 10%;"></i></span>

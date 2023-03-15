@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('first_name')->nullable(false);
             $table->string('second_name')->nullable(false);
             $table->string('institution')->nullable(false);
-            $table->string('year'); //the finacial/academic year they are attached
-            $table->unsignedTinyInteger('cohort'); //1,2,3,4
-            $table->foreignIdFor(Department::class)->nullable();
+            $table->string('year')->nullable(true); //the finacial/academic year they are attached
+            $table->unsignedTinyInteger('cohort')->nullable(true); //1,2,3,4
+            $table->foreignIdFor(Department::class)->nullable(true);
             /**
              * 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
             * 3=>accepted_offer, 4=>reported, 5=>terminated_before_completion, 6=>'completed'.

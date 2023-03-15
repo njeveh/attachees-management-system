@@ -16,19 +16,25 @@ class CreateUsersSeeder extends Seeder
         $users = [
             [
                'name'=>'ICT Department',
-               'email'=>'ict.departmets@jkuat.com',
+               'email'=>'ict.admin@jkuat.com',
                'type'=>3,
                'password'=> bcrypt('123456'),
             ],
             [
-               'name'=>'Dipca Admin',
-               'email'=>'dipca@jkuat.com',
-               'type'=> 2,
+               'name'=>'Finance Department',
+               'email'=>'finance.admin@jkuat.com',
+               'type'=>3,
                'password'=> bcrypt('123456'),
             ],
             [
-               'name'=>'Department Admin',
-               'email'=>'department.admin@jkuat.com',
+               'name'=>'Transport Department',
+               'email'=>'transport.admin@jkuat.com',
+               'type'=>3,
+               'password'=> bcrypt('123456'),
+            ],
+            [
+               'name'=>'Human Resource Department',
+               'email'=>'hr.admin@jkuat.com',
                'type'=>3,
                'password'=> bcrypt('123456'),
             ],
@@ -39,9 +45,9 @@ class CreateUsersSeeder extends Seeder
                'password'=> bcrypt('123456'),
             ],
             [
-               'name'=>'User',
-               'email'=>'user@jkuat.com',
-               'type'=>0,
+               'name'=>'Dipca Admin',
+               'email'=>'dipca@jkuat.com',
+               'type'=> 2,
                'password'=> bcrypt('123456'),
             ],
         ];

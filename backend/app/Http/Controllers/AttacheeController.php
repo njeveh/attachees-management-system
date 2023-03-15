@@ -70,10 +70,12 @@ class AttacheeController extends Controller
                     'first_name' => $request->first_name,
                     'second_name' => $request->second_name,
                     'institution' => $request->institution,
+                    'engagement_level' => 0,
                 ]);
         DB::commit();
                 event(new Registered($user));
             } catch (\Exception $e) {
+                Log::info($e);
                 DB::rollBack();
                         return back()->with(
             'error', 'Sorry!! Something went wrong.'
