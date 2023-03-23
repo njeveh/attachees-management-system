@@ -29,9 +29,10 @@
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('attachee.notifications') }}">
                 <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
                 <span>Notifications</span>
+                @livewire('attachee.notification-badge')
             </a>
         </li>
         <li>

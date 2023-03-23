@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot:title>
+        {{ auth()->user()->departmentAdmin->department->name }} Adverts
+    </x-slot:title>
     <div class="wrapper">
         <!-- Sidebar  -->
         <x-department-admin-side-nav-links />

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\Application;
 use App\Models\Attachee;
 use Illuminate\Http\Request;
@@ -91,4 +92,6 @@ class ApplicationController extends Controller
         $application = auth()->user()->attachee->applications->where('id', $id);
         return view('attachee.applications', ['application' => $application]);
     }
+
+
 }

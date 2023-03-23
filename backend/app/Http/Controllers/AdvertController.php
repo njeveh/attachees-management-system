@@ -136,6 +136,16 @@ class AdvertController extends Controller
     }
 
     /**
+     * get all department active and approved adverts to dispaly them on the department applications page
+     */
+    public function getDepartmentApplicableAdverts()
+    {
+        $adverts = auth()->user()->departmentAdmin->department->adverts->where('is_active', 1)
+        ->where('approval_status', 'approved');
+        return view('departments.applications', ['adverts' => $adverts]);
+    }
+
+    /**
      * Display all adverts to central services.
      */
     public function showCentralServicesAdvertsView(Request $request)

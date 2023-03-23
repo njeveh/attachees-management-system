@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attachee extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,11 +19,22 @@ class Attachee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id', 'national_id', 'first_name', 'second_name',
-        'institution', 'department_id', 'year', 'cohort',
-        'engagement_level',/** 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
-            * 3=>accepted_offer, 4=>reported, 5=>terminated_before_completion, 6=>'completed'.
-            */
+        'user_id',
+        'national_id',
+        'first_name',
+        'second_name',
+        'institution',
+        'department_id',
+        'year',
+        'cohort',
+        'position',
+        'engagement_level',
+        /**
+         * 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
+         * 3=>got_offer_but_offer_revoked 4=>got_and_accepted_offer, 5=>reported, 6=>terminated_before_completion, 7=>'completed'.
+         */
+        'date_terminated',
+        'date_started',
     ];
 
     /**
@@ -81,7 +93,7 @@ class Attachee extends Model
     {
         return $this->hasMany(AttacheeEmergencyContact::class);
     }
-    
+
     /**
      * get education levels associated with this attcahee
      */

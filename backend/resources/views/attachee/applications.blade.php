@@ -41,8 +41,8 @@
                                                     <span class="text-success">&nbsp Accepted</span>
                                                 @break
 
-                                                @case('cancelled')
-                                                    <span class="text-warning">&nbsp Cancelled</span>
+                                                @case('canceled')
+                                                    <span class="text-warning">&nbsp canceled</span>
                                                 @break
 
                                                 @default

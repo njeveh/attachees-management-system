@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,13 +16,14 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(Attachee::class)->nullable(false)
-            ->constrained()
-            ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
             $table->foreignIdFor(Advert::class)->nullable(true)
-            ->constrained()
-            ->nullOnDelete();
+                ->constrained()
+                ->nullOnDelete();
             $table->tinyInteger('quarter')->nullable(false); //1,2,3,4
-            $table->string('status')->nullable(false)->default('pending'); //pending, accepted, rejected or cancelled
+            $table->string('status')->nullable(false)->default('pending'); //pending, accepted, rejected or canceled
+            $table->timestamp('date_replied');
         });
     }
 

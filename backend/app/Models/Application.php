@@ -16,9 +16,13 @@ class Application extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachee_id', 'advert_id',
-        'status',//pending, rejected, accepted, cancelled
+        'attachee_id',
+        'advert_id',
+        'status',
+        //pending, rejected, accepted, canceled
         'quarter',
+        //path to file.
+        'date_replied',
     ];
 
     /**
@@ -40,7 +44,7 @@ class Application extends Model
     /**
      * get the applicant
      */
-    public function applicant(): BelongsTo
+    public function attachee(): BelongsTo
     {
         return $this->belongsTo(Attachee::class);
     }

@@ -9,7 +9,7 @@
                 <div class="page-title">
                     <h3>{{ $application->advert->title }}/Ref: {{ $application->advert->reference_number }}</h3>
                 </div>
-                @if ($application->status == 'cancelled')
+                @if ($application->status == 'canceled')
                     <div class="d-flex align-items-center justify-content-center">
                         <div class="toast show bg-warning">
                             <div class="toast-header bg-info">
@@ -17,7 +17,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
                             </div>
                             <div class="toast-body">
-                                You cancelled this application.
+                                You canceled this application.
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                                                 <span class="text-warning">Missing</span>
                                         @endswitch
                                     </td>
-                                    <td>Pending review</td>
+                                    <td>{{ $application_accompaniment->review_remarks }}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             @if ($application->status == 'pending')
@@ -118,8 +118,8 @@
                 </section>
                 @if ($application->status == 'pending')
                     <div class="d-flex justify-content-end align-items-center m-2">
-                        <button type="button" wire:click="warn('cancell')"
-                            class="btn btn-danger">{{ __('Cancell Application') }}</button>
+                        <button type="button" wire:click="warn('cancel')"
+                            class="btn btn-danger">{{ __('cancel Application') }}</button>
                     </div>
                 @endif
             </main>

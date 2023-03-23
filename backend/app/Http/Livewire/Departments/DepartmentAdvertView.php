@@ -9,8 +9,12 @@ use Livewire\Component;
 class DepartmentAdvertView extends Component
 {
 
-    protected $listeners = ['deleteAdvert' => 'deleteAdvert',
-'approveAdvert' => 'approveAdvert','activateAdvert' => 'activateAdvert', 'deactivateAdvert' => 'deactivateAdvert'];
+    protected $listeners = [
+        'deleteAdvert' => 'deleteAdvert',
+        'approveAdvert' => 'approveAdvert',
+        'activateAdvert' => 'activateAdvert',
+        'deactivateAdvert' => 'deactivateAdvert'
+    ];
     public $advert_id;
     public $feedback;
     public $alert_class;
@@ -29,11 +33,16 @@ class DepartmentAdvertView extends Component
         $gen_reqs = $advert->accompaniments->where('type', 'general_requirement');
         $prof_reqs = $advert->accompaniments->where('type', 'professional_requirement');
         $responsibilities = $advert->accompaniments->where('type', 'intern_responsibility');
-        return view('livewire.departments.department-advert-view', ['advert' => $advert, 'gen_reqs' => $gen_reqs,
-        'prof_reqs' => $prof_reqs, 'responsibilities' => $responsibilities,]);
+        return view('livewire.departments.department-advert-view', [
+            'advert' => $advert,
+            'gen_reqs' => $gen_reqs,
+            'prof_reqs' => $prof_reqs,
+            'responsibilities' => $responsibilities,
+        ]);
     }
-    public function warn($action){
-        switch ($action){
+    public function warn($action)
+    {
+        switch ($action) {
             case 'delete':
                 $this->feedback_header = 'Confirm Deletion';
                 $this->feedback = 'Are you sure you want to delete this advert? This action is irrevasible.';
@@ -63,18 +72,17 @@ class DepartmentAdvertView extends Component
     }
     public function deleteAdvert()
     {
-        try{
-            if (Advert::destroy($this->advert_id) > 0){
+        try {
+            if (Advert::destroy($this->advert_id) > 0) {
                 return redirect()->route('departments.view_adverts');
-            }
-            else{
+            } else {
                 $this->feedback_header = 'Error Deleting!!';
                 $this->feedback = 'Something went wrong. Advert delition Failed';
                 $this->alert_class = 'alert-danger';
                 $this->alert_type = 'feedback';
                 $this->dispatchBrowserEvent('advert_action_feedback');
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->feedback_header = 'Error Deleting!!';
             $this->feedback = 'Something went wrong. Advert delition Failed';
             $this->alert_class = 'alert-danger';
@@ -85,7 +93,7 @@ class DepartmentAdvertView extends Component
 
     public function activateAdvert()
     {
-        try{
+        try {
             $advert = Advert::find($this->advert_id);
             $advert->is_active = 1;
             $advert->save();
@@ -94,7 +102,7 @@ class DepartmentAdvertView extends Component
             $this->alert_class = 'alert-success';
             $this->alert_type = 'feedback';
             $this->dispatchBrowserEvent('advert_action_feedback');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             $this->feedback_header = 'Error Updating!!';
             $this->feedback = 'Advert activation Failed';
             $this->alert_class = 'alert-danger';
@@ -105,7 +113,7 @@ class DepartmentAdvertView extends Component
 
     public function deactivateAdvert()
     {
-        try{
+        try {
             $advert = Advert::find($this->advert_id);
             $advert->is_active = 0;
             $advert->save();
@@ -114,7 +122,7 @@ class DepartmentAdvertView extends Component
             $this->alert_class = 'alert-success';
             $this->alert_type = 'feedback';
             $this->dispatchBrowserEvent('advert_action_feedback');
-        }catch (\Exception $e){
+        } catch (Exception $e) {
             $this->feedback_header = 'Error Updating!!';
             $this->feedback = 'Advert deactivation Failed';
             $this->alert_class = 'alert-danger';

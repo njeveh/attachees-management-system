@@ -70,7 +70,7 @@
             {{-- Emergency Contacts --}}
             <div class="">
                 <h4>{{ __('Emergency Contacts') }}</h4>
-                <ol>
+                <ol class="input-group-list">
                     @foreach ($emergency_contacts as $key => $emergency_contact)
                         @if ($key > 0)
                             <li>
@@ -187,7 +187,7 @@
             {{-- Education --}}
             <div class="">
                 <h4>{{ __('Education') }}</h4>
-                <ol>
+                <ol class='input-group-list'>
                     @foreach ($education_levels as $key => $education_level)
                         @if ($key > 0)
                             <li>
@@ -292,7 +292,7 @@
             {{-- Skills --}}
             <div class="">
                 <h4>{{ __('Skills') }}</h4>
-                <ol>
+                <ol class='input-group-list'>
                     @foreach ($skills as $key => $skill)
                         @if ($key > 0)
                             <li>
@@ -317,7 +317,7 @@
                             <li>
                                 <div class="mb-2 form-group">
                                     <label for="skills_{{ $key }}_skill"
-                                        class="form-lable">{{ __('Skills') }}
+                                        class="form-lable">{{ __('Skill') }}
                                     </label>
                                     <input type="text" class="form-control mb-3"
                                         id="skills_{{ $key }}_skill"
@@ -342,7 +342,7 @@
             {{-- Referees --}}
             <div class="">
                 <h4>{{ __('Referees') }}</h4>
-                <ol>
+                <ol class='input-group-list'>
                     @foreach ($referees as $key => $referee)
                         @if ($key > 1)
                             <li>

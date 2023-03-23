@@ -27,7 +27,7 @@ p {
 }
 main {
   background-color: var(--bacground-gray);
-  position: relative;
+
 }
 /* ---------------------------------------------------
     SEARCHPAGE 
@@ -173,9 +173,6 @@ header {
   background-color: var(--background-white);
   width: 100%;
   overflow-y: scroll;
-}
-.home-page-buttons {
-  margin-top: 10px;
 }
 .job-posts {
   margin-top: 10px;
@@ -674,8 +671,8 @@ div.search-area {
     display: inline;
   }
   div.home-page-buttons {
-  margin-top: 70px;
-}
+    margin-top: 70px;
+  }
   #side-menu {
     margin-left: -250px;
   }
@@ -684,12 +681,19 @@ div.search-area {
   }
 
 * {
-  font-size: 15px;
-}
-#guest-nav h5 {
-  margin: 0;
-  font-size: 15px;
-}
+    font-size: 15px;
+  }
+  #guest-nav h5 {
+    margin: 0;
+    font-size: 15px;
+  }
+  div.sticky-btns {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    z-index: 10;
+    top: 110px;
+    background-color: white;
+  }
 }
 
 
@@ -702,16 +706,28 @@ div.search-area {
 #side-menu {
   min-width: 250px;
   max-width: 250px;
-  position: relative;
   transition: all 0.3s;
-  overflow: scroll;
 }
 
   #side-menu {
     margin-left: -250px;
+    
   }
   #side-menu.active {
     margin-left: 20px;
+
+
+  }
+
+  div.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 1;
+    top: 100px;
+
+  }
+  #side-menu-collapse-bnt-container {
+    position: relative;
   }
   #side-menu-collapse {
     position: absolute;
@@ -735,12 +751,6 @@ div.search-area {
   background-color: var(--primary-color);
 }
 
-/* .update-form {
-  display: none;
-}
-.update-form.active {
-  display: block;
-} */
 
 .update-form {
   transition: all 0.3s;
@@ -758,6 +768,41 @@ div.search-area {
   background-color: var(--primary-color) !important
 }
 
-/* input:focus {
-  outline: none;
-} */
+.input-group-list li {
+  padding: 10px;
+}
+.input-group-list li:nth-child(even) {
+  background-color: #f1f8ff;
+}
+
+.fixed-filters {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 10;
+  top: 70px;
+  background-color: white;
+}
+
+.sticky-btns {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 10;
+  top: 70px;
+  background-color: white;
+}
+
+.btns-hidden {
+  display: none;
+}
+
+.read-notification {
+  background-color: #cee0f3;
+}
+#sticky-btns-department-view-application-docs{
+    position: -webkit-sticky;
+  position: sticky;
+  z-index: 5;
+  top: 110px;
+  background-color: white;
+  margin: 0;
+}

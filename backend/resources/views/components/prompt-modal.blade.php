@@ -27,7 +27,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-bs-dismiss="modal"
-                        data-bs-target="#promptModal">Cancell</button>
+                        data-bs-target="#promptModal">cancel</button>
                     {{ $confirm_btn }}
                 </div>
             </div>

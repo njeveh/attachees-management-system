@@ -6,11 +6,14 @@ use App\Models\Advert;
 use App\Models\Department;
 use Livewire\Component;
 use App\Utilities\Utilities;
+use Livewire\WithPagination;
 
 class HomePage extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $search = '';
-    public $departmentId;
+    public $department;
     public $departments;
     public $department_objects;
     public $side_menu_class;
@@ -22,25 +25,25 @@ class HomePage extends Component
     {
         $this->department_objects = Department::all();
         $this->side_menu_class = '';
-        $this->next_year_quarter_data = Utilities::get_next_year_quarter_data();
-        
+        $this->next_year_quarter_data = Utilities::get_next_quarter_data();
+
     }
     public function render()
     {
         /**
          * whereLike is a query builder macro defined on /Providers/AppserviceProvider boot method
          * 
-        */
-        $adverts = Advert::whereLike(['title', 'description','reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
-                ->when($this->departmentId, function ($query, $departmentId) {
-                    return $query->where('department_id', $departmentId);
-                })
-                ->when($this->departments, function ($query, $departments) {
-                    return $query->orWhereIn('department_id', $departments);
-                })
-                ->where('approval_status', 'approved')->where('is_active', 1)
-                ->where('cohort'.$this->next_year_quarter_data['next_quarter'].'_vacancies', '>' ,0)
-                ->get();
+         */
+        $adverts = Advert::whereLike(['title', 'description', 'reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
+            // ->when($this->departmentId, function ($query, $departmentId) {
+            //     return $query->where('department_id', $departmentId);
+            // })
+            ->when($this->departments, function ($query, $departments) {
+                return $query->whereIn('department_id', $departments);
+            })
+            ->where('approval_status', 'approved')->where('is_active', 1)
+            ->where('cohort' . $this->next_year_quarter_data['quarter'] . '_vacancies', '>', 0)
+            ->paginate(2);
         return view('livewire.home-page', ['adverts' => $adverts, 'departments' => $this->department_objects]);
     }
 
@@ -51,19 +54,28 @@ class HomePage extends Component
 
     public function updatedDepartments()
     {
-        if (!is_array($this->departments)) return;
-            $this->departments = array_filter($this->departments, function ($department) {
+        if (!is_array($this->departments))
+            return;
+        $this->departments = array_filter($this->departments, function ($department) {
             return $department != false;
         });
     }
-    // public function updatedDepartmentId(){
-    //     array_push($this->departments, $this->departmentId);
-    // }
-    public function updatedSearchOne(){
+    public function updatedDepartment()
+    {
+        if ($this->department != 0) {
+            $this->departments[$this->department] = $this->department;
+        }
+        if ($this->department == 0) {
+            $this->resetDepartmentFilters();
+        }
+    }
+    public function updatedSearchOne()
+    {
         $this->reset('searchTwo');
         $this->search = $this->searchOne;
     }
-    public function updatedSearchTwo(){
+    public function updatedSearchTwo()
+    {
         $this->reset('searchOne');
         $this->search = $this->searchTwo;
     }
@@ -71,12 +83,19 @@ class HomePage extends Component
     {
         $this->reset('departments');
         $this->reset('search');
-        $this->reset('departmentId');
+        $this->reset('department');
     }
-    public function toggleClass(){
-        if ($this->side_menu_class == ''){
+
+    public function resetDepartmentFilters()
+    {
+        $this->reset('departments');
+        $this->reset('department');
+    }
+    public function toggleClass()
+    {
+        if ($this->side_menu_class == '') {
             $this->side_menu_class = 'active';
-        }else{
+        } else {
             $this->side_menu_class = '';
         }
     }

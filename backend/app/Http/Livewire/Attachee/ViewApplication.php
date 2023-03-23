@@ -28,14 +28,14 @@ class ViewApplication extends Component
     public $user;
     public $application_accompaniments;
 
-    protected $listeners = ['cancellApplication' => 'cancellApplication',];
+    protected $listeners = ['cancelApplication' => 'cancelApplication',];
 
     protected $rules = [
-                'application_letter' => 'file|mimes:pdf,jpg,jpeg,png',
-                'attachment_letter' => 'file|mimes:pdf,jpg,jpeg,png',
-                'insurance_cover' => 'file|mimes:pdf,jpg,jpeg,png',
-                'national_id_front' => 'file|mimes:pdf,jpg,jpeg,png,',
-                'national_id_back' => 'file|mimes:pdf,jpg,jpeg,png,',
+        'application_letter' => 'file|mimes:pdf,jpg,jpeg,png',
+        'attachment_letter' => 'file|mimes:pdf,jpg,jpeg,png',
+        'insurance_cover' => 'file|mimes:pdf,jpg,jpeg,png',
+        'national_id_front' => 'file|mimes:pdf,jpg,jpeg,png,',
+        'national_id_back' => 'file|mimes:pdf,jpg,jpeg,png,',
     ];
 
     public function mount($id)
@@ -45,38 +45,38 @@ class ViewApplication extends Component
     }
     public function render()
     {
-        return view('livewire.attachee.view-application', ['application' => $this->application,],);
+        return view('livewire.attachee.view-application', ['application' => $this->application,], );
     }
 
-    public function warn($action){
-        switch ($action){
-            case 'cancell':
-                $this->feedback_header = 'Confirm Cancellation';
-                $this->feedback = "Are you sure you want to cancell this application? By doing this you won't be considered for shortlisting.";
+    public function warn($action)
+    {
+        switch ($action) {
+            case 'cancel':
+                $this->feedback_header = 'Confirm Cancelation';
+                $this->feedback = "Are you sure you want to cancel this application? By doing this you won't be considered for shortlisting.";
                 $this->alert_class = 'alert-danger';
-                $this->confirmed_action = 'cancellApplication';
+                $this->confirmed_action = 'cancelApplication';
                 $this->alert_type = 'confirmation_prompt';
                 $this->dispatchBrowserEvent('action_confirm');
                 break;
 
-                //more actions will be added here
+            //more actions will be added here
 
         }
     }
 
-    public function cancellApplication()
+    public function cancelApplication()
     {
-        try{
-        $this->application->status = 'cancelled';
-        $this->application->save();
+        try {
+            $this->application->status = 'canceled';
+            $this->application->save();
 
-        $this->feedback_header = 'Application Cancellation Successful';
-        $this->feedback = "Your application has been successfully cancelled. You won't be considered for short listing in the applied post.";
-        $this->alert_class = 'alert-success';
-        $this->dispatchBrowserEvent('action_feedback');
-        }catch (\Exception $e)
-        {
-            $this->feedback_header = 'Cancellation failed';
+            $this->feedback_header = 'Application Cancelation Successful';
+            $this->feedback = "Your application has been successfully canceled. You won't be considered for short listing in the applied post.";
+            $this->alert_class = 'alert-success';
+            $this->dispatchBrowserEvent('action_feedback');
+        } catch (\Exception $e) {
+            $this->feedback_header = 'cancelation failed';
             $this->feedback = "Sorry, something went wrong. Please try again and if the error persists contact support team for assistance.";
             $this->alert_class = 'alert-danger';
             $this->dispatchBrowserEvent('action_feedback');
@@ -85,7 +85,7 @@ class ViewApplication extends Component
     public function update($field)
     {
 
-        switch ($field){
+        switch ($field) {
             case 'application_letter':
                 $to_be_updated = $this->application_letter;
                 break;
@@ -104,22 +104,29 @@ class ViewApplication extends Component
         }
         $this->validateOnly($field);
 
-            try{
-                    $to_be_updated->storePubliclyAs(
-                    'application_docs/'. preg_replace('/\s+/', '_',$this->application->advert->department->name).'/'.
-                    preg_replace('/\//', '_',$this->application->advert->year).'/'.preg_replace('/\s+/', '_',$this->application->advert->title).'/'.
-                    auth()->user()->attachee->national_id, $field, 'public');
-            } catch (\Exception $e) {
-                $this->feedback_header = 'Error Updating Document!!';
-                $this->feedback = 'Something went wrong while updating the document. Please try again and if the error persists contact support team to resolve the issue';
-                $this->alert_class = 'alert-danger';
-                $this->dispatchBrowserEvent('action_feedback');
-                return;
-            }
-            
-            $this->feedback_header = 'success!!';
-            $this->feedback = "Document has been updated successfully";
-            $this->alert_class = 'alert-success';
+        try {
+            $to_be_updated->storePubliclyAs(
+                preg_replace('/\s+/', '_', $this->application->advert->department->name) . '/' . 'application_docs/' .
+                preg_replace('/\//', '_', $this->application->advert->year) . '/' . 'quarter_' . $this->application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->title) . '/' .
+                auth()->user()->attachee->national_id,
+                $field,
+                'public'
+            );
+            $target = $this->application_accompaniments->where('name', $field)->first();
+            $target->status = 'pending_review';
+            $target->save();
+        } catch (\Exception $e) {
+            //Log::info($e);
+            $this->feedback_header = 'Error Updating Document!!';
+            $this->feedback = 'Something went wrong while updating the document. Please try again and if the error persists contact support team to resolve the issue';
+            $this->alert_class = 'alert-danger';
             $this->dispatchBrowserEvent('action_feedback');
-}
+            return;
+        }
+
+        $this->feedback_header = 'success!!';
+        $this->feedback = "Document has been updated successfully";
+        $this->alert_class = 'alert-success';
+        $this->dispatchBrowserEvent('action_feedback');
+    }
 }

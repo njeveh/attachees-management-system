@@ -48,6 +48,9 @@
                             </form>
                         </div>
                     </li>
+                    <script>
+                        window.userID = {{ auth()->user()->id }};
+                    </script>
                 @endguest
             </ul>
         </div>

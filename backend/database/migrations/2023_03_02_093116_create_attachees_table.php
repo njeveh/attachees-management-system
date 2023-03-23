@@ -6,8 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -17,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignIdFor(User::class)->nullable(false)
-            ->constrained()->cascadeOnDelete();
+                ->constrained()->cascadeOnDelete();
             $table->string('national_id')->nullable(false);
             $table->string('first_name')->nullable(false);
             $table->string('second_name')->nullable(false);
@@ -27,9 +26,13 @@ return new class extends Migration
             $table->foreignIdFor(Department::class)->nullable(true);
             /**
              * 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
-            * 3=>accepted_offer, 4=>reported, 5=>terminated_before_completion, 6=>'completed'.
-            */
+             * 3=>got_offer_but_offer_revoked 4=>got_and_accepted_offer, 5=>reported, 6=>terminated_before_completion, 7=>'completed'.
+             */
             $table->smallInteger('engagement_level')->nullable(false)->default(0);
+            $table->string('position')->nullable();
+            $table->timestamp('date_started')->nullable();
+            $table->timestamp('date_terminated')->nullable();
+            $table->timestamp('termination_reason')->nullable();
         });
     }
 
