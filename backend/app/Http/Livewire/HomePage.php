@@ -35,9 +35,9 @@ class HomePage extends Component
          * 
          */
         $adverts = Advert::whereLike(['title', 'description', 'reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
-            // ->when($this->departmentId, function ($query, $departmentId) {
-            //     return $query->where('department_id', $departmentId);
-            // })
+            ->when($this->department, function ($query, $department) {
+                return $query->where('department_id', $department);
+            })
             ->when($this->departments, function ($query, $departments) {
                 return $query->whereIn('department_id', $departments);
             })
@@ -59,15 +59,11 @@ class HomePage extends Component
         $this->departments = array_filter($this->departments, function ($department) {
             return $department != false;
         });
+        $this->reset('department');
     }
     public function updatedDepartment()
     {
-        if ($this->department != 0) {
-            $this->departments[$this->department] = $this->department;
-        }
-        if ($this->department == 0) {
-            $this->resetDepartmentFilters();
-        }
+        $this->reset('departments');
     }
     public function updatedSearchOne()
     {
@@ -86,11 +82,11 @@ class HomePage extends Component
         $this->reset('department');
     }
 
-    public function resetDepartmentFilters()
-    {
-        $this->reset('departments');
-        $this->reset('department');
-    }
+    // public function resetDepartmentFilters()
+    // {
+    //     $this->reset('departments');
+    //     $this->reset('department');
+    // }
     public function toggleClass()
     {
         if ($this->side_menu_class == '') {

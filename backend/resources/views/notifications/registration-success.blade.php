@@ -11,7 +11,8 @@
                             {{ __('< Home') }}</a>
                     </div>
                     <div class="d-flex justify-content-center align-content-center">
-                        <img src="/assets/static/logo.png" alt="logo" style="width:130px; height:130px;">
+                        <a href="welcome.page"><img src="/assets/static/logo.png" alt="logo"
+                                style="width:130px; height:130px;"></a>
                     </div>
                 </div>
                 <div class="card-body">

@@ -35,8 +35,8 @@ class AttacheeDismissal extends Component
         $attachees = $this->department->attachees;
         if ($attachees->count()) {
             $attachees = Attachee::whereIn('id', $attachees->modelkeys())
-                ->whereLike(['first_name', 'second_name', 'cohort', 'year', 'national_id', 'position', 'institution'], $this->search ?? '')
-                ->where('engagement_level', 5)
+                ->whereLike(['applicant.first_name', 'applicant.second_name', 'cohort', 'year', 'applicant.national_id', 'position',], $this->search ?? '')
+                ->where('status', 'active')
                 ->get();
         }
         return view('livewire.departments.attachee-dismissal', ['attachees' => $attachees]);
@@ -60,12 +60,12 @@ class AttacheeDismissal extends Component
     public function dismiss($id)
     {
         $this->validate();
-        $engagement_level = $this->termination_reason === 'completed' ? 7 : 6;
+        $status = $this->termination_reason === 'completed' ? 'completed' : 'terminated_before_completion';
         try {
             Attachee::find($id)->update([
                 'date_terminated' => \Carbon\Carbon::now(),
                 'termination_reason' => $this->termination_reason,
-                'engagement_level' => $engagement_level,
+                'status' => $status,
             ]);
             $this->termination_reason = '';
         } catch (\Exception $e) {

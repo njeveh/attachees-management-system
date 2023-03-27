@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advert;
+use App\Models\Applicant;
 use App\Models\Application;
 use App\Models\Attachee;
 use Illuminate\Http\Request;
@@ -22,16 +23,19 @@ class ApplicationController extends Controller
      */
     public function create($id)
     {
-        $attachee = Attachee::where('user_id', auth()->user()->id)->first();
-        if(Application::where('advert_id', $id)->where('attachee_id', $attachee->id)->exists())
-        {
-            $application = Application::where('advert_id', $id)->where('attachee_id', $attachee->id)->first();
+        $applicant = Applicant::where('user_id', auth()->user()->id)->first();
+        if (Application::where('advert_id', $id)->where('applicant_id', $applicant->id)->exists()) {
+            $application = Application::where('advert_id', $id)->where('applicant_id', $applicant->id)->first();
             $application_id = $application->id;
-            return view('attachee.feedback', ['header' => 'Request Denied!!', 'message' => "You can't apply to this post more than once",
-            'link' => '/attachee/my-applications/'.$application_id.'/view-application/', 'link_text' => 'view my application',
-            'alert_class' => 'alert-danger']);
-        }else{
-       return view('attachee.apply', ['advert_id' => $id]);
+            return view('attachee.feedback', [
+                'header' => 'Request Denied!!',
+                'message' => "You can't apply to this post more than once",
+                'link' => '/attachee/my-applications/' . $application_id . '/view-application/',
+                'link_text' => 'view my application',
+                'alert_class' => 'alert-danger'
+            ]);
+        } else {
+            return view('attachee.apply', ['advert_id' => $id]);
         }
     }
 
@@ -80,7 +84,7 @@ class ApplicationController extends Controller
      */
     public function getAttacheeapplications()
     {
-        $applications = auth()->user()->attachee->applications;
+        $applications = auth()->user()->applicant->applications;
         return view('attachee.applications', ['applications' => $applications]);
     }
 
@@ -89,7 +93,7 @@ class ApplicationController extends Controller
      */
     public function getAttacheeapplication($id)
     {
-        $application = auth()->user()->attachee->applications->where('id', $id);
+        $application = auth()->user()->applicant->applications->where('id', $id);
         return view('attachee.applications', ['application' => $application]);
     }
 

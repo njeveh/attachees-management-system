@@ -24,7 +24,7 @@
                     </div>
                     {{-- Applications table --}}
                     <section class="overflow-auto">
-                        <table class="table table-hover tabls-responsive-sm mb-5">
+                        <table class="table table-hover table-responsive-sm mb-5">
                             <thead>
                                 <tr class="bg-dark text-light">
                                     <th scope="col">No.</th>
@@ -42,10 +42,10 @@
                                     @foreach ($applications as $application)
                                         <tr>
                                             <th scope="row">{{ $i }}</th>
-                                            <td>{{ $application->attachee->national_id }}</td>
+                                            <td class="align-middle">{{ $application->applicant->national_id }}</td>
                                             <td class="align-middle">
-                                                {{ $application->attachee->first_name }}
-                                                {{ $application->attachee->second_name }}</th>
+                                                {{ $application->applicant->first_name }}
+                                                {{ $application->applicant->second_name }}</th>
                                             <td class="align-middle">
                                                 {{ $application->advert->title }}
 
@@ -53,7 +53,7 @@
 
                                             <td>
                                                 <button class="btn btn-success"
-                                                    wire:click='report({{ $application->id }})'>Report</button>
+                                                    wire:click="report('{{ $application->id }}')">Report</button>
                                             </td>
                                         </tr>
                                         @php

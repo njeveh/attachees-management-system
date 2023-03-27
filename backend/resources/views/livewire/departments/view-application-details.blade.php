@@ -104,8 +104,8 @@
                     </h3>
                 </div>
                 <div class="page-title">
-                    <h3>Applicant's Name: {{ $application->attachee->first_name }}
-                        {{ $application->attachee->second_name }}</h3>
+                    <h3>Applicant's Name: {{ $application->applicant->first_name }}
+                        {{ $application->applicant->second_name }}</h3>
                 </div>
                 <section class="">
                     <table class="table">

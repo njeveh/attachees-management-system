@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Departments;
 
 use App\Models\Application;
+use App\Models\Attachee;
 use App\Utilities\Utilities;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class AttacheeReporting extends Component
@@ -37,14 +39,14 @@ class AttacheeReporting extends Component
         $applications = $this->department->applications;
         if ($applications->count()) {
             $applications = Application::whereIn('id', $applications->modelkeys())
-                ->whereLike(['attachee.first_name', 'attachee.second_name', 'advert.title', 'attachee.national_id', 'attachee.institution'], $this->search ?? '')
-                ->where('quarter', $this->quarter['quarter'] + 1)
+                ->whereLike(['applicant.first_name', 'applicant.second_name', 'advert.title', 'applicant.national_id', 'applicant.institution'], $this->search ?? '')
+                ->where('quarter', $this->quarter['quarter'])
                 ->where('status', 'accepted')->get();
             if ($applications->count()) {
                 $applications = $applications->filter(function ($application) {
                     return $application->applicationAccompaniments->doesntContain('status', '!==', 'accepted') &&
                         $application->applicationAccompaniments->contains('name', 'offer_acceptance_form')
-                        && $application->attachee->engagement_level == 4;
+                        && $application->applicant->engagement_level == 4;
                 });
             }
         }
@@ -53,17 +55,31 @@ class AttacheeReporting extends Component
 
     public function report($id)
     {
+        $applicant = Application::find($id)->applicant;
+        if ($applicant->has('attachee')) {
+            $this->feedback_header = 'Error reporting attachee!!';
+            $this->feedback = 'This applicant has already reported for another position.';
+            $this->alert_class = 'alert-danger';
+            $this->dispatchBrowserEvent('action_feedback');
+        }
+        DB::beginTransaction();
         try {
             $position = Application::find($id)->advert->title;
-            Application::find($id)->attachee->update([
-                'date_started' => \Carbon\Carbon::now(),
-                'engagement_level' => 5,
+            Attachee::create([
+                'applicant_id' => $applicant->id,
                 'department_id' => $this->department->id,
                 'year' => $this->year,
                 'cohort' => $this->quarter['quarter'],
                 'position' => $position,
+                'date_started' => \Carbon\Carbon::now(),
+                'status' => 'active',
             ]);
+            Application::find($id)->applicant->update([
+                'engagement_level' => 5,
+            ]);
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollBack();
             $this->feedback_header = 'Error reporting attachee!!';
             $this->feedback = 'Something went wrong. Please try again and if the error persists contact support team to resolve the issue';
             $this->alert_class = 'alert-danger';

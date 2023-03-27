@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Advert extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -18,10 +19,22 @@ class Advert extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'department_id', 'title', 'reference_number', 'author', 'last_updated_by',
-        'last_approval_action_done_by', 'last_activation_action_done_by',
-        'description', 'year', 'cohort1_vacancies',
-        'cohort2_vacancies', 'cohort3_vacancies', 'cohort4_vacancies', 'how_to_apply', 'approval_status', //pending_approval || approved || disapproved
+        'department_id',
+        'title',
+        'reference_number',
+        'author',
+        'last_updated_by',
+        'last_approval_action_done_by',
+        'last_activation_action_done_by',
+        'description',
+        'year',
+        'cohort1_vacancies',
+        'cohort2_vacancies',
+        'cohort3_vacancies',
+        'cohort4_vacancies',
+        'how_to_apply',
+        'approval_status',
+        //pending_approval || approved || disapproved
         'is_active' // 0 || 1
     ];
 
@@ -60,6 +73,14 @@ class Advert extends Model
      */
     public function applicants(): HasManyThrough
     {
-        return $this->hasManyThrough(Attachee::class, Application::class);
+        return $this->hasManyThrough(Applicant::class, Application::class);
+    }
+
+    /**
+     * get the applicants to this advert
+     */
+    public function attachees(): HasMany
+    {
+        return $this->hasMany(Attachee::class);
     }
 }

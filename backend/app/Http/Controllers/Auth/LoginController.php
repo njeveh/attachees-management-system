@@ -41,33 +41,32 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {   
+    {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
         if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
             if (auth()->user()->type == 'department_admin') {
                 return redirect()->intended('/departments/home');
-            }else if (auth()->user()->type == 'attachee') {
+            } else if (auth()->user()->type == 'attachee') {
                 return redirect()->intended('/attachee/home');
-            }else if (auth()->user()->type == 'dipca_admin') {
+            } else if (auth()->user()->type == 'dipca_admin') {
                 return redirect()->intended('/dipca/home');
-            }else if (auth()->user()->type == 'central_services_admin') {
+            } else if (auth()->user()->type == 'central_services_admin') {
                 return redirect()->intended('/central-services/home');
-            }else{
+            } else {
                 return redirect()->intended(route('home'));
             }
-        }else{
-             // if unsuccessful, then redirect back to the login with the form data
-        return back()->with(
-            'error', 'The provided credentials do not match our records.'
-        )->onlyInput('email');
-            // return redirect()->route('login')
-            //     ->with('error','Email-Address or Password is Wrong.');
+        } else {
+            // if unsuccessful, then redirect back to the login with the form data
+            return back()->with(
+                'error',
+                'The provided credentials do not match our records.'
+            )->onlyInput('email');
         }
-          
+
     }
 }

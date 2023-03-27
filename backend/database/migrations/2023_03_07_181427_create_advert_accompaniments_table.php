@@ -12,9 +12,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('advert_accompaniments', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->timestamps();
-            $table->foreignIdFor(Advert::class)->nullable(false)
+            $table->foreignUuid('advert_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
             $table->string('value')->nullable(false)->fulltext('value');
             $table->string('type')->nullable(false); //general_requirement || professional_requirement || intern_responsibility.

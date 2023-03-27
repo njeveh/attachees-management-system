@@ -40,8 +40,6 @@
                          <h5>Description : </h5>
                          <div class="advert-view">
                              <div>{{ $advert->description }}</div>
-                             <h5>Requirements</h5>
-                             {{ $advert->description }}
                              @if (count($gen_reqs) > 0)
                                  <h5>General Requirements</h5>
                                  <ul>

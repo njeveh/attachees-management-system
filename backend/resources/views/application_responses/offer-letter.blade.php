@@ -88,7 +88,7 @@
             </div>
             <section id="letter-body">
                 <div>
-                    <h4 id="salutation">Dear {{ $application->attachee->first_name }},</h4>
+                    <h4 id="salutation">Dear {{ $application->applicant->first_name }},</h4>
                     <div id="main-body">
                         JKUAT {{ $application->advert->department->name }} is delighted to offer you the attachment
                         position of {{ $application->advert->title }}

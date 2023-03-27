@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class AttacheeBiodata extends Model
+class ApplicantBiodata extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +17,12 @@ class AttacheeBiodata extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachee_id', 'date_of_birth', 'address',
-        'phone_number', 'disability', 'professional_summary',
+        'applicant_id',
+        'date_of_birth',
+        'address',
+        'phone_number',
+        'disability',
+        'professional_summary',
     ];
 
     /**
@@ -32,8 +37,8 @@ class AttacheeBiodata extends Model
     /**
      * get the attachee associated with this bio data
      */
-    public function attachee(): BelongsTo
+    public function applicant(): BelongsTo
     {
-        return $this->belongsTo(Attachee::class);
+        return $this->belongsTo(Applicant::class);
     }
 }

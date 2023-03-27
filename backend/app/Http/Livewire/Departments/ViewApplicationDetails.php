@@ -103,8 +103,10 @@ class ViewApplicationDetails extends AdvertApplications
 
                         ]);
                     if ($this->intended_status === 'accepted') {
-                        $this->application->attachee->engagement_level = 4;
-                        $this->application->attachee->save();
+                        if ($this->application->applicant->engagement_level < 4) {
+                            $this->application->applicant->engagement_level = 4;
+                            $this->application->applicant->save();
+                        }
                     }
                     break;
             }

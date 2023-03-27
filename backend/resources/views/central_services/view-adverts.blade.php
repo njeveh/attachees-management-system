@@ -36,8 +36,8 @@
                                             <td>{{ date_format($pending_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Pending</td>
                                             <td><a
-                                                    class="btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $pending_advert->id }}">View
-                                                    Advert</a></td>
+                                                    class="btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $pending_advert->id }}">View</a>
+                                            </td>
                                         </tr>
                                     @endforeach
 
@@ -70,8 +70,7 @@
                                             <td>{{ date_format($approved_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Approved</td>
                                             <td><a
-                                                    class=" btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $approved_advert->id }}">View
-                                                    Advert</a>
+                                                    class=" btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $approved_advert->id }}">View</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -105,8 +104,8 @@
                                             <td>{{ date_format($disapproved_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Disapproved</td>
                                             <td><a
-                                                    class="btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $disapproved_advert->id }}">View
-                                                    Advert</a></td>
+                                                    class="btn btn-primary action-button"href="{{ '/central-services/view-advert/' . $disapproved_advert->id }}">View</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

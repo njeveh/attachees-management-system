@@ -1,22 +1,20 @@
 <?php
 
-use App\Models\Department;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('adverts', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->timestamps();
-            $table->foreignIdFor(Department::class)->nullable(false)
-            ->constrained()->cascadeOnDelete();
+            $table->foreignUuid('department_id')->nullable(false)
+                ->constrained()->cascadeOnDelete();
             $table->string('reference_number')->nullable(false)->default('JKUAT#ANoNyMoUs');
             $table->string('title')->nullable(false)->fulltext('title');
             $table->text('description')->fulltext('description');

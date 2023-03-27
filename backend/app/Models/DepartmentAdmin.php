@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 
 class DepartmentAdmin extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
 
 
     protected $fillable = [
         'user_id',
         'department_id',
+        'staff_id',
         'first_name',
         'last_name',
         'phone_number',

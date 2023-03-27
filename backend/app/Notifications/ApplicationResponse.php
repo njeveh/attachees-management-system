@@ -70,31 +70,31 @@ class ApplicationResponse extends Notification implements ShouldQueue
     }
 
 
-    /**
-     * Get the broadcastable representation of the notification.
-     */
-    public function toBroadcast(object $notifiable): BroadcastMessage
-    {
-        return new BroadcastMessage([
-            'from' => $this->application->advert->department->name,
-            'date' => $this->application->date_replied,
-            'title' => 'Application Response',
-            'application_id' => $this->application->id,
-            'message' => $this->message,
-            'revocation_reasons' => $this->revocation_reasons,
-            'links' => [
-                'response_letter' => $this->revocation_reasons == null ? env('APP_URL') . '/attachee/application-response-letter/' . $this->application->id : env('APP_URL') . '/attachee/application-response-letter/',
-                'offer_acceptance_form' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form/' . $this->application->id : null,
-                'offer_acceptance_form_upload_link' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form-upload/' . $this->application->id : null,
-            ],
-        ]);
-    }
+/**
+ * Get the broadcastable representation of the notification.
+ */
+// public function toBroadcast(object $notifiable): BroadcastMessage
+// {
+//     return new BroadcastMessage([
+//         'from' => $this->application->advert->department->name,
+//         'date' => $this->application->date_replied,
+//         'title' => 'Application Response',
+//         'application_id' => $this->application->id,
+//         'message' => $this->message,
+//         'revocation_reasons' => $this->revocation_reasons,
+//         'links' => [
+//             'response_letter' => $this->revocation_reasons == null ? env('APP_URL') . '/attachee/application-response-letter/' . $this->application->id : env('APP_URL') . '/attachee/application-response-letter/',
+//             'offer_acceptance_form' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form/' . $this->application->id : null,
+//             'offer_acceptance_form_upload_link' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form-upload/' . $this->application->id : null,
+//         ],
+//     ]);
+// }
 
-    /**
-     * The channels the user receives notification broadcasts on.
-     */
-    public function receivesBroadcastNotificationsOn(): string
-    {
-        return 'users.' . $this->application->attachee->user_id;
-    }
+/**
+ * The channels the user receives notification broadcasts on.
+ */
+// public function receivesBroadcastNotificationsOn(): string
+// {
+//     return 'users.' . $this->application->applicant->user_id;
+// }
 }

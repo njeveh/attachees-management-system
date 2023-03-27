@@ -806,3 +806,119 @@ div.search-area {
   background-color: white;
   margin: 0;
 }
+
+
+  div.advert-iso-logo-container {
+      position: relative;
+      width: 90%;
+      margin: auto;
+      height: 80px;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+  }
+
+  div.advert-iso-logo-container #advert-left-iso-image {
+      position: absolute;
+      top: -45px;
+      left: 0px;
+      width: 80px;
+  }
+
+  div.advert-iso-logo-container #advert-right-iso-image {
+      position: absolute;
+      top: -45px;
+      right: 0px;
+      width: 80px;
+  }
+
+  .advert-footer-div {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  /*Central Services Home*/
+.welcome-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  height: 25vh;
+  width: 100%;
+  background-image: url("../../public/assets/static/shapelined-_JBKdviweXI-unsplash.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 20% 0%;
+}
+
+.welcome-banner p {
+  margin-bottom: 0;
+  color: var(--font-dark);
+  font-size: 1.2em;
+  font-weight: 400;
+}
+.welcome-banner h2 {
+  font-size: 2.8em;
+
+  font-weight: bolder;
+}
+.notifications-display {
+  padding-left: 20px;
+}
+/* Statistics */
+.page-title {
+  margin: 0px 0px 20px 0px;
+}
+.statistics-section .statistics-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.statistics-details .graph-summary {
+  position: relative;
+  flex: 1.5;
+  min-height: 35vh;
+  border-radius: 4px;
+  margin-right: 15px;
+  padding: 10px 20px 10px 20px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+.statistics-details .summary-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.summary-cards div {
+  height: 15vh;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  margin-bottom: 15px;
+}
+.summary-cards .summary-card-title {
+  color: var(--font-white);
+  margin-bottom: 0;
+  font-weight: bold;
+}
+.summary-cards .summary-number {
+  color: var(--font-white);
+  margin-bottom: 0;
+  font-weight: 700;
+  font-size: 1.7rem;
+  padding-left: 5px;
+}
+.summary-cards .pending-approvals {
+  background-color: #7dc6f8;
+}
+.summary-cards .ongoing {
+  background-color: #fc908d;
+}

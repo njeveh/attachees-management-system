@@ -59,7 +59,7 @@ class AdvertApplications extends Component
     }
     public function render()
     {
-        $applications = Application::where('advert_id', $this->advert->id)->whereLike(['attachee.first_name', 'attachee.second_name', 'quarter', 'advert.year', 'status',], $this->search ?? '')
+        $applications = Application::where('advert_id', $this->advert->id)->whereLike(['applicant.first_name', 'applicant.second_name', 'quarter', 'advert.year', 'status',], $this->search ?? '')
             ->when($this->tab_filter == 'active', function ($query) {
                 return $query->whereIn('quarter', [$this->next_quarter, $this->next_quarter - 1]);
             })
@@ -192,11 +192,13 @@ class AdvertApplications extends Component
                     'date_replied' => \Carbon\Carbon::now(),
                 ]
             );
-            $attachee = $application->attachee;
-            $attachee->engagement_level = 2;
-            $attachee->save();
+            $applicant = $application->applicant;
+            if ($applicant->engagement_level < 2) {
+                $applicant->engagement_level = 2;
+                $applicant->save();
+            }
             $application->refresh();
-            $message = 'Dear ' . $attachee->first_name . ', your application has been successfully Processed. Please follow the link below to get your response letter.';
+            $message = 'Dear ' . $applicant->first_name . ', your application has been successfully Processed. Please follow the link below to get your response letter.';
             ApplicationReplied::dispatch($application, $message);
         } catch (\Exception $e) {
             $this->feedback_header = 'Error performing requested action!!';
@@ -223,11 +225,13 @@ class AdvertApplications extends Component
                     'date_replied' => \Carbon\Carbon::now(),
                 ]
             );
-            $attachee = $application->attachee;
-            $attachee->engagement_level = 2;
-            $attachee->save();
+            $applicant = $application->applicant;
+            if ($applicant->engagement_level < 2) {
+                $applicant->engagement_level = 2;
+                $applicant->save();
+            }
             $application->refresh();
-            $message = 'Congratulations ' . $attachee->first_name . ', your application has been successfully Processed. Please follow the links below to get your response letter and offer acceptance form.
+            $message = 'Congratulations ' . $applicant->first_name . ', your application has been successfully Processed. Please follow the links below to get your response letter and offer acceptance form.
             You are expected to fill the acceptance form and upload a scanned copy of it on the upload link provided below ';
             ApplicationReplied::dispatch($application, $message);
         } catch (\Exception $e) {
@@ -257,9 +261,11 @@ class AdvertApplications extends Component
                 ]
             );
             $application->refresh();
-            $application->attachee->engagement_level = 3;
-            $application->attachee->save();
-            $message = 'Dear ' . $application->attachee->first_name . ', Due to reasons detailed in the letter accessible via the link below, your application acceptance for the post (' . $application->advert->title . ') has been revoked.
+            if ($application->applicant->engagement_level < 3) {
+                $application->applicant->engagement_level = 3;
+                $application->applicant->save();
+            }
+            $message = 'Dear ' . $application->applicant->first_name . ', Due to reasons detailed in the letter accessible via the link below, your application acceptance for the post (' . $application->advert->title . ') has been revoked.
             You may contact us for more information.';
             ApplicationReplied::dispatch($application, $message, $this->revocation_reasons);
         } catch (\Exception $e) {

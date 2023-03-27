@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Advert;
-use App\Models\Attachee;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,17 +11,15 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('applications', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->timestamps();
-            $table->foreignIdFor(Attachee::class)->nullable(false)
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->foreignIdFor(Advert::class)->nullable(true)
-                ->constrained()
-                ->nullOnDelete();
+            $table->foreignUuid('applicant_id')->nullable(false)
+                ->constrained()->cascadeOnDelete();
+            $table->foreignUuid('advert_id')->nullable(true)
+                ->constrained()->nullOnDelete();
             $table->tinyInteger('quarter')->nullable(false); //1,2,3,4
             $table->string('status')->nullable(false)->default('pending'); //pending, accepted, rejected or canceled
-            $table->timestamp('date_replied');
+            $table->timestamp('date_replied')->nullable();
         });
     }
 

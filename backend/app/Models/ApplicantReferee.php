@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttacheeSkill extends Model
+class ApplicantReferee extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,13 @@ class AttacheeSkill extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachee_id', 'skill',
+        'applicant_id',
+        'name',
+        'relationship',
+        'phone_number',
+        'email',
+        'institution',
+        'position_in_the_institution',
     ];
 
     /**
@@ -29,7 +35,7 @@ class AttacheeSkill extends Model
     ];
 
     /**
-     * get the attachee associated with this skill
+     * get the attachee associated with this referee
      */
     public function attachee(): BelongsTo
     {

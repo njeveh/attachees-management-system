@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttacheeEmergencyContact extends Model
+class ApplicantEducationLevel extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachee_id', 'name', 'relationship',
-        'phone_number',
+        'applicant_id',
+        'education_level',
+        'start_date',
+        'end_date',
     ];
 
     /**
@@ -30,7 +32,7 @@ class AttacheeEmergencyContact extends Model
     ];
 
     /**
-     * get the attachee associated with this contact
+     * get the attachee associated with this education level
      */
     public function attachee(): BelongsTo
     {

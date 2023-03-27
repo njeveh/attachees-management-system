@@ -9,7 +9,9 @@
                     </div>
                     <div
                         style="display: flex; width:100%; justify-content:center; align-items:center; margin-top:-20px 0 10px 0">
-                        <img src="/assets/static/logo.png" alt="logo" style="width:130px; height:130px;">
+                        <a href="{{ route('welcome.page') }}">
+                            <img src="/assets/static/logo.png" alt="logo" style="width:130px; height:130px;">
+                        </a>
                     </div>
                     @if (session('error'))
                         <div class="alert alert-danger py-1" role="alert">
@@ -61,7 +63,7 @@
                 </div>
                 <div class="panel panel-footer text-center">
                     <small>Don't have an account? <a
-                            href="{{ route('attachee.registration') }}">{{ __('Register') }}</a>
+                            href="{{ route('applicant.registration') }}">{{ __('Register') }}</a>
                     </small>
                 </div>
             </div>

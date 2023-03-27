@@ -24,6 +24,6 @@ class SendApplicationResponseNotification implements ShouldQueue
      */
     public function handle(object $event): void
     {
-        $event->application->attachee->user->notify(new ApplicationResponse($event->application, $event->message, $event->revocation_reasons));
+        $event->application->applicant->user->notify(new ApplicationResponse($event->application, $event->message, $event->revocation_reasons));
     }
 }

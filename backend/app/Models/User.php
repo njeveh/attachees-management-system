@@ -4,16 +4,18 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
+        'is_active',
     ];
 
     /**
@@ -55,15 +58,12 @@ class User extends Authenticatable
     protected function type(): Attribute
     {
         return new Attribute(
-            get: fn ($value) =>  ["user", "attachee", "dipca_admin", "department_admin", "central_services_admin"][$value],
-        );
-    }
-    /**
-     * get the attachee associated with this user if any
-     */
-    public function attachee(): HasOne
-    {
-        return $this->hasOne(Attachee::class);
+            get: fn($value) => ["user", "attachee", "dipca_admin", "department_admin", "central_services_admin"][$value],
+        ); } /**
+           * get the attachee associated with this user if any
+           */
+    public function applicant(): HasOne {
+        return $this->hasOne(Applicant::class);
     }
 
     /**

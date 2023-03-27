@@ -8,10 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+
 
 class Attachee extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -19,21 +21,16 @@ class Attachee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'national_id',
-        'first_name',
-        'second_name',
-        'institution',
+        'applicant_id',
         'department_id',
         'year',
         'cohort',
         'position',
-        'engagement_level',
-        /**
-         * 0=>has_made_no_application, 1=>has_made_application, 2=>got_response,
-         * 3=>got_offer_but_offer_revoked 4=>got_and_accepted_offer, 5=>reported, 6=>terminated_before_completion, 7=>'completed'.
-         */
+        'advert_id',
+        'status',
+        //active, terminated_before_completion, 'completed'.
         'date_terminated',
+        'termination_reason',
         'date_started',
     ];
 
@@ -47,11 +44,19 @@ class Attachee extends Model
     ];
 
     /**
-     * get the user associated with this attachee
+     * get the applicant associated with this attachee
      */
-    public function user(): BelongsTo
+    public function applicant(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Applicant::class);
+    }
+
+    /**
+     * get the advert associated with this attachee position
+     */
+    public function advert(): BelongsTo
+    {
+        return $this->belongsTo(Advert::class);
     }
 
     /**
@@ -60,53 +65,5 @@ class Attachee extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
-    }
-
-    /**
-     * get applications associated with this attcahee
-     */
-    public function applications(): HasMany
-    {
-        return $this->hasMany(Application::class);
-    }
-
-    /**
-     * get biodata associated with this attcahee
-     */
-    public function attacheeBiodata(): HasOne
-    {
-        return $this->hasOne(AttacheeBiodata::class);
-    }
-
-    /**
-     * get skills associated with this attcahee
-     */
-    public function attacheeSkills(): HasMany
-    {
-        return $this->hasMany(AttacheeSkill::class);
-    }
-
-    /**
-     * get emergency contacts associated with this attcahee
-     */
-    public function attacheeEmergencyContacts(): HasMany
-    {
-        return $this->hasMany(AttacheeEmergencyContact::class);
-    }
-
-    /**
-     * get education levels associated with this attcahee
-     */
-    public function attacheeEducationLevels(): HasMany
-    {
-        return $this->hasMany(AttacheeEducationLevel::class);
-    }
-
-    /**
-     * get the referees associated with this attcahee
-     */
-    public function attacheeReferees(): Hasmany
-    {
-        return $this->hasmany(AttacheeReferee::class);
     }
 }

@@ -2,19 +2,16 @@
 
 namespace App\Http\Livewire\Attachee;
 
-use App\Models\AttacheeBiodata;
-use App\Models\AdvertAccompaniment;
-use App\Models\AttacheeEducationLevel;
-use App\Models\AttacheeEmergencyContact;
-use App\Models\AttacheeReferee;
-use App\Models\AttacheeSkill;
+use App\Models\ApplicantBiodata;
+use App\Models\ApplicantEducationLevel;
+use App\Models\ApplicantEmergencyContact;
+use App\Models\ApplicantReferee;
+use App\Models\ApplicantSkill;
+use Exception;
 use Livewire\Component;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class Biodata extends Component
 {
@@ -26,12 +23,13 @@ class Biodata extends Component
     public $phone_number;
     public $has_disability;
     public $disability;
+    public $disability_input_collapse;
     public Collection $emergency_contacts;
     public $professional_summary;
     public Collection $education_levels;
     public Collection $skills;
     public Collection $referees;
-    public $attachee;
+    public $applicant;
     public $biodata;
     // public $biodata_id;
 
@@ -40,7 +38,7 @@ class Biodata extends Component
         'address' => 'required|string',
         'phone_number' => 'required|string',
         'has_disability' => 'required|boolean',
-        'disability' => 'required_if:has_disability,true',
+        'disability' => 'required_if:has_disability,true|exclude_if:has_disability,false',
         'emergency_contacts.*.name' => 'required|string',
         'emergency_contacts.*.relationship' => 'required|string',
         'emergency_contacts.*.phone_number' => 'required|string',
@@ -79,9 +77,9 @@ class Biodata extends Component
             'skills' => collect([]),
             'referees' => collect([]),
         ]);
-        $this->attachee = auth()->user()->attachee;
-        if ($this->attachee->attacheeBiodata) {
-            $this->biodata = $this->attachee->attacheeBiodata;
+        $this->applicant = auth()->user()->applicant;
+        if ($this->applicant->applicantBiodata) {
+            $this->biodata = $this->applicant->applicantBiodata;
             $this->date_of_birth = $this->biodata->date_of_birth;
             $this->address = $this->biodata->address;
             $this->phone_number = $this->biodata->phone_number;
@@ -90,10 +88,10 @@ class Biodata extends Component
             $this->professional_summary = $this->biodata->professional_summary;
         }
 
-        $emergency_contacts = $this->attachee->attacheeEmergencyContacts;
-        $education_levels = $this->attachee->attacheeEducationLevels;
-        $skills = $this->attachee->attacheeSkills;
-        $referees = $this->attachee->attacheeReferees;
+        $emergency_contacts = $this->applicant->applicantEmergencyContacts;
+        $education_levels = $this->applicant->applicantEducationLevels;
+        $skills = $this->applicant->applicantSkills;
+        $referees = $this->applicant->applicantReferees;
 
         if (count($emergency_contacts)) {
             $emergency_contacts->map(function ($contact, $key) {
@@ -171,8 +169,25 @@ class Biodata extends Component
                 ],
             );
         }
+        $this->updatedhasDisability();
+    }
+    public function render()
+    {
+        return view('livewire.attachee.biodata');
     }
 
+    public function updatedhasDisability()
+    {
+        switch ($this->has_disability) {
+            case 0:
+                $this->disability_input_collapse = 'collapse';
+                //$this->disability = '';
+                break;
+            case 1:
+                $this->disability_input_collapse = '';
+                break;
+        }
+    }
     public function addInput($field)
     {
         switch ($field) {
@@ -215,7 +230,7 @@ class Biodata extends Component
         switch ($field) {
             case 'emergency_contact':
                 if (!is_null($this->emergency_contacts[$key]['id'])) {
-                    if (AttacheeEmergencyContact::destroy($this->emergency_contacts[$key]['id'])) {
+                    if (ApplicantEmergencyContact::destroy($this->emergency_contacts[$key]['id'])) {
                         $this->emergency_contacts->pull($key);
                     } else {
                         $this->feedback_header = 'Error deleting field!!';
@@ -229,7 +244,7 @@ class Biodata extends Component
                 break;
             case 'education_level':
                 if (!is_null($this->education_levels[$key]['id'])) {
-                    if (AttacheeEducationLevel::destroy($this->education_levels[$key]['id'])) {
+                    if (ApplicantEducationLevel::destroy($this->education_levels[$key]['id'])) {
                         $this->education_levels->pull($key);
                     } else {
                         $this->feedback_header = 'Error deleting field!!';
@@ -243,7 +258,7 @@ class Biodata extends Component
                 break;
             case 'skill':
                 if (!is_null($this->skills[$key]['id'])) {
-                    if (AttacheeSkill::destroy($this->skills[$key]['id'])) {
+                    if (ApplicantSkill::destroy($this->skills[$key]['id'])) {
                         $this->skills->pull($key);
                     } else {
                         $this->feedback_header = 'Error deleting field!!';
@@ -258,7 +273,7 @@ class Biodata extends Component
 
             case 'referee':
                 if (!is_null($this->referees[$key]['id'])) {
-                    if (AttacheeReferee::destroy($this->referees[$key]['id'])) {
+                    if (ApplicantReferee::destroy($this->referees[$key]['id'])) {
                         $this->referees->pull($key);
                     } else {
                         $this->feedback_header = 'Error deleting field!!';
@@ -273,10 +288,6 @@ class Biodata extends Component
 
         }
     }
-    public function render()
-    {
-        return view('livewire.attachee.biodata');
-    }
 
     public function createUpdateBiodata()
     {
@@ -285,7 +296,7 @@ class Biodata extends Component
         DB::beginTransaction();
         try {
             if ($this->biodata) {
-                AttacheeBiodata::where('id', $this->biodata->id)
+                ApplicantBiodata::where('id', $this->biodata->id)
                     ->update([
                         'date_of_birth' => $this->date_of_birth,
                         'address' => $this->address,
@@ -294,8 +305,8 @@ class Biodata extends Component
                         'professional_summary' => $this->professional_summary,
                     ]);
             } else {
-                $this->biodata = AttacheeBiodata::create([
-                    'attachee_id' => $this->attachee->id,
+                $this->biodata = ApplicantBiodata::create([
+                    'applicant_id' => $this->applicant->id,
                     'date_of_birth' => $this->date_of_birth,
                     'address' => $this->address,
                     'phone_number' => $this->phone_number,
@@ -306,15 +317,14 @@ class Biodata extends Component
             if (count($this->emergency_contacts)) {
                 $this->emergency_contacts->map(function ($contact, $key) {
                     if (!is_null($this->emergency_contacts[$key]['id'])) {
-                        Log::info('updating contact');
-                        AttacheeEmergencyContact::where('id', $this->emergency_contacts[$key]['id'])->update([
+                        ApplicantEmergencyContact::where('id', $this->emergency_contacts[$key]['id'])->update([
                             'name' => $this->emergency_contacts[$key]['name'],
                             'relationship' => $this->emergency_contacts[$key]['relationship'],
                             'phone_number' => $this->emergency_contacts[$key]['phone_number'],
                         ]);
                     } else {
-                        AttacheeEmergencyContact::create([
-                            'attachee_id' => $this->attachee->id,
+                        ApplicantEmergencyContact::create([
+                            'applicant_id' => $this->applicant->id,
                             'name' => $this->emergency_contacts[$key]['name'],
                             'relationship' => $this->emergency_contacts[$key]['relationship'],
                             'phone_number' => $this->emergency_contacts[$key]['phone_number'],
@@ -325,14 +335,14 @@ class Biodata extends Component
             if (count($this->education_levels)) {
                 $this->education_levels->map(function ($level, $key) {
                     if (!is_null($this->education_levels[$key]['id'])) {
-                        AttacheeEducationLevel::where('id', $this->education_levels[$key]['id'])->update([
+                        ApplicantEducationLevel::where('id', $this->education_levels[$key]['id'])->update([
                             'education_level' => $this->education_levels[$key]['education_level'],
                             'start_date' => $this->education_levels[$key]['start_date'],
                             'end_date' => $this->education_levels[$key]['end_date'],
                         ]);
                     } else {
-                        AttacheeEducationLevel::create([
-                            'attachee_id' => $this->attachee->id,
+                        ApplicantEducationLevel::create([
+                            'applicant_id' => $this->applicant->id,
                             'education_level' => $this->education_levels[$key]['education_level'],
                             'start_date' => $this->education_levels[$key]['start_date'],
                             'end_date' => $this->education_levels[$key]['end_date'],
@@ -343,12 +353,12 @@ class Biodata extends Component
             if (count($this->skills)) {
                 $this->skills->map(function ($skill, $key) {
                     if (!is_null($this->skills[$key]['id'])) {
-                        AttacheeSkill::where('id', $this->skills[$key]['id'])->update([
+                        ApplicantSkill::where('id', $this->skills[$key]['id'])->update([
                             'skill' => $this->skills[$key]['skill'],
                         ]);
                     } else {
-                        AttacheeSkill::create([
-                            'attachee_id' => $this->attachee->id,
+                        ApplicantSkill::create([
+                            'applicant_id' => $this->applicant->id,
                             'skill' => $this->skills[$key]['skill'],
                         ]);
                     }
@@ -358,7 +368,7 @@ class Biodata extends Component
             if (count($this->referees)) {
                 $this->referees->map(function ($referee, $key) {
                     if (!is_null($this->referees[$key]['id'])) {
-                        AttacheeReferee::where('id', $this->referees[$key]['id'])->update([
+                        ApplicantReferee::where('id', $this->referees[$key]['id'])->update([
                             'name' => $this->referees[$key]['name'],
                             'relationship' => $this->referees[$key]['relationship'],
                             'phone_number' => $this->referees[$key]['phone_number'],
@@ -367,8 +377,8 @@ class Biodata extends Component
                             'position_in_the_institution' => $this->referees[$key]['position'],
                         ]);
                     } else {
-                        AttacheeReferee::create([
-                            'attachee_id' => $this->attachee->id,
+                        ApplicantReferee::create([
+                            'applicant_id' => $this->applicant->id,
                             'name' => $this->referees[$key]['name'],
                             'relationship' => $this->referees[$key]['relationship'],
                             'phone_number' => $this->referees[$key]['phone_number'],
@@ -382,7 +392,8 @@ class Biodata extends Component
 
             DB::commit();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
+            DB::rollBack();
             $this->feedback_header = 'Error editing biodata!!';
             $this->feedback = 'Something went wrong while editing the biodata. Please try again and if the error persists contact support team to resolve the issue';
             $this->alert_class = 'alert-danger';
@@ -392,6 +403,6 @@ class Biodata extends Component
         $this->feedback = 'Biodata updated successfully';
         $this->alert_class = 'alert-success';
         $this->dispatchBrowserEvent('biodata_action_feedback');
-        // return redirect()->route('attachee.biodata');
+        // return redirect()->route('applicant.biodata');
     }
 }

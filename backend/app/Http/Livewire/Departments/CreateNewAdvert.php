@@ -30,21 +30,22 @@ class CreateNewAdvert extends Component
     public Collection $prof_reqs;
     public Collection $intern_responsibilities;
     private $advert;
+    private $advert_id;
     private $department;
 
-        protected $rules = [
-                'title' => 'required|string',
-                'description' => 'required|string',
-                'how_to_apply' => 'required',
-                'cohort1_vacancies' => 'required| min:0|numeric',
-                'cohort2_vacancies' => 'required|min:0|numeric',
-                'cohort3_vacancies' => 'required|min:0|numeric',
-                'cohort4_vacancies' => 'required|min:0|numeric',
-                'gen_reqs.*.gen_req' => 'required',
-                'prof_reqs.*.prof_req' => 'required',
-                'intern_responsibilities.*.intern_responsibility' => 'required',
+    protected $rules = [
+        'title' => 'required|string',
+        'description' => 'required|string',
+        'how_to_apply' => 'required',
+        'cohort1_vacancies' => 'required| min:0|numeric',
+        'cohort2_vacancies' => 'required|min:0|numeric',
+        'cohort3_vacancies' => 'required|min:0|numeric',
+        'cohort4_vacancies' => 'required|min:0|numeric',
+        'gen_reqs.*.gen_req' => 'required',
+        'prof_reqs.*.prof_req' => 'required',
+        'intern_responsibilities.*.intern_responsibility' => 'required',
     ];
-        protected $validationAttributes = [
+    protected $validationAttributes = [
         'gen_reqs.*.gen_req' => 'general requirement',
         'prof_reqs.*.prof_req' => 'professional requirement',
         'intern_responsibilities.*.intern_responsibility' => 'intern responsibility'
@@ -55,16 +56,17 @@ class CreateNewAdvert extends Component
             'gen_reqs' => collect([['gen_req' => '']]),
             'prof_reqs' => collect([['prof_req' => '']]),
             'intern_responsibilities' => collect([['intern_responsibility' => '']]),
-            'year' => (date('Y') . '/' . date('Y') + 1 ),
+            'year' => (date('Y') . '/' . date('Y') + 1),
         ]);
     }
 
-    public function setYear($year) {
+    public function setYear($year)
+    {
         $this->year = $year;
     }
     public function addInput($field)
     {
-        switch ($field){
+        switch ($field) {
             case 'gen_req':
                 $this->gen_reqs->push(['gen_req' => '']);
                 break;
@@ -79,8 +81,8 @@ class CreateNewAdvert extends Component
     }
     public function removeInput($key, $field)
     {
-        
-        switch ($field){
+
+        switch ($field) {
             case 'gen_req':
                 $this->gen_reqs->pull($key);
                 break;
@@ -102,63 +104,63 @@ class CreateNewAdvert extends Component
     {
         $this->validate();
         DB::beginTransaction();
-            try{
-                $user = auth()->user();
-                $this->department = $user->departmentAdmin->department;
-                $this->advert = Advert::create([
-                    'title' => $this->title,
-                    'department_id' => $this->department->id,
-                    'description' => $this->description,
-                    'year' => $this->year,
-                    'how_to_apply' => $this->how_to_apply,
-                    'cohort1_vacancies' => $this->cohort1_vacancies,
-                    'cohort2_vacancies' => $this->cohort2_vacancies,
-                    'cohort3_vacancies' => $this->cohort3_vacancies,
-                    'cohort4_vacancies' => $this->cohort4_vacancies,
-                    'author' => $user->departmentAdmin->first_name . ' ' . $user->departmentAdmin->last_name
-                ]);
-                if (count($this->gen_reqs)){
-                    $this->gen_reqs->map(function($gen_req, $key){
-                        AdvertAccompaniment::create([
-                            'advert_id' => $this->advert->id,
-                            'value' => $this->gen_reqs[$key]['gen_req'],
-                            'type' => 'general_requirement',
-                        ]);
-                    });
-                    }
-                if (count($this->prof_reqs)){
-                    $this->prof_reqs->map(function($prof_req, $key){
-                        AdvertAccompaniment::create([
-                            'advert_id' => $this->advert->id,
-                            'value' => $this->prof_reqs[$key]['prof_req'],
-                            'type' => 'professional_requirement',
-                        ]);
-                    });
-                }
-                if (count($this->intern_responsibilities)){
-                    $this->intern_responsibilities->map(function($intern_responsibility, $key){
-                        AdvertAccompaniment::create([
-                            'advert_id' => $this->advert->id,
-                            'value' => $this->intern_responsibilities[$key]['intern_responsibility'],
-                            'type' => 'intern_responsibility',
-                        ]);
-                    });
-                }
-        DB::commit();
-        $this->advert->reference_number = $this->year.'-'.$this->department->name. '#Advert' .$this->advert->id;
-        $this->advert->save();
-            } catch (\Exception $e) {
-                Log::info($e);
-                $this->feedback_header = 'Error Adding Advert!!';
-                $this->feedback = 'Something went wrong while creating the advert. Please try again and if the error persists contact support team to resolve the issue';
-                $this->alert_class = 'alert-danger';
-                $this->dispatchBrowserEvent('advert_action_feedback');
-                return;
+        try {
+            $user = auth()->user();
+            $this->department = $user->departmentAdmin->department;
+            $this->advert = Advert::create([
+                'title' => $this->title,
+                'department_id' => $this->department->id,
+                'description' => $this->description,
+                'year' => $this->year,
+                'how_to_apply' => $this->how_to_apply,
+                'cohort1_vacancies' => $this->cohort1_vacancies,
+                'cohort2_vacancies' => $this->cohort2_vacancies,
+                'cohort3_vacancies' => $this->cohort3_vacancies,
+                'cohort4_vacancies' => $this->cohort4_vacancies,
+                'author' => $user->departmentAdmin->first_name . ' ' . $user->departmentAdmin->last_name
+            ]);
+            if (count($this->gen_reqs)) {
+                $this->gen_reqs->map(function ($gen_req, $key) {
+                    AdvertAccompaniment::create([
+                        'advert_id' => $this->advert->id,
+                        'value' => $this->gen_reqs[$key]['gen_req'],
+                        'type' => 'general_requirement',
+                    ]);
+                });
             }
-            // $this->request_feedback_header = 'Success!!';
-            // $this->request_feedback = 'Advert added successfully';
-            // $this->request_success = 1;
-            // $this->dispatchBrowserEvent('advert_action');
-            return redirect('/departments/view-advert/'.$this->advert->id);
+            if (count($this->prof_reqs)) {
+                $this->prof_reqs->map(function ($prof_req, $key, ) {
+                    AdvertAccompaniment::create([
+                        'advert_id' => $this->advert->id,
+                        'value' => $this->prof_reqs[$key]['prof_req'],
+                        'type' => 'professional_requirement',
+                    ]);
+                });
+            }
+            if (count($this->intern_responsibilities)) {
+                $this->intern_responsibilities->map(function ($intern_responsibility, $key) {
+                    AdvertAccompaniment::create([
+                        'advert_id' => $this->advert->id,
+                        'value' => $this->intern_responsibilities[$key]['intern_responsibility'],
+                        'type' => 'intern_responsibility',
+                    ]);
+                });
+            }
+            DB::commit();
+            $this->advert->reference_number = $this->year . '-' . $this->department->name . '#Advert' . $this->advert->id;
+            $this->advert->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->feedback_header = 'Error Adding Advert!!';
+            $this->feedback = 'Something went wrong while creating the advert. Please try again and if the error persists contact support team to resolve the issue';
+            $this->alert_class = 'alert-danger';
+            $this->dispatchBrowserEvent('advert_action_feedback');
+            return;
+        }
+        // $this->request_feedback_header = 'Success!!';
+        // $this->request_feedback = 'Advert added successfully';
+        // $this->request_success = 1;
+        // $this->dispatchBrowserEvent('advert_action');
+        return redirect('/departments/view-advert/' . $this->advert->id);
     }
 }

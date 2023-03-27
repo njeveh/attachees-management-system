@@ -56,7 +56,7 @@ class ApplicationResponseController extends Controller
     public function UploadOfferAcceptanceForm(Request $request, $id)
     {
         $application = Application::find($id);
-        $attachee = $application->attachee;
+        $applicant = $application->applicant;
         if ($application->status != 'accepted') {
             return Response('', $status = 404);
         }
@@ -71,7 +71,7 @@ class ApplicationResponseController extends Controller
             $path = $request->offer_acceptance_form->storePubliclyAs(
                 preg_replace('/\s+/', '_', $application->advert->department->name) . 'offer_acceptance_forms/' . '/' .
                 preg_replace('/\//', '_', $application->advert->year) . '/' . 'quarter_' . $application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $application->advert->title) . '/' .
-                $application->attachee->national_id,
+                $application->applicant->national_id,
                 'offer_acceptance_form',
                 'public'
             );
@@ -82,8 +82,10 @@ class ApplicationResponseController extends Controller
                     'application_id' => $id,
                     'path' => $path,
                 ]);
-                $attachee->engagement_level = 3;
-                $attachee->save();
+                if ($applicant->engagement_level < 3) {
+                    $applicant->engagement_level = 3;
+                    $applicant->save();
+                }
                 DB::commit();
             }
         } catch (\Exception $e) {

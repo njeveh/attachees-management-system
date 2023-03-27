@@ -62,7 +62,7 @@
                     </div>
                     {{-- Applications table --}}
                     <section class="overflow-auto">
-                        <table class="table table-hover tabls-responsive-sm mb-5">
+                        <table class="table table-hover table-responsive-sm mb-5">
                             <thead>
                                 <tr class="{{ $table_title_bg_color }}">
                                     <th colspan='5'>
@@ -92,8 +92,8 @@
                                         <tr>
                                             <th scope="row">{{ $i }}</th>
                                             <td class="align-middle">
-                                                {{ $application->attachee->first_name }}
-                                                {{ $application->attachee->second_name }}</th>
+                                                {{ $application->applicant->first_name }}
+                                                {{ $application->applicant->second_name }}</th>
                                             <td class="align-middle">{{ $application->quarter }}</td>
                                             <td class="align-middle">
                                                 @switch($application->status)
@@ -126,11 +126,13 @@
                                                         class="btn btn-success">View</a>
                                                     @if ($application->status == 'pending')
                                                         <button class="btn btn-primary"
-                                                            wire:click="warn('accept', {{ $application->id }})">
+                                                            wire:click="warn('accept', '{{ $application->id }}')">
                                                             Accept
                                                         </button>
-                                                        <button wire:click="warn('reject', {{ $application->id }})"
-                                                            class="btn btn-danger">Reject</button>
+                                                        <button wire:click="warn('reject', '{{ $application->id }}')"
+                                                            class="btn btn-danger">
+                                                            Reject
+                                                        </button>
                                                     @endif
                                                     @if ($application->status == 'accepted')
                                                         <button class="btn btn-danger" data-bs-toggle="collapse"

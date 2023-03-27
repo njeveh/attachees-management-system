@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Application extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'attachee_id',
+        'applicant_id',
         'advert_id',
         'status',
         //pending, rejected, accepted, canceled
         'quarter',
-        //path to file.
         'date_replied',
     ];
 
@@ -44,9 +44,9 @@ class Application extends Model
     /**
      * get the applicant
      */
-    public function attachee(): BelongsTo
+    public function applicant(): BelongsTo
     {
-        return $this->belongsTo(Attachee::class);
+        return $this->belongsTo(Applicant::class);
     }
 
     /**

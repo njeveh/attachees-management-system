@@ -108,7 +108,7 @@ class ViewApplication extends Component
             $to_be_updated->storePubliclyAs(
                 preg_replace('/\s+/', '_', $this->application->advert->department->name) . '/' . 'application_docs/' .
                 preg_replace('/\//', '_', $this->application->advert->year) . '/' . 'quarter_' . $this->application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->title) . '/' .
-                auth()->user()->attachee->national_id,
+                auth()->user()->applicant->national_id,
                 $field,
                 'public'
             );
@@ -116,7 +116,7 @@ class ViewApplication extends Component
             $target->status = 'pending_review';
             $target->save();
         } catch (\Exception $e) {
-            //Log::info($e);
+            Log::info($e);
             $this->feedback_header = 'Error Updating Document!!';
             $this->feedback = 'Something went wrong while updating the document. Please try again and if the error persists contact support team to resolve the issue';
             $this->alert_class = 'alert-danger';

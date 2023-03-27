@@ -23,7 +23,7 @@
                         </h3>
                     </div>
                     <section class="overflow-auto">
-                        <table class="table table-hover tabls-responsive-sm mb-5">
+                        <table class="table table-hover table-responsive-sm mb-5">
                             <thead>
                                 <tr class="bg-dark text-light">
                                     <th scope="col">No.</th>
@@ -70,7 +70,7 @@
 
                                                     <div class="row">
                                                         <button class="col btn btn-success m-2"
-                                                            wire:click="warn({{ $attachee->id }}, 'completed')">Completed</button>
+                                                            wire:click="warn('{{ $attachee->id }}', 'completed')">Completed</button>
                                                         <button class="col btn btn-warning m-2"
                                                             data-bs-toggle="collapse"
                                                             data-bs-target="#reason-input-form-{{ $attachee->id }}">Other</button>
@@ -87,7 +87,7 @@
                                                             </span>
                                                         @enderror
                                                         <button type="button"
-                                                            wire:click="warn({{ $attachee->id }}, 'other')"
+                                                            wire:click="warn('{{ $attachee->id }}', 'other')"
                                                             class="btn btn-info btn-block form-control my-2">
                                                             Proceed
                                                         </button>

@@ -2,7 +2,6 @@
 
     <form class="mt-3" wire:submit.prevent="createUpdateBiodata">
         @csrf
-        <!-- Edit Advert -->
         <div class="container">
             <div class="form-group mb-3">
                 <label for="date-of-birth" class="form-label">{{ __('Date of Birth') }}</label>
@@ -48,23 +47,25 @@
                 <input type="radio" wire:model="has_disability" value='1' class="form-check-input"
                     id="has-disability">
                 @error('has_disability')
-                    <span class="error">
+                    <span class="error text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
-            <div class="disability-field">
-                Please specify your disability
-                below
-            </div>
-            <div class="form-group mb-3">
-                <label for="disability" class="form-label">{{ __('Disability') }}</label>
-                <textarea wire:model="disability" class="form-control" id="disability" rows="3"></textarea>
-                @error('disability')
-                    <span class="error">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+            <div class="{{ $disability_input_collapse }}">
+                <div class="disability-field">
+                    Please specify your disability
+                    below
+                </div>
+                <div class="form-group mb-3">
+                    <label for="disability" class="form-label">{{ __('Disability') }}</label>
+                    <textarea wire:model="disability" class="form-control" id="disability" rows="3"></textarea>
+                    @error('disability')
+                        <span class="error">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
 
             {{-- Emergency Contacts --}}

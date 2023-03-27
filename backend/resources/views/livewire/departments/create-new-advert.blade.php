@@ -5,9 +5,10 @@
         <div class="container">
             <div class="form-group mb-3">
                 <label for="title" class="form-label">{{ __('Title') }}</label>
-                <input type="text" wire:model="title" class="form-control" id="title">
+                <input type="text" wire:model="title" class="form-control @error('title') is-invalid @enderror"
+                    id="title" required autocomplete="on">
                 @error('title')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="text-danger my-1">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -15,9 +16,10 @@
 
             <div class="form-group mb-3">
                 <label for="description" class="form-label">{{ __('Description') }}</label>
-                <textarea class="form-control" wire:model="description" id="description" rows="5" required></textarea>
+                <textarea class="form-control @error('description') is-invalid @enderror" wire:model="description" id="description"
+                    rows="5" required></textarea>
                 @error('description')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="text-danger my-1">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -32,15 +34,15 @@
                                     <label for="input_{{ $key }}_gen_req" class="sr-only">General Requirement
                                         {{ $key }}</label>
                                     <div class="input-group mb-3">
-                                        <textarea class="form-control mb-3" id="input_{{ $key }}_gen_req"
-                                            wire:model.defer="gen_reqs.{{ $key }}.gen_req" rows="2"></textarea>
+                                        <textarea class="form-control mb-3 @error('gen_reqs.' . $key . '.gen_req') is-invalid @enderror"
+                                            id="input_{{ $key }}_gen_req" wire:model.defer="gen_reqs.{{ $key }}.gen_req" rows="2"></textarea>
                                         <button type="button" wire:click="removeInput({{ $key }},'gen_req')"
                                             class="btn btn-danger mb-3">
-                                            <span><i class="fa fa-times"></i></span>
+                                            <span><i class="fas fa-close"></i></span>
                                         </button>
                                     </div>
                                     @error('gen_reqs.' . $key . '.gen_req')
-                                        <span class="error">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -51,10 +53,11 @@
                                 <div class="mb-3 form-group">
                                     <label for="input_{{ $key }}_gen_req" class="sr-only">General Requirement
                                         {{ $key }}</label>
-                                    <textarea class="form-control mb-3" id="input_{{ $key }}_gen_req"
-                                        wire:model.defer="gen_reqs.{{ $key }}.gen_req" rows="2" required></textarea>
+                                    <textarea class="form-control mb-3 @error('gen_reqs.' . $key . '.gen_req') is-invalid @enderror"
+                                        id="input_{{ $key }}_gen_req" wire:model.defer="gen_reqs.{{ $key }}.gen_req" rows="2"
+                                        required></textarea>
                                     @error('gen_reqs.' . $key . '.gen_req')
-                                        <span class="error invalid-feedback" role="alert">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -79,16 +82,17 @@
                                     <label for="input_{{ $key }}_prof_req" class="sr-only">General Requirement
                                         {{ $key }}</label>
                                     <div class="input-group mb-3">
-                                        <textarea class="form-control mb-3" id="input_{{ $key }}_prof_req"
-                                            wire:model.defer="prof_reqs.{{ $key }}.prof_req" rows="2" required></textarea>
+                                        <textarea class="form-control mb-3 @error('prof_reqs.' . $key . '.prof_req') is-invalid @enderror"
+                                            id="input_{{ $key }}_prof_req" wire:model.defer="prof_reqs.{{ $key }}.prof_req" rows="2"
+                                            required></textarea>
                                         <button type="button"
                                             wire:click="removeInput({{ $key }}, 'prof_req')"
                                             class="btn btn-danger mb-3">
-                                            <span><i class="fa fa-times"></i></span>
+                                            <span><i class="fas fa-close"></i></span>
                                         </button>
                                     </div>
                                     @error('prof_reqs.' . $key . '.prof_req')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -100,10 +104,11 @@
                                     <label for="input_{{ $key }}_prof_req" class="sr-only">Professional
                                         Requirement
                                         {{ $key }}</label>
-                                    <textarea class="form-control mb-3" id="input_{{ $key }}_prof_req"
-                                        wire:model.defer="prof_reqs.{{ $key }}.prof_req" rows="2" required></textarea>
+                                    <textarea class="form-control mb-3 @error('prof_reqs.' . $key . '.prof_req') is-invalid @enderror"
+                                        id="input_{{ $key }}_prof_req" wire:model.defer="prof_reqs.{{ $key }}.prof_req" rows="2"
+                                        required></textarea>
                                     @error('prof_reqs.' . $key . '.prof_req')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -130,16 +135,18 @@
                                         Responsibility
                                         {{ $key }}</label>
                                     <div class="input-group mb-3">
-                                        <textarea class="form-control mb-3" id="input_{{ $key }}_intern_responsibility"
+                                        <textarea
+                                            class="form-control mb-3 @error('intern_responsibilities.' . $key . '.intern_responsibility') is-invalid @enderror"
+                                            id="input_{{ $key }}_intern_responsibility"
                                             wire:model.defer="intern_responsibilities.{{ $key }}.intern_responsibility" rows="2" required></textarea>
                                         <button type="button"
                                             wire:click="removeInput({{ $key }}, 'intern_responsibility')"
                                             class="btn btn-danger mb-3">
-                                            <span><i class="fa fa-times"></i></span>
+                                            <span><i class="fas fa-close"></i></span>
                                         </button>
                                     </div>
                                     @error('intern_responsibilities.' . $key . '.intern_responsibility')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -151,10 +158,12 @@
                                     <label for="input_{{ $key }}_intern_responsibility" class="sr-only">Intern
                                         Responsibility
                                         {{ $key }}</label>
-                                    <textarea class="form-control mb-3" id="input_{{ $key }}_intern_responsibility"
+                                    <textarea
+                                        class="form-control mb-3 @error('intern_responsibilities.' . $key . '.intern_responsibility') is-invalid @enderror"
+                                        id="input_{{ $key }}_intern_responsibility"
                                         wire:model.defer="intern_responsibilities.{{ $key }}.intern_responsibility" rows="2" required></textarea>
                                     @error('intern_responsibilities.' . $key . '.intern_responsibility')
-                                        <span class="invalid-feedback" role="alert">
+                                        <span class="error text-danger">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -171,9 +180,10 @@
             </div>
             <div class="form-group mb-3">
                 <h4>{{ __('Application Instructions') }}</h4>
-                <textarea class="form-control mb-3" wire:model="how_to_apply" rows="5" required></textarea>
+                <textarea class="form-control mb-3 @error('how_to_apply') is-invalid @enderror" wire:model="how_to_apply"
+                    rows="5" required></textarea>
                 @error('how_to_apply')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="error text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -191,40 +201,44 @@
 
             <div class="form-group mb-3">
                 <label for="cohort-1-vacancies" class="form-label">{{ __('Cohort 1') }}</label>
-                <input type="number" wire:model="cohort1_vacancies" class="form-control" id="cohort-1-vacancies"
+                <input type="number" wire:model="cohort1_vacancies"
+                    class="form-control @error('cohort1_vacancies') is-invalid @enderror" id="cohort-1-vacancies"
                     required>
                 @error('cohort1_vacancies')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
             <div class="form-group mb-3">
                 <label for="cohort-2-vacancies" class="form-label">{{ __('Cohort 2') }}</label>
-                <input type="number" wire:model="cohort2_vacancies" class="form-control" id="cohort-2-vacancies"
+                <input type="number" wire:model="cohort2_vacancies"
+                    class="form-control @error('cohort2_vacancies') is-invalid @enderror" id="cohort-2-vacancies"
                     required>
                 @error('cohort2_vacancies')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
             <div class="form-group mb-3">
                 <label for="cohort-3-vacancies" class="form-label">{{ __('Cohort 3') }}</label>
-                <input type="number" wire:model="cohort3_vacancies" class="form-control" id="cohort-3-vacancies"
+                <input type="number" wire:model="cohort3_vacancies"
+                    class="form-control @error('cohort3_vacancies') is-invalid @enderror" id="cohort-3-vacancies"
                     required>
                 @error('cohort3_vacancies')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
             <div class="form-group mb-3">
                 <label for="cohort-4-vacancies" class="form-label">{{ __('Cohort 4') }}</label>
-                <input type="number" wire:model="cohort4_vacancies" class="form-control" id="cohort-4-vacancies"
+                <input type="number" wire:model="cohort4_vacancies"
+                    class="form-control @error('cohort4_vacancies') is-invalid @enderror" id="cohort-4-vacancies"
                     required>
                 @error('cohort4_vacancies')
-                    <span class="invalid-feedback" role="alert">
+                    <span class="invalid-feedback text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror

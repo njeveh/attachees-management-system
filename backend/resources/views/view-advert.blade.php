@@ -29,9 +29,9 @@
                                     class="nav-link font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                             </li>
                         @else
-                            @if (Route::has('attachee.registration'))
+                            @if (Route::has('applicant.registration'))
                                 <li class="nav-item">
-                                    <a href="{{ route('attachee.registration') }}"
+                                    <a href="{{ route('applicant.registration') }}"
                                         class="nav-link ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
                                 </li>
                             @endif
@@ -48,9 +48,18 @@
     </nav>
     <div class="guest-content-wrapper d-flex flex-column">
         <main class="advert-view-main mb-5">
-            {{-- <div class="d-flex justify-content-end align-items-center m-2">
-                <button class="btn btn-success">{{ __('Apply') }}</button>
-            </div> --}}
+            <header class="header">
+                <div align="center" class="logo justified">
+                    <img src="/assets/static/logo.png" alt="JKUAT LOGO" width="100px">
+                </div>
+                <div align="center" class="justified">
+                    <h3>JOMO KENYATTA UNIVERSITY OF AGRICULTURE AND TECHNOLOGY</h3>
+                </div>
+                <div align="center" class="justified">
+                    <p class="justified">P.O. BOX 62000-00200, CITY SQUARE, NAIROBI, KENYA.<br>TELEPHONE: (067)
+                        52711/52181-4. FAX: 52164, THIKA</p>
+                </div>
+            </header>
             <section class="m-2 advert card">
                 <div class="card-header">
                     <h3>{{ $advert->title }}/Ref: {{ $advert->reference_number }}</h3>
@@ -92,10 +101,24 @@
                         shortlisted applicants will be considered for interview.
 
                     </div>
+                    <div class="d-flex justify-content-end align-items-center m-2">
+                        <a href="/adverts/{{ $advert->id }}/apply" class="btn btn-success">{{ __('Apply') }}</a>
+                    </div>
                 </div>
             </section>
-            <div class="d-flex justify-content-end align-items-center m-2">
-                <a href="/adverts/{{ $advert->id }}/apply" class="btn btn-success">{{ __('Apply') }}</a>
+            <div class="mt-5"
+                style="display: flex; flex-direction:column; align-items: center; justify-content: center; background-color: white;">
+                <div class="d-flex flex-column align-items-center justify-content-center pt-4 px-5 mx-4"
+                    style="position: relative; width: fit-content;">
+                    <img src="/assets/static/iso-9001.jpg"
+                        style="position: absolute; top: -40px; right: -20px; width: 68px;">
+                    <img src="/assets/static/iso14001.png" alt=""
+                        style="position: absolute; top: -40px; left: -20px; width: 70px;">
+                    <div>JKUAT is ISO 9001:2015 and ISO 14001:2015
+                        Certified.</div>
+                    <div> Setting Trends in Higher Education,
+                        Research, Innovation and Entrepreneurship</div>
+                </div>
             </div>
         </main>
         <x-footer />

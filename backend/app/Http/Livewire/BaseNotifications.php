@@ -37,10 +37,10 @@ class BaseNotifications extends Component
     //     return view('livewire.attachee.notifications');
     // }
 
-    public function render()
-    {
-        return view('livewire.base-notifications');
-    }
+    // public function render()
+    // {
+    //     return view('livewire.base-notifications');
+    // }
 
 
     /**

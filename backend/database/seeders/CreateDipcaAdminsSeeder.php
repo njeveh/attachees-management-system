@@ -15,13 +15,14 @@ class CreateDipcaAdminsSeeder extends Seeder
     {
         $dipca_admins = [
             [
-                'user_id' => 6,
-                'first_name'=>'DIPCA ADMIN',
-                'last_name'=>'JKUAT',
-                'phone_number'=>'+254722011144',
+                'user_id' => '2360e38d-3af4-4da8-8571-88aeb47fbd31',
+                'first_name' => 'DIPCA ADMIN',
+                'last_name' => 'JKUAT',
+                'staff_id' => 'dipca001-224',
+                'phone_number' => '+254722011144',
             ],
         ];
-    
+
         foreach ($dipca_admins as $key => $dipca_admin) {
             DipcaAdmin::create($dipca_admin);
         }

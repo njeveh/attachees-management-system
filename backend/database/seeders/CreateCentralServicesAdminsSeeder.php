@@ -15,13 +15,14 @@ class CreateCentralServicesAdminsSeeder extends Seeder
     {
         $admins = [
             [
-                'user_id' => 5,
-               'first_name'=>'Central Services Admin',
-               'last_name'=>'JKUAT',
-               'phone_number'=>'+254700611118',
+                'user_id' => '69c69545-e5f2-4bac-946d-7235393de49e',
+                'first_name' => 'Central Services Admin',
+                'last_name' => 'JKUAT',
+                'phone_number' => '+254700611118',
+                'staff_id' => 'jkuat0900/cs',
             ],
         ];
-    
+
         foreach ($admins as $key => $admin) {
             CentralServicesAdmin::create($admin);
         }

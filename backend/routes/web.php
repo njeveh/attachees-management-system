@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminUserRegistrationController;
 use App\Http\Controllers\AdvertController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApplicationResponseController;
 use App\Http\Controllers\AttacheeBiodataController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GeneratePDFController;
 use App\Http\Controllers\HomeController;
@@ -16,13 +18,21 @@ use App\Http\Livewire\Attachee\Notifications;
 use App\Http\Livewire\Attachee\NotificationView;
 use App\Http\Livewire\Attachee\ViewApplication;
 use App\Http\Livewire\CentralServices\AdvertView;
+use App\Http\Livewire\CentralServices\ApplicantUsers;
+use App\Http\Livewire\CentralServices\Departments;
+use App\Http\Livewire\CentralServices\DepartmentsUsers;
+use App\Http\Livewire\CentralServices\DepartmentView;
+use App\Http\Livewire\CentralServices\DipcaUsers;
 use App\Http\Livewire\CentralServices\EditAdvert;
+use App\Http\Livewire\CentralServices\Users;
+use App\Http\Livewire\CentralServices\ViewUserProfile;
 use App\Http\Livewire\Departments\AdvertApplications;
 use App\Http\Livewire\Departments\AttacheeDismissal;
 use App\Http\Livewire\Departments\AttacheeReporting;
 use App\Http\Livewire\Departments\DepartmentAdvertView;
 use App\Http\Livewire\Departments\DepartmentEditAdvert;
 use App\Http\Livewire\Departments\DepartmentNotifications;
+use App\Http\Livewire\Departments\DepartmentNotificationView;
 use App\Http\Livewire\Departments\ViewApplicantBiodata;
 use App\Http\Livewire\Departments\ViewApplicationDetails;
 use App\Http\Livewire\HomePage;
@@ -49,16 +59,20 @@ Route::get('/adverts/{id}', [WelcomePageController::class, 'show'])->name('guest
 Route::get('/registration-successful', function () {
     return view('notifications.registration-success');
 })->name('registration.success');
+Route::get('/account-activation-notice', function () {
+    return view('notifications.account-activation');
+})->name('account_activation_notice');
 
 Route::get(
     '/dashboard',
     [DashboardController::class, 'index']
-)->middleware(['auth', 'verified'])->name('dashboard');
+)->middleware(['auth', 'is_active'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'is_active'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('change-password', [PasswordController::class, 'changePassword'])->name('password.change_password');
 
 });
 // Route::post(
@@ -79,12 +93,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 All Attachee Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'verified', 'is_active'])->group(function () {
 
     Route::get('/attachee/home', [HomeController::class, 'attacheeHome'])->name('attachee.home');
     Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
     Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
     Route::get('/attachee/biodata', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
+    Route::get('/attachee/profile', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
     Route::get('/attachee/my-applications', [ApplicationController::class, 'getAttacheeApplications'])->name('attachee.applications');
     Route::get('/attachee/my-applications/{id}/view-application', ViewApplication::class);
     Route::get('/attachee/notifications/', AttacheeNotifications::class)->name('attachee.notifications');
@@ -103,7 +118,7 @@ Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history'])->gro
 All Dipca Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:dipca_admin', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'user-access:dipca_admin', 'prevent-back-history', 'is_active'])->group(function () {
 
     Route::get('/dipca/home', [HomeController::class, 'dipcaHome'])->name('dipca.home');
 });
@@ -113,7 +128,7 @@ Route::middleware(['auth', 'user-access:dipca_admin', 'prevent-back-history'])->
 All Departments Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history', 'is_active'])->group(function () {
 
     Route::get('/departments/home', [HomeController::class, 'departmentHome'])->name('departments.home');
     Route::get('/departments/create-new-advert', [AdvertController::class, 'create'])->name('departments.new_advert_form');
@@ -128,7 +143,7 @@ Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history
     Route::get('/departments/attachee-reporting', AttacheeReporting::class)->name('departments.attachee_reporting');
     Route::get('/departments/attachee-dismissal', AttacheeDismissal::class)->name('departments.attachee_dismissal');
     Route::get('/departments/notifications/', DepartmentNotifications::class)->name('departments.notifications');
-    //Route::get('/departments/notifications/{id}', DepartmentNotificationView::class)->name('departments.notification');
+    Route::get('/departments/notifications/{id}', DepartmentNotificationView::class)->name('departments.notification');
 
 
     // Route::get('/departments/applicable-adverts/{id}/applications', DepartmentEditAdvert::class)->name('departments.edit_advert');
@@ -140,10 +155,25 @@ Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history
 All Central services Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-history', 'is_active'])->group(function () {
 
     Route::get('/central-services/home', [HomeController::class, 'centralServicesHome'])->name('central_services.home');
     Route::get('/central-services/view-adverts', [AdvertController::class, 'showCentralServicesAdvertsView'])->name('central_services.view_adverts');
     Route::get('/central-services/view-advert/{id}', AdvertView::class)->name('central_services.view_advert');
     Route::get('/central-services/edit-advert/{id}', EditAdvert::class)->name('central_services.edit_advert');
+    Route::get('/central-services/departments/', Departments::class)->name('central_services.departments');
+    Route::get('/central-services/departments/{id}', DepartmentView::class)->name('central_services.department_view');
+    Route::get('/central-services/users', ApplicantUsers::class)->name('central_services.users');
+    Route::get('/central-services/departments-users', DepartmentsUsers::class)->name('central_services.departments_users');
+    Route::get('/central-services/dipca-users', DipcaUsers::class)->name('central_services.dipca_users');
+    Route::get('/central-services/user-profile-view/{id}', ViewUserProfile::class)->name('central_services.user_profile_view');
+    Route::get('/central-services/reset-user-password/{id}', [PasswordController::class, 'showAdminPasswordResetForm'])->name('central_services.reset_user_password');
+    Route::post('/central-services/reset-user-password/', [PasswordController::class, 'adminPasswordReset'])->name('central_services.reset_user_password.submit');
+    Route::get('/central-services/notifications/', \App\Http\Livewire\CentralServices\Notifications::class)->name('central_services.notifications');
+    Route::get('/central-services/department-admin-registration', [AdminUserRegistrationController::class, 'getDepartmentAdminCreationForm'])->name('central_services.department-admin-registration-form');
+    Route::get('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'getDipcaAdminCreationForm'])->name('central_services.dipca-admin-registration-form');
+    Route::post('/central-services/department-admin-registration', [AdminUserRegistrationController::class, 'storeDepartmentAdmin'])->name('central_services.department-admin-registration');
+    Route::post('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'storeDipcaAdmin'])->name('central_services.dipca-admin-registration');
+
+
 });

@@ -58,7 +58,7 @@ class Apply extends Component
     {
         $this->validate();
         if (
-            Application::where('attachee_id', $this->user->attachee->id)
+            Application::where('applicant_id', $this->user->applicant->id)
                 ->where('advert_id', $this->advert->id)->exists()
         ) {
             $this->feedback_header = 'Error Creating application!!';
@@ -79,7 +79,7 @@ class Apply extends Component
                 ['national_id_back', $this->national_id_back]
             ]);
             $this->application = Application::create([
-                'attachee_id' => $this->user->attachee->id,
+                'applicant_id' => $this->user->applicant->id,
                 'advert_id' => $this->advert->id,
                 'quarter' => $this->quarter['quarter'],
             ]);
@@ -87,7 +87,7 @@ class Apply extends Component
                 $path = $item[1]->storePubliclyAs(
                     preg_replace('/\s+/', '_', $this->application->advert->department->name) . '/' . 'application_docs/' .
                     preg_replace('/\//', '_', $this->application->advert->year) . '/' . 'quarter_' . $this->quarter['quarter'] . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->title) . '/' .
-                    $this->user->attachee->national_id, $item[0],
+                    $this->user->applicant->national_id, $item[0],
                     'public'
                 );
                 ApplicationAccompaniment::create([
@@ -96,11 +96,13 @@ class Apply extends Component
                     'path' => $path,
                 ]);
             });
-            $this->user->attachee->engagement_level = 1;
-            $this->user->attachee->save();
+            if ($this->user->applicant->engagement_level < 1) {
+                $this->user->applicant->engagement_level = 1;
+                $this->user->applicant->save();
+            }
             DB::commit();
         } catch (\Exception $e) {
-            Log::info($e);
+            DB::rollBack();
 
             $this->feedback_header = 'Error Creating Application!!';
             $this->feedback = 'Something went wrong while uploading documents. Please try again and if the error persists contact support team to resolve the issue';
@@ -111,7 +113,7 @@ class Apply extends Component
         }
 
 
-        if ($this->user->attachee->attacheeBiodata) {
+        if ($this->user->applicant->applicantBiodata) {
             $message = 'Your application has been submitted successfully';
         } else {
             $message = 'Your application has been submitted successfully. Please Follow the button link below to update your biodata and complete your application. It will act as your CV.';
