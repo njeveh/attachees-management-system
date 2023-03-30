@@ -31,8 +31,8 @@
                             <option value="">
                                 All
                             </option>
-                            <option value="applicants">
-                                Applicants
+                            <option value="non_attachee_applicants">
+                                Non-attachee Applicants
                             </option>
                             <option value="active_attachees">
                                 Active Attachees

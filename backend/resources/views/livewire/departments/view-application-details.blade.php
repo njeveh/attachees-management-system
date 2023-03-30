@@ -32,10 +32,10 @@
                             <span class="text-info">Pending</span>
                         </div>
                         <div class="d-flex flex-wrap justify-content-end">
-                            <button class="btn btn-primary m-2" wire:click="warn('accept', {{ $application->id }})">
+                            <button class="btn btn-primary m-2" wire:click="warn('accept', '{{ $application->id }}')">
                                 Accept
                             </button>
-                            <button wire:click="warn('reject', {{ $application->id }})"
+                            <button wire:click="warn('reject', '{{ $application->id }}')"
                                 class="btn btn-danger m-2">Reject</button>
                         </div>
                     @break

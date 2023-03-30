@@ -42,13 +42,13 @@
                                     @endphp
                                     @foreach ($attachees as $attachee)
                                         <tr>
-                                            <th scope="row">{{ $i }}</th>
-                                            <td>{{ $attachee->national_id }}</td>
+                                            <th scope="row" class="align-middle">{{ $i }}</th>
+                                            <td class="align-middle">{{ $attachee->applicant->national_id }}</td>
                                             <td class="align-middle">
-                                                {{ $attachee->first_name }}
-                                                {{ $attachee->second_name }}</th>
-                                            <td>{{ $attachee->year }}</td>
-                                            <td>{{ $attachee->cohort }}</td>
+                                                {{ $attachee->applicant->first_name }}
+                                                {{ $attachee->applicant->second_name }}</th>
+                                            <td class="align-middle">{{ $attachee->year }}</td>
+                                            <td class="align-middle">{{ $attachee->cohort }}</td>
                                             <td class="align-middle">
                                                 {{ $attachee->position }}
 

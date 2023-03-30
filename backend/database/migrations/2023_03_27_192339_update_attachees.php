@@ -11,7 +11,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('attachees', function (Blueprint $table) {
-            $table->foreignUuid('advert_id')->nullable()->constrained()->setNullOnDelete();
+            // $table->foreignUuid('advert_id')->nullable()->constrained()->setNullOnDelete();
+            //$table->tinyInteger('has_filled_evaluation_form')->nullable();
+            $table->foreignUuid('application_id')->nullable()->constrained()->setNullOnDelete();
         });
     }
 

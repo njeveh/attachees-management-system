@@ -16,9 +16,12 @@ return new class extends Migration {
             $table->foreignUuid('applicant_id')->nullable(false)->unique()
                 ->constrained()->cascadeOnDelete();
             $table->date('date_of_birth')->nullable(false);
+            $table->char('sex', 1);
             $table->string('address')->nullable();
             $table->string('phone_number');
             $table->string('disability')->nullable();
+            $table->string('level_of_study', 20);
+            $table->string('course_of_study');
             $table->text('professional_summary')->nullable();
         });
     }

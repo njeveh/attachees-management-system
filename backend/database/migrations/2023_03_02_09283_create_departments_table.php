@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->unique()->primary();
             $table->timestamps();
             $table->string('name')->nullable(false);
-            $table->string('description')->nullable(false);
+            $table->text('description')->nullable(false);
             $table->string('department_head')->nullable();
             $table->string('email')->nullable();
             $table->string('phone');

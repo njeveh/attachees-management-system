@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreignUuid('advert_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
-            $table->string('value')->nullable(false)->fulltext('value');
+            $table->string('value', 500)->nullable(false)->fulltext('value');
             $table->string('type')->nullable(false); //general_requirement || professional_requirement || intern_responsibility.
         });
     }

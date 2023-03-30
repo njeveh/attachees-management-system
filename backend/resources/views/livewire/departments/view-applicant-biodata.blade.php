@@ -44,10 +44,27 @@
                             <input type="text" wire:model="phone_number" class="form-control" id="phone-number"
                                 disabled>
                         </div>
-
-                        <p class="disability-field">
+                        <div class="form-group">
+                            <label for="sex" class="form-label">
+                                {{ __('Sex') }}</label>
+                            <div id="sex">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="sex" value="M"
+                                            disabled>M
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="sex" value="F"
+                                            disabled>F
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="disability-field">
                             Has disability?
-                        </p>
+                        </div>
                         <div class="form-check">
                             <label for="has-disability" class="form-check-label">{{ __('No') }}</label>
                             <input type="radio" wire:model="has_disability" value='0' class="form-check-input"
@@ -63,7 +80,41 @@
                             <label for="disability" class="form-label">{{ __('Disability if Yes') }}</label>
                             <textarea wire:model="disability" class="form-control" id="disability" rows="3" disabled></textarea>
                         </div>
-
+                        <div class="mb-3 form-group">
+                            <label for="level-of-study" class="form-label">Level of Study:</label>
+                            <div id="level-of-study">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="masters" disabled>Masters
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="bachelors" disabled>Bachelors
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="diploma" disabled>Diploma
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="certificate" disabled>Certificate
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="course-of-study"
+                                class="form-label">{{ __('Current Course of Study') }}</label>
+                            <input type="text" wire:model="course_of_study" class="form-control"
+                                id="course-of-study" disabled>
+                        </div>
                         {{-- Emergency Contacts --}}
                         <div class="">
                             <h4>{{ __('Emergency Contacts') }}</h4>

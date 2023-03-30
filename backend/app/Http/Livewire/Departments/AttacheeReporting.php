@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Departments;
 use App\Models\Application;
 use App\Models\Attachee;
 use App\Utilities\Utilities;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -40,13 +41,14 @@ class AttacheeReporting extends Component
         if ($applications->count()) {
             $applications = Application::whereIn('id', $applications->modelkeys())
                 ->whereLike(['applicant.first_name', 'applicant.second_name', 'advert.title', 'applicant.national_id', 'applicant.institution'], $this->search ?? '')
-                ->where('quarter', $this->quarter['quarter'])
+                ->where('quarter', $this->quarter['quarter'] + 1)
                 ->where('status', 'accepted')->get();
             if ($applications->count()) {
                 $applications = $applications->filter(function ($application) {
                     return $application->applicationAccompaniments->doesntContain('status', '!==', 'accepted') &&
                         $application->applicationAccompaniments->contains('name', 'offer_acceptance_form')
-                        && $application->applicant->engagement_level == 4;
+                        && $application->applicant->engagement_level > 3 &&
+                        !$application->attachee;
                 });
             }
         }
@@ -56,21 +58,28 @@ class AttacheeReporting extends Component
     public function report($id)
     {
         $applicant = Application::find($id)->applicant;
-        if ($applicant->has('attachee')) {
+        //acertain that this applicant is not currently attached somewhere else
+        if (
+            $applicant->attachees->where('status', 'active')->count()
+        ) {
             $this->feedback_header = 'Error reporting attachee!!';
-            $this->feedback = 'This applicant has already reported for another position.';
+            $this->feedback = 'This applicant is already an active attachee in another position.';
             $this->alert_class = 'alert-danger';
             $this->dispatchBrowserEvent('action_feedback');
+            return;
         }
         DB::beginTransaction();
         try {
-            $position = Application::find($id)->advert->title;
+            $application = Application::find($id);
+            $position = $application->advert->title;
             Attachee::create([
                 'applicant_id' => $applicant->id,
+                'application_id' => $application->id,
                 'department_id' => $this->department->id,
                 'year' => $this->year,
                 'cohort' => $this->quarter['quarter'],
                 'position' => $position,
+                'advert_id' => $application->advert->id,
                 'date_started' => \Carbon\Carbon::now(),
                 'status' => 'active',
             ]);

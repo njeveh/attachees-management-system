@@ -19,6 +19,9 @@ class Biodata extends Component
     public $alert_class;
     public $feedback_header;
     public $date_of_birth;
+    public $sex;
+    public $level_of_study;
+    public $course_of_study;
     public $address;
     public $phone_number;
     public $has_disability;
@@ -37,6 +40,9 @@ class Biodata extends Component
         'date_of_birth' => 'required|date',
         'address' => 'required|string',
         'phone_number' => 'required|string',
+        'sex' => 'required',
+        'level_of_study' => 'required|string',
+        'course_of_study' => 'required|string',
         'has_disability' => 'required|boolean',
         'disability' => 'required_if:has_disability,true|exclude_if:has_disability,false',
         'emergency_contacts.*.name' => 'required|string',
@@ -86,6 +92,9 @@ class Biodata extends Component
             $this->has_disability = !($this->biodata->disability == null);
             $this->disability = $this->biodata->disability;
             $this->professional_summary = $this->biodata->professional_summary;
+            $this->sex = $this->biodata->sex;
+            $this->course_of_study = $this->biodata->course_of_study;
+            $this->level_of_study = $this->biodata->level_of_study;
         }
 
         $emergency_contacts = $this->applicant->applicantEmergencyContacts;
@@ -303,6 +312,9 @@ class Biodata extends Component
                         'phone_number' => $this->phone_number,
                         'disability' => $this->disability,
                         'professional_summary' => $this->professional_summary,
+                        'sex' => $this->sex,
+                        'level_of_study' => $this->level_of_study,
+                        'course_of_study' => $this->course_of_study,
                     ]);
             } else {
                 $this->biodata = ApplicantBiodata::create([
@@ -312,6 +324,9 @@ class Biodata extends Component
                     'phone_number' => $this->phone_number,
                     'disability' => $this->disability,
                     'professional_summary' => $this->professional_summary,
+                    'sex' => $this->sex,
+                    'level_of_study' => $this->level_of_study,
+                    'course_of_study' => $this->course_of_study,
                 ]);
             }
             if (count($this->emergency_contacts)) {

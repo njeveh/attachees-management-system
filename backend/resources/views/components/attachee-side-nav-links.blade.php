@@ -36,11 +36,6 @@
             </a>
         </li>
         <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-star" style="width: 10%;"></i></span>
-                <span>Evaluation</span></a>
-        </li>
-        <li>
             <a href="#downloadsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <span class="icon"><i class="fas fa-download" style="width: 10%;"></i></span>
                 <span>Downloads</span>

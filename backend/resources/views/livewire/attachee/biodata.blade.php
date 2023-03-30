@@ -32,6 +32,27 @@
                     </span>
                 @enderror
             </div>
+            <div class="form-group">
+                <label for="sex" class="form-label">
+                    {{ __('Sex') }}</label>
+                <div id="sex" class="@error('sex') is-invalid @enderror">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="sex" value="M">M
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="sex" value="F">F
+                        </label>
+                    </div>
+                </div>
+                @error('sex')
+                    <span class="invalid-feedback text-danger">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
 
             <p class="disability-field">
                 Do you have any disability?
@@ -67,7 +88,52 @@
                     @enderror
                 </div>
             </div>
-
+            <div class="mb-3 form-group">
+                <label for="level-of-study" class="form-label">Level of Study (tick appropriately
+                    below):</label>
+                <div id="level-of-study" class="@error('level_of_study') is-invalid @enderror">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                value="masters">Masters
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                value="bachelors">Bachelors
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                value="diploma">Diploma
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                value="certificate">Certificate
+                        </label>
+                    </div>
+                </div>
+                @error('level_of_study')
+                    <span class="invalid-feedback text-danger">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group mb-3">
+                <label for="course-of-study"
+                    class="form-label">{{ __('which course are you currently pursuing?') }}</label>
+                <input type="text" wire:model="course_of_study" class="form-control" id="course-of-study"
+                    required>
+                @error('course_of_study')
+                    <span class="error">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
             {{-- Emergency Contacts --}}
             <div class="">
                 <h4>{{ __('Emergency Contacts') }}</h4>

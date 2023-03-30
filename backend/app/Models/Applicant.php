@@ -59,11 +59,11 @@ class Applicant extends Model
     }
 
     /**
-     * get applications associated with this attcahee
+     * get applications associated with this attachee
      */
-    public function attachee(): HasOne
+    public function attachees(): HasMany
     {
-        return $this->hasOne(Attachee::class);
+        return $this->hasMany(Attachee::class);
     }
 
     /**

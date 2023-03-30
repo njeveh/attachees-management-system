@@ -66,10 +66,9 @@ class ApplicationResponseController extends Controller
         $request->validate([
             'offer_acceptance_form' => 'required|file|mimes:pdf,jpg,jpeg,png',
         ]);
-        DB::beginTransaction();
         try {
             $path = $request->offer_acceptance_form->storePubliclyAs(
-                preg_replace('/\s+/', '_', $application->advert->department->name) . 'offer_acceptance_forms/' . '/' .
+                preg_replace('/\s+/', '_', $application->advert->department->name) . '/offer_acceptance_forms/' .
                 preg_replace('/\//', '_', $application->advert->year) . '/' . 'quarter_' . $application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $application->advert->title) . '/' .
                 $application->applicant->national_id,
                 'offer_acceptance_form',
@@ -82,15 +81,8 @@ class ApplicationResponseController extends Controller
                     'application_id' => $id,
                     'path' => $path,
                 ]);
-                if ($applicant->engagement_level < 3) {
-                    $applicant->engagement_level = 3;
-                    $applicant->save();
-                }
-                DB::commit();
             }
         } catch (\Exception $e) {
-            Log::info($e);
-            DB::rollBack();
             return back()->with(
                 'server_error',
                 'Sorry!! Something went wrong.'

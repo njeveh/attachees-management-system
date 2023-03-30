@@ -15,19 +15,20 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreignUuid('applicant_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
-            $table->string('year')->nullable(true); //the finacial/academic year they are attached
-            $table->unsignedTinyInteger('cohort')->nullable(true); //1,2,3,4
+            $table->foreignUuid('application_id')->nullable()->constrained()->setNullOnDelete();
             $table->foreignUuid('department_id')->nullable(true)
                 ->constrained()->cascadeOnDelete();
+            $table->string('year')->nullable(true); //the finacial/academic year they are attached
+            $table->unsignedTinyInteger('cohort')->nullable(true); //1,2,3,4
             /**
              * active, terminated_before_completion, completed,
              */
             $table->string('status')->nullable(false)->default('active');
             $table->string('position')->nullable();
-            $table->foreignUuid('advert_id')->nullable()->constrained()->setNullOnDelete();
             $table->timestamp('date_started')->nullable();
             $table->timestamp('date_terminated')->nullable();
             $table->string('termination_reason')->nullable();
+            $table->tinyInteger('has_filled_evaluation_form')->nullable(false)->default(0);
         });
     }
 

@@ -4,14 +4,9 @@ namespace App\Http\Livewire\Attachee;
 
 use App\Models\Advert;
 use App\Models\Application;
-use App\Models\AdvertAccompaniment;
 use App\Models\ApplicationAccompaniment;
-use App\Models\Attachee;
 use App\Utilities\Utilities;
 use Livewire\Component;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\WithFileUploads;

@@ -77,10 +77,10 @@ class Advert extends Model
     }
 
     /**
-     * get the applicants to this advert
+     * get the attachees related to this advert
      */
-    public function attachees(): HasMany
+    public function attachees(): HasManyThrough
     {
-        return $this->hasMany(Attachee::class);
+        return $this->hasManyThrough(Attachee::class, Application::class);
     }
 }

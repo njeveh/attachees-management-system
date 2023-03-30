@@ -14,6 +14,9 @@ class ViewApplicantBiodata extends Component
     public $feedback_header;
     public $date_of_birth;
     public $address;
+    public $sex;
+    public $level_of_study;
+    public $course_of_study;
     public $phone_number;
     public $has_disability;
     public $disability;
@@ -45,6 +48,9 @@ class ViewApplicantBiodata extends Component
             $this->has_disability = !($this->biodata->disability == null);
             $this->disability = $this->biodata->disability;
             $this->professional_summary = $this->biodata->professional_summary;
+            $this->sex = $this->biodata->sex;
+            $this->course_of_study = $this->biodata->course_of_study;
+            $this->level_of_study = $this->biodata->level_of_study;
         }
 
         $emergency_contacts = $this->applicant->applicantEmergencyContacts;

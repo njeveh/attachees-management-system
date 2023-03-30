@@ -85,7 +85,7 @@ class ApplicantController extends Controller
             DB::rollBack();
             return back()->with(
                 'error',
-                'Sorry!! Something went wrong.'
+                'Sorry!! Something went wrong while processing your request, please try again.'
             )->withInput();
         }
 

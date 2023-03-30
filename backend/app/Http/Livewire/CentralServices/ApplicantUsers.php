@@ -11,18 +11,18 @@ class ApplicantUsers extends Users
     {
         $applicants = Applicant::whereLike(['first_name', 'second_name', 'national_id',], $this->search ?? '')
             ->when($this->status_filter == 'active_attachees', function ($query, $status) {
-                return $query->whereHas('attachee', function (Builder $query) {
+                return $query->whereHas('attachees', function (Builder $query) {
                     return $query->where('status', 'active');
                 });
             })
-            ->when($this->status_filter == 'applicants', function ($query, $status) {
+            ->when($this->status_filter == 'non_attachee_applicants', function ($query, $status) {
                 return $query->whereNot(function (Builder $query) {
-                    $query->whereHas('attachee');
+                    $query->whereHas('attachees');
                 });
             })
             ->when($this->status_filter == 'dismissed_attachees', function ($query, $status) {
-                return $query->whereHas('attachee', function (Builder $query) {
-                    return $query->whereIn('status', ['completed', 'terminated_before_completion']);
+                return $query->whereHas('attachees', function (Builder $query) {
+                    return $query->where('status', '!=', 'active');
                 });
             })->paginate(1);
         return view('livewire.central-services.applicant-users', ['applicants' => $applicants]);

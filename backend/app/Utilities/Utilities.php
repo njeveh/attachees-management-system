@@ -97,16 +97,15 @@ class Utilities
 
     }
 
-    public static function generateResponseLetter($path, $view)
+    public static function generateReport($data)
     {
         try {
-            $pdf = new PDF();
-            $pdf = PDF::loadView($view);
-            $pdf->render();
-            $output = $pdf->output();
-            Storage::put('/public/' . $path, $output, 'public');
+            $dompdf = new PDF();
+            $dompdf = PDF::loadView('livewire.central-services.report', ['attachees' => $data]);
+            $dompdf->render();
+            return $dompdf->stream();
         } catch (\Exception $e) {
-            //
+            \Log::info($e);
         }
         return;
 

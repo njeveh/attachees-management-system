@@ -4,7 +4,7 @@
     </x-slot:heading>
     <x-slot:links>
         <li>
-            <a href="#">
+            <a href="{{ route('central_services.home') }}">
                 <span class="icon"><i class="fas fa-home" style="width: 10%;"></i></span>
                 <span>{{ __('Dashboard') }}</span>
             </a>
@@ -35,27 +35,22 @@
         </li>
         <p>APPLICATIONS</p>
         <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
+            <a href="{{ route('central_services.applications_data') }}">
+                <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>
                 <span>{{ __('Applications') }}</span></a>
         </li>
 
         <p>EVALUATIONS</p>
         <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-star" style="width: 10%;"></i></span>
-                <span>{{ __('Evaluations') }}</span></a>
-        </li>
-        <li>
-            <a href="#">
+            <a href="{{ route('central_services.evaluations') }}">
                 <span class="icon"><i class="fas fa-download" style="width: 10%;"></i></span>
                 <span>{{ __('Generate Evaluations') }}</span></a>
         </li>
         <p>REPORTS</p>
         <li>
-            <a href="#">
-                <span class="icon"><i class="fas fa-bars" style="width: 10%;"></i></span>
-                <span>{{ __('Reports') }}</span>
+            <a href="{{ route('central_services.reports') }}">
+                <span class="icon"><i class="fas fa-download" style="width: 10%;"></i></span>
+                <span>{{ __('Generate Reports') }}</span>
             </a>
         </li>
     </x-slot:links>

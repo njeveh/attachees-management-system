@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Departments;
 
+use App\Events\AttacheeDismissed;
 use App\Models\Application;
 use App\Models\Attachee;
 use App\Utilities\Utilities;
@@ -60,13 +61,23 @@ class AttacheeDismissal extends Component
     public function dismiss($id)
     {
         $this->validate();
-        $status = $this->termination_reason === 'completed' ? 'completed' : 'terminated_before_completion';
+        $attachee = Attachee::find($id);
+        if ($this->termination_reason == 'completed') {
+            $status = 'completed';
+            $message = 'Congratulations ' . $attachee->applicant->first_name . ' for successfully completing your attachment/internship at JKUAT. It was our pleasure having you
+            and we hope you had a good learning experience. We welcome you to fill the evaluation form accessible via the link provided below and give us your honest
+            feedback useful at improving our engagements with future attachees and interns. You are required to fill and submit the form in order to be able to receive a recommendation letter.';
+        } else {
+            $status = 'terminated_before_completion';
+            $message = 'Dear ' . $attachee->applicant->first_name . ' Your attachment/internship at JKUAT has been terminated prematurely. If neccessary, Please contact the department you were attached in for further information.';
+        }
         try {
             Attachee::find($id)->update([
                 'date_terminated' => \Carbon\Carbon::now(),
                 'termination_reason' => $this->termination_reason,
                 'status' => $status,
             ]);
+            AttacheeDismissed::dispatch($attachee, $message, $this->termination_reason);
             $this->termination_reason = '';
         } catch (\Exception $e) {
             $this->feedback_header = 'Error dismissing attachee!!';

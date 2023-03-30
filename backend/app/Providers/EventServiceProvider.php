@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\ApplicationReplied;
+use App\Events\AttacheeDismissed;
 use App\Listeners\SendApplicationResponseNotification;
+use App\Listeners\SendAttacheeDismissalNotice;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -23,6 +25,9 @@ class EventServiceProvider extends ServiceProvider
         ApplicationReplied::class => [
             SendApplicationResponseNotification::class,
         ],
+        AttacheeDismissed::class => [
+            SendAttacheeDismissalNotice::class,
+        ]
     ];
 
     /**

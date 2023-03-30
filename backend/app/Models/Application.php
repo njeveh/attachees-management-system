@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Application extends Model
 {
@@ -48,7 +49,13 @@ class Application extends Model
     {
         return $this->belongsTo(Applicant::class);
     }
-
+    /**
+     * get the attachee associated with this application if any
+     */
+    public function attachee(): HasOne
+    {
+        return $this->hasOne(Attachee::class);
+    }
     /**
      * get the advert related to this application
      */

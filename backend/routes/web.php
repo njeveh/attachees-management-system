@@ -10,20 +10,26 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GeneratePDFController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportsGenerationController;
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\Attachee\Apply;
 use App\Http\Livewire\Attachee\AttacheeNotifications;
 use App\Http\Livewire\Attachee\AttacheeNotificationView;
+use App\Http\Livewire\Attachee\EvaluationForm;
 use App\Http\Livewire\Attachee\Notifications;
 use App\Http\Livewire\Attachee\NotificationView;
 use App\Http\Livewire\Attachee\ViewApplication;
 use App\Http\Livewire\CentralServices\AdvertView;
 use App\Http\Livewire\CentralServices\ApplicantUsers;
+use App\Http\Livewire\CentralServices\ApplicationsData;
+use App\Http\Livewire\CentralServices\AttacheeUsers;
 use App\Http\Livewire\CentralServices\Departments;
 use App\Http\Livewire\CentralServices\DepartmentsUsers;
 use App\Http\Livewire\CentralServices\DepartmentView;
 use App\Http\Livewire\CentralServices\DipcaUsers;
 use App\Http\Livewire\CentralServices\EditAdvert;
+use App\Http\Livewire\CentralServices\GenerateEvaluations;
+use App\Http\Livewire\CentralServices\GenerateReports;
 use App\Http\Livewire\CentralServices\Users;
 use App\Http\Livewire\CentralServices\ViewUserProfile;
 use App\Http\Livewire\Departments\AdvertApplications;
@@ -97,7 +103,6 @@ Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'veri
 
     Route::get('/attachee/home', [HomeController::class, 'attacheeHome'])->name('attachee.home');
     Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
-    Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
     Route::get('/attachee/biodata', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
     Route::get('/attachee/profile', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
     Route::get('/attachee/my-applications', [ApplicationController::class, 'getAttacheeApplications'])->name('attachee.applications');
@@ -108,9 +113,12 @@ Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'veri
     Route::get('/attachee/offer-acceptance-form/{id}', [ApplicationResponseController::class, 'generateOfferAcceptanceForm']);
     Route::get('/attachee/offer-acceptance-form-upload-page/{id}', [ApplicationResponseController::class, 'showOfferAcceptanceFormUploadPage']);
     Route::post('/attachee/offer-acceptance-form-upload/{id}', [ApplicationResponseController::class, 'uploadOfferAcceptanceForm']);
-    // Route::get('/application/uploads/success', function(){
-    //     return view('attachee.application-success');
-    // })->name('application_uploads.success');
+    Route::get('/attachee/evaluation-form/{id}', EvaluationForm::class)->name('attachee.evaluation_form');
+    Route::get('/attachee/evaluation-done', function () {
+        return view('attachee.notify-evaluation-done');
+    })->name('attachee.evaluation_done');
+
+
 });
 
 /*------------------------------------------
@@ -163,7 +171,8 @@ Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-h
     Route::get('/central-services/edit-advert/{id}', EditAdvert::class)->name('central_services.edit_advert');
     Route::get('/central-services/departments/', Departments::class)->name('central_services.departments');
     Route::get('/central-services/departments/{id}', DepartmentView::class)->name('central_services.department_view');
-    Route::get('/central-services/users', ApplicantUsers::class)->name('central_services.users');
+    Route::get('/central-services/aplicant-users', ApplicantUsers::class)->name('central_services.users');
+    //Route::get('/central-services/attachee-users', AttacheeUsers::class)->name('central_services.attachee_users');
     Route::get('/central-services/departments-users', DepartmentsUsers::class)->name('central_services.departments_users');
     Route::get('/central-services/dipca-users', DipcaUsers::class)->name('central_services.dipca_users');
     Route::get('/central-services/user-profile-view/{id}', ViewUserProfile::class)->name('central_services.user_profile_view');
@@ -174,6 +183,10 @@ Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-h
     Route::get('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'getDipcaAdminCreationForm'])->name('central_services.dipca-admin-registration-form');
     Route::post('/central-services/department-admin-registration', [AdminUserRegistrationController::class, 'storeDepartmentAdmin'])->name('central_services.department-admin-registration');
     Route::post('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'storeDipcaAdmin'])->name('central_services.dipca-admin-registration');
+    Route::get('/central-services/applications-data', ApplicationsData::class)->name('central_services.applications_data');
+    Route::get('/central-services/evaluations', GenerateEvaluations::class)->name('central_services.evaluations');
+    Route::get('/central-services/reports', GenerateReports::class)->name('central_services.reports');
+    Route::post('/central-services/download-reports', [ReportsGenerationController::class, 'downloadReport'])->name('central_services.reports_download');
 
 
 });

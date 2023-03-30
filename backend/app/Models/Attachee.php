@@ -23,15 +23,16 @@ class Attachee extends Model
     protected $fillable = [
         'applicant_id',
         'department_id',
+        'application_id',
         'year',
         'cohort',
         'position',
-        'advert_id',
         'status',
         //active, terminated_before_completion, 'completed'.
+        'date_started',
         'date_terminated',
         'termination_reason',
-        'date_started',
+        'has_filled_evaluation_form',
     ];
 
     /**
@@ -52,11 +53,11 @@ class Attachee extends Model
     }
 
     /**
-     * get the advert associated with this attachee position
+     * get the application associated with this attachee position
      */
-    public function advert(): BelongsTo
+    public function application(): BelongsTo
     {
-        return $this->belongsTo(Advert::class);
+        return $this->belongsTo(Application::class);
     }
 
     /**

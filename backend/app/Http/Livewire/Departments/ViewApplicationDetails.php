@@ -107,6 +107,11 @@ class ViewApplicationDetails extends AdvertApplications
                             $this->application->applicant->engagement_level = 4;
                             $this->application->applicant->save();
                         }
+                    } elseif ($this->intended_status === 'rejected') {
+                        if ($this->application->applicant->engagement_level < 5 && $this->application->applicant->engagement_level != 3) {
+                            $this->application->applicant->engagement_level = 2;
+                            $this->application->applicant->save();
+                        }
                     }
                     break;
             }

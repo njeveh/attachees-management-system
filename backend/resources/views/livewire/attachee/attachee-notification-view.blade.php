@@ -12,14 +12,24 @@
                 <div>{{ $notification->data['message'] }}</div>
 
                 <div>
-                    @foreach ($notification->data['links'] as $key => $link)
-                        @if ($link != null)
-                            <a @if ($notification->data['revocation_reasons'] != '') href="{{ $link }}{{ $notification->id }}"
+                    @if ($notification->data['title'] == 'Application Response')
+                        @foreach ($notification->data['links'] as $key => $link)
+                            @if ($link != null)
+                                <a @if ($notification->data['revocation_reasons'] != '') href="{{ $link }}{{ $notification->id }}"
                             @else
                             href="{{ $link }}" @endif
-                                class="btn btn-primary m-2">{{ preg_replace('/_/', ' ', $key) }}</a>
-                        @endif
-                    @endforeach
+                                    class="btn btn-primary m-2">{{ preg_replace('/_/', ' ', $key) }}</a>
+                            @endif
+                        @endforeach
+                    @endif
+                    @if ($notification->data['title'] == 'End of Attachment/Internship Notice')
+                        @foreach ($notification->data['links'] as $key => $link)
+                            @if ($link != null)
+                                <a href="{{ $link }}"
+                                    class="btn btn-primary m-2">{{ preg_replace('/_/', ' ', $key) }}</a>
+                            @endif
+                        @endforeach
+                    @endif
 
                 </div>
             </main>

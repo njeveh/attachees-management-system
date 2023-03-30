@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreignUuid('applicant_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
-            $table->string('skill')->nullable(false);
+            $table->string('skill', 500)->nullable(false);
         });
     }
 
