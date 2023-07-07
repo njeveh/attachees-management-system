@@ -45,6 +45,10 @@
                                                     <span class="text-warning">&nbsp canceled</span>
                                                 @break
 
+                                                @case('revoked')
+                                                    <span class="text-danger">&nbsp Acceptance Revoked</span>
+                                                @break
+
                                                 @default
                                                     <span class="text-secondary">Pending</span>
                                             @endswitch

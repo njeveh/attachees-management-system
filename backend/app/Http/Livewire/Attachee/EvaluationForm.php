@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Attachee;
 use App\Models\Attachee;
 use App\Models\Department;
 use App\Models\Evaluation;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 
@@ -79,7 +80,7 @@ class EvaluationForm extends Component
         if ($this->recommendable_to_friends == 1) {
             $this->reasons_if_not_recommendable = null;
         }
-        \DB::beginTransaction();
+        DB::beginTransaction();
         try {
             Evaluation::create([
                 'course_being_pursued' => $this->course_being_pursued,
@@ -97,10 +98,10 @@ class EvaluationForm extends Component
             ]);
             $this->attachee->has_filled_evaluation_form = 1;
             $this->attachee->save();
-            \DB::commit();
+            DB::commit();
         } catch (\Exception $e) {
             // \Log::info($e);
-            \DB::rollBack();
+            DB::rollBack();
             $this->feedback_header = 'Error storing Evaluation!!';
             $this->feedback = 'Something went wrong while adding the evaluation to storage. Please try again and if the error persists contact support team to resolve the issue';
             $this->alert_class = 'alert-danger';

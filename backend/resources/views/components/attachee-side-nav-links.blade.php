@@ -3,10 +3,17 @@
         JKUAT Attachment <br /> Portal
     </x-slot:heading>
     <x-slot:links>
-        <a href="#">
+    <li>
+        <a href="/">
             <span class="icon"><i class="fas fa-home" style="width: 10%;"></i></span>
             <span>Home</span>
         </a>
+    </li>
+        <li>
+            <a href="{{ route('attachee.home') }}">
+                <span class="icon"><i class="fas fa-bar-chart" style="width: 10%;"></i></span>
+                <span>Dashboard</span>
+            </a>
         </li>
         <li>
             <a href="#profileSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -15,7 +22,7 @@
             </a>
             <ul class="collapse list-unstyled" id="profileSubmenu">
                 <li>
-                    <a href="#">View Profile</a>
+                    <a href="{{ route('attachee.profile') }}">View Profile</a>
                 </li>
                 <li>
                     <a href="{{ route('attachee.biodata') }}">Biodata</a>
@@ -42,10 +49,10 @@
             </a>
             <ul class="collapse list-unstyled" id="downloadsSubmenu">
                 <li>
-                    <a href="#">Application response letter</a>
+                    <a href=" {{ route('attachee.reviewed_applications') }}">Application response letter</a>
                 </li>
                 <li>
-                    <a href="#">Recommendation letter</a>
+                    <a href="{{ route('attachee.recommendation-letters') }}">Recommendation letter</a>
                 </li>
             </ul>
         </li>

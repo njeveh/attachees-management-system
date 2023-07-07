@@ -31,7 +31,7 @@ class Apply extends Component
     public $quarter;
 
     protected $rules = [
-        'application_letter' => 'required|file|mimes:pdf,jpg,jpeg,png',
+        'application_letter' => 'required|file|mimes:pdf,docx,odt',
         'attachment_letter' => 'required|file|mimes:pdf,jpg,jpeg,png',
         'insurance_cover' => 'required|file|mimes:pdf,jpg,jpeg,png',
         'national_id_front' => 'required|file|mimes:pdf,jpg,jpeg,png,',
@@ -51,6 +51,7 @@ class Apply extends Component
 
     public function apply()
     {
+        Log::info('application');
         $this->validate();
         if (
             Application::where('applicant_id', $this->user->applicant->id)

@@ -68,7 +68,7 @@ class AdvertApplications extends Component
             })
             ->when($this->status_filter, function ($query, $status) {
                 return $query->where('status', $status);
-            })->paginate(2);
+            })->latest()->paginate(10);
         return view('livewire.departments.advert-applications', ['applications' => $applications]);
     }
 
@@ -170,12 +170,20 @@ class AdvertApplications extends Component
                 $this->dispatchBrowserEvent('action_confirm');
                 break;
             case 'accept':
-                $this->feedback_header = 'Confirm Acceptance';
-                $this->feedback = 'Are you sure you want to accept this Application? The applicant will receive a letter of offer immediately.';
-                $this->alert_class = 'alert-warning';
-                $this->confirmed_action = 'acceptApplication';
-                $this->confirmed_action_parameter = $id;
-                $this->dispatchBrowserEvent('action_confirm');
+                $application = Application::find($id);
+                if( $application->applicationAccompaniments->contains('status', '!==', 'accepted')){
+                    $this->feedback_header = 'Action Denied!!';
+                    $this->feedback = "You can't accept this application before you approve all the application accompaniments.";
+                    $this->alert_class = 'alert-danger';
+                    $this->dispatchBrowserEvent('action_feedback');
+                } else {
+                    $this->feedback_header = 'Confirm Acceptance';
+                    $this->feedback = 'Are you sure you want to accept this Application? The applicant will receive a letter of offer immediately.';
+                    $this->alert_class = 'alert-warning';
+                    $this->confirmed_action = 'acceptApplication';
+                    $this->confirmed_action_parameter = $id;
+                    $this->dispatchBrowserEvent('action_confirm');
+                }
                 break;
 
         }
@@ -231,7 +239,7 @@ class AdvertApplications extends Component
                 $applicant->save();
             }
             $application->refresh();
-            $message = 'Congratulations ' . $applicant->first_name . ', your application has been successfully Processed. Please follow the links below to get your response letter and offer acceptance form.
+            $message = 'Congratulations ' . $applicant->first_name . ', your application has been successfully Processed. Please follow the link(s) below to get your response letter and offer acceptance form.
             You are expected to fill the acceptance form and upload a scanned copy of it on the upload link provided below ';
             ApplicationReplied::dispatch($application, $message);
         } catch (\Exception $e) {
@@ -265,7 +273,7 @@ class AdvertApplications extends Component
                 $application->applicant->engagement_level = 3;
                 $application->applicant->save();
             }
-            $message = 'Dear ' . $application->applicant->first_name . ', Due to reasons detailed in the letter accessible via the link below, your application acceptance for the post (' . $application->advert->title . ') has been revoked.
+            $message = 'Dear ' . $application->applicant->first_name . ', Due to reasons stated below, your application acceptance for the post (' . $application->advert->title . ') has been revoked.
             You may contact us for more information.';
             ApplicationReplied::dispatch($application, $message, $this->revocation_reasons);
         } catch (\Exception $e) {

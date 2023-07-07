@@ -24,7 +24,7 @@ class ApplicantUsers extends Users
                 return $query->whereHas('attachees', function (Builder $query) {
                     return $query->where('status', '!=', 'active');
                 });
-            })->paginate(1);
+            })->paginate(10);
         return view('livewire.central-services.applicant-users', ['applicants' => $applicants]);
     }
 

@@ -59,7 +59,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return new Attribute(
             get: fn($value) => ["user", "attachee", "dipca_admin", "department_admin", "central_services_admin"][$value],
-        ); } /**
+        ); 
+    } 
+        /**
            * get the attachee associated with this user if any
            */
     public function applicant(): HasOne {

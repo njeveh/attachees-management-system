@@ -5,13 +5,14 @@
             @csrf
             <div class="container">
                 <div class="mb-3">
-                    <h4>Upload Documents</h4>
+                    <h4>Upload Documents </h4>
+                    <p class="text-danger">(All documents should be of either of these mime types: pdf, jpg, jpeg or png)</p>
                     <div class="form-group mb-3">
                         <label for="application-letter" class="form-label">{{ __('Application Letter') }}</label>
                         <input type="file" wire:model="application_letter" class="form-control" id="application-letter"
                             required>
                         @error('application_letter')
-                            <span class="error">
+                            <span class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -22,7 +23,7 @@
                         <input type="file" wire:model="insurance_cover" class="form-control" id="insurance-cover"
                             required>
                         @error('insurance_cover')
-                            <span class="error">
+                            <span class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -33,7 +34,7 @@
                         <input type="file" wire:model="attachment_letter" class="form-control" id="attachment-letter"
                             required>
                         @error('attachment_letter')
-                            <span class="error">
+                            <span class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -44,7 +45,7 @@
                         <input type="file" wire:model="national_id_front" class="form-control" id="national-id-front"
                             required>
                         @error('national_id_front')
-                            <span class="error">
+                            <span class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -55,7 +56,7 @@
                         <input type="file" wire:model="national_id_back" class="form-control" id="national-id-back"
                             required>
                         @error('national_id_back')
-                            <span class="error">
+                            <span class="text-danger">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror

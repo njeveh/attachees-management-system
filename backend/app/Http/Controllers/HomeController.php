@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
+use App\Models\Attachee;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -43,18 +45,7 @@ class HomeController extends Controller
      */
     public function attacheeHome()
     {
-                    if (auth()->user()->type == 'department_admin') {
-                return redirect()->route('departments.home');
-            }else if (auth()->user()->type == 'attachee') {
-return view('attachee.home');
-            }else if (auth()->user()->type == 'dipca_admin') {
-                return redirect()->route('dipca.home');
-            }else if (auth()->user()->type == 'central_services_admin') {
-                return redirect()->route('central_services.home');
-            }else{
-                return redirect()->route('welcome.page');
-            }
-        // return view('attachee.home');
+        return view('attachee.home');
     }
   
     /**
@@ -64,7 +55,11 @@ return view('attachee.home');
      */
     public function departmentHome()
     {
-        return view('departments.home');
+        $department = auth()->user()->departmentAdmin->department;
+        $pending_applications = $department->applications->where('status', 'pending')->count();
+        $current_attachees = $department->attachees->where('status', 'active')->count();
+        return view('departments.home', ['pending_applications' => $pending_applications,
+    'current_attachees' => $current_attachees]);
     }
 
     /**
@@ -74,7 +69,10 @@ return view('attachee.home');
      */
     public function centralServicesHome()
     {
-        return view('central_services.home');
+        $pending_applications = Application::where('status', 'pending')->count();
+        $active_attachees = Attachee::where('status', 'active')->count();
+        return view('central_services.home', ['pending_applications' => $pending_applications,
+        'active_attachees' => $active_attachees]);
     }
 
     /**

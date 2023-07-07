@@ -30,7 +30,7 @@ class ApplicationResponseController extends Controller
                 $reponsibilities = $application->advert->accompaniments->where('type', 'intern_responsibility');
                 $dompdf = PDF::loadView('application_responses.offer-letter', ['application' => $application, 'quarter' => $quarter, 'responsibilities' => $reponsibilities,]);
             } elseif ($application->status === 'rejected') {
-                $dompdf = PDF::loadView('application_responses.reject-letter', ['application' => $application]);
+                $dompdf = PDF::loadView('application_responses.reject-letter', ['application' => $application,]);
             } else {
                 return Response('', $status = 404);
             }
@@ -99,6 +99,5 @@ class ApplicationResponseController extends Controller
             return Response('', $status = 404);
         }
         return view('application_responses.offer-acceptance-form-upload', ['application_id' => $application->id]);
-
     }
 }

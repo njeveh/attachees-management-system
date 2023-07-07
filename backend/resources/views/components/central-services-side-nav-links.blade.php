@@ -35,7 +35,13 @@
         </li>
         <p>APPLICATIONS</p>
         <li>
-            <a href="{{ route('central_services.applications_data') }}">
+            <a href="{{ route('central_services.applications_summary') }}">
+                <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>
+                <span>{{ __('Applications Summary') }}</span></a>
+        </li>
+
+        <li>
+            <a href="{{ route('central_services.applications') }}">
                 <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>
                 <span>{{ __('Applications') }}</span></a>
         </li>

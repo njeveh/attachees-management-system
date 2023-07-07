@@ -33,19 +33,22 @@ class ApplicationResponse extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    // public function toMail(object $notifiable): MailMessage
-    // {
-    //     return (new MailMessage)
-    //         ->line('The introduction to the notification.')
-    //         ->action('Notification Action', url('/'))
-    //         ->line('Thank you for using our application!');
-    // }
+    public function toMail(object $notifiable): MailMessage
+    {
+        return (new MailMessage)
+            ->subject('Application Response')
+            ->greeting('Application Response')
+            ->line($this->message)
+            ->line($this->revocation_reasons)
+            ->action('Attachments', env('APP_URL').'/attachee/my-reviewed-applications/' .$this->application->id. '/links')
+            ->line('Thank you!');
+    }
 
     /**
      * Get the array representation of the notification.
@@ -62,9 +65,9 @@ class ApplicationResponse extends Notification implements ShouldQueue
             'revocation_reasons' => $this->revocation_reasons,
             'message' => $this->message,
             'links' => [
-                'response_letter' => $this->revocation_reasons == '' ? env('APP_URL') . '/attachee/application-response-letter/' . $this->application->id : env('APP_URL') . '/attachee/application-response-letter/',
-                'offer_acceptance_form' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form/' . $this->application->id : null,
-                'offer_acceptance_form_upload_link' => $this->application->status == 'accepted' ? env('APP_URL') . '/attachee/offer-acceptance-form-upload-page/' . $this->application->id : null,
+                'response_letter' => $this->revocation_reasons == '' ? '/attachee/application-response-letter/' . $this->application->id : '/attachee/application-response-letter/',
+                'offer_acceptance_form' => $this->application->status == 'accepted' ? '/attachee/offer-acceptance-form/' . $this->application->id : null,
+                'offer_acceptance_form_upload_link' => $this->application->status == 'accepted' ? '/attachee/offer-acceptance-form-upload-page/' . $this->application->id : null,
             ],
         ];
     }

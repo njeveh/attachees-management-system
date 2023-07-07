@@ -5,20 +5,20 @@
     <x-slot:links>
 
         <li>
-            <a href="#">
+            <a href="{{ route('dipca.home') }}">
                 <span class="icon"><i class="fas fa-chart-line" style="width: 10%;"></i></span>
                 <span>Dashboard</span>
             </a>
         </li>
 
         <li>
-            <a href="#">
+            <a href="{{ route('dipca.notifications') }}">
                 <span class="icon"><i class="fas fa-bell" style="width: 10%;"></i></span>
                 <span>Notifications</span>
             </a>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('dipca.reports') }}">
                 <span class="icon"><i class="fas fa-bars" style="width: 10%;"></i></span>
                 <span>Reports</span>
             </a>

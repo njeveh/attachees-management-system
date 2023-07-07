@@ -15,7 +15,7 @@ class CreateDipcaAdminsSeeder extends Seeder
     {
         $dipca_admins = [
             [
-                'user_id' => '2360e38d-3af4-4da8-8571-88aeb47fbd31',
+                'user_id' => '996b86b9-d054-412a-a316-b6b91cf13bd7',
                 'first_name' => 'DIPCA ADMIN',
                 'last_name' => 'JKUAT',
                 'staff_id' => 'dipca001-224',

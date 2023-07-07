@@ -15,7 +15,7 @@ class CreateCentralServicesAdminsSeeder extends Seeder
     {
         $admins = [
             [
-                'user_id' => '69c69545-e5f2-4bac-946d-7235393de49e',
+                'user_id' => '996b86b9-b632-46ab-9784-6e2781fe14c4',
                 'first_name' => 'Central Services Admin',
                 'last_name' => 'JKUAT',
                 'phone_number' => '+254700611118',

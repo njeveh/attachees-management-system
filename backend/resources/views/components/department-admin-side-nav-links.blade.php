@@ -4,7 +4,7 @@
     </x-slot:heading>
     <x-slot:links>
         <li>
-            <a href="#">
+            <a href="{{ route('departments.home') }}">
                 <span class="icon"><i class="fas fa-chart-line" style="width: 10%;"></i></span>
                 <span>Dashboard</span>
             </a>
@@ -48,11 +48,11 @@
                         <span>View applicables</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#">
                         <span class="icon"><i class="fas fa-gear" style="width: 10%;"></i></span>
                         <span>Manage</span></a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         <li>
@@ -72,11 +72,11 @@
                         <span class="icon"><i class="fas fa-user-slash"></i></span>
                         <span>Dismissing</span></a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="#">
                         <span class="icon"><i class="fas fa-users-cog"></i></span>
                         <span>Manage Attachees</span></a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         {{-- <li>
@@ -91,12 +91,12 @@
             </a>
             <ul class="collapse list-unstyled" id="recLettersSubmenu">
                 <li>
-                    <a href="#">
+                    <a href="{{ route('departments.recommendation_letters') }}">
                         <span class="icon"><i class="fas fa-eye" style="width: 10%;"></i></span>
                         <span>View Letters</span></a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('departments.upload_recommendation_letter') }}">
                         <span class="icon"><i class="fas fa-upload" style="width: 10%;"></i></span>
                         <span>Upload Letters</span></a>
                 </li>

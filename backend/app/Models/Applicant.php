@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Applicant extends Model
 {
@@ -59,7 +60,7 @@ class Applicant extends Model
     }
 
     /**
-     * get applications associated with this attachee
+     * get attachee instances associated with this applicant
      */
     public function attachees(): HasMany
     {
@@ -104,5 +105,13 @@ class Applicant extends Model
     public function applicantReferees(): Hasmany
     {
         return $this->hasmany(ApplicantReferee::class);
+    }
+
+    /**
+     * get recommendation letters associated with this applicant
+     */
+    public function recommendationLetters(): HasManyThrough
+    {
+        return $this->hasManyThrough(RecommendationLetter::class, Attachee::class);
     }
 }

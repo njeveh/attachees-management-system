@@ -97,5 +97,23 @@ class ApplicationController extends Controller
         return view('attachee.applications', ['application' => $application]);
     }
 
+    /**
+     * get all reveiwed applications belonging to a specific attachee
+     */
+    public function getAttacheeReviewedapplications()
+    {
+        $applications = auth()->user()->applicant->applications->whereIn('status', ['accepted', 'rejected']);
+        return view('attachee.application-responses', ['applications' => $applications]);
+    }
+
+    /**
+     * get downloads for a reveiwed application belonging to a specific attachee
+     */
+    public function getAttacheeReviewedapplicationDownloads($id)
+    {
+        $application = Application::find($id);
+        return view('attachee.application-response', ['application' => $application]);
+    }
+
 
 }

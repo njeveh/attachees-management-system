@@ -15,7 +15,7 @@ class AttacheeUsers extends Users
             })
             ->when($this->status_filter == 'dismissed_attachees', function ($query, $status) {
                 return $query->whereIn('status', ['completed', 'terminated_before_completion']);
-            })->paginate(1);
+            })->paginate(10);
 
         return view('livewire.central-services.attachee-users');
     }

@@ -10,8 +10,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GeneratePDFController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RecommendationLetterController;
 use App\Http\Controllers\ReportsGenerationController;
 use App\Http\Controllers\WelcomePageController;
+use App\Http\Livewire\Applicant\Home;
 use App\Http\Livewire\Attachee\Apply;
 use App\Http\Livewire\Attachee\AttacheeNotifications;
 use App\Http\Livewire\Attachee\AttacheeNotificationView;
@@ -21,6 +23,8 @@ use App\Http\Livewire\Attachee\NotificationView;
 use App\Http\Livewire\Attachee\ViewApplication;
 use App\Http\Livewire\CentralServices\AdvertView;
 use App\Http\Livewire\CentralServices\ApplicantUsers;
+use App\Http\Livewire\CentralServices\ApplicationDocuments;
+use App\Http\Livewire\CentralServices\Applications;
 use App\Http\Livewire\CentralServices\ApplicationsData;
 use App\Http\Livewire\CentralServices\AttacheeUsers;
 use App\Http\Livewire\CentralServices\Departments;
@@ -39,8 +43,12 @@ use App\Http\Livewire\Departments\DepartmentAdvertView;
 use App\Http\Livewire\Departments\DepartmentEditAdvert;
 use App\Http\Livewire\Departments\DepartmentNotifications;
 use App\Http\Livewire\Departments\DepartmentNotificationView;
+use App\Http\Livewire\Departments\RecommendationLetters;
+use App\Http\Livewire\Departments\UploadRecommendationLetters;
 use App\Http\Livewire\Departments\ViewApplicantBiodata;
 use App\Http\Livewire\Departments\ViewApplicationDetails;
+use App\Http\Livewire\Dipca\GenerateReports as DipcaGenerateReports;
+use App\Http\Livewire\Dipca\Notifications as DipcaNotifications;
 use App\Http\Livewire\HomePage;
 use App\Models\Advert;
 use Illuminate\Support\Facades\Auth;
@@ -101,12 +109,14 @@ All Attachee Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'verified', 'is_active'])->group(function () {
 
-    Route::get('/attachee/home', [HomeController::class, 'attacheeHome'])->name('attachee.home');
+    Route::get('/attachee/home', Home::class)->name('attachee.home');
     Route::get('/adverts/{id}/apply', [ApplicationController::class, 'create']);
     Route::get('/attachee/biodata', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
-    Route::get('/attachee/profile', [AttacheeBiodataController::class, 'create'])->name('attachee.biodata');
+    Route::get('/attachee/profile', \App\Http\Livewire\Attachee\Profile::class)->name('attachee.profile');
     Route::get('/attachee/my-applications', [ApplicationController::class, 'getAttacheeApplications'])->name('attachee.applications');
     Route::get('/attachee/my-applications/{id}/view-application', ViewApplication::class);
+    Route::get('/attachee/my-reviewed-applications', [ApplicationController::class, 'getAttacheeReviewedApplications'])->name('attachee.reviewed_applications');
+    Route::get('/attachee/my-reviewed-applications/{id}/links', [ApplicationController::class, 'getAttacheeReviewedApplicationDownloads'])->name('attachee.reviewed_application_downloads');
     Route::get('/attachee/notifications/', AttacheeNotifications::class)->name('attachee.notifications');
     Route::get('/attachee/notifications/{id}', AttacheeNotificationView::class)->name('attachee.notification');
     Route::get('/attachee/application-response-letter/{id}', [ApplicationResponseController::class, 'generateApplicationResponseLetter']);
@@ -117,6 +127,8 @@ Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'veri
     Route::get('/attachee/evaluation-done', function () {
         return view('attachee.notify-evaluation-done');
     })->name('attachee.evaluation_done');
+    Route::get('/attachee/my-recommendation-letters', [RecommendationLetterController::class, 'show'])->name('attachee.recommendation-letters');
+
 
 
 });
@@ -129,6 +141,11 @@ All Dipca Routes List
 Route::middleware(['auth', 'user-access:dipca_admin', 'prevent-back-history', 'is_active'])->group(function () {
 
     Route::get('/dipca/home', [HomeController::class, 'dipcaHome'])->name('dipca.home');
+    Route::get('/dipca/reports', DipcaGenerateReports::class)->name('dipca.reports');
+    Route::post('/dipca/download-reports', [ReportsGenerationController::class, 'downloadReport'])->name('dipca.reports_download');
+    Route::get('/dipca/notifications/', DipcaNotifications::class)->name('dipca.notifications');
+
+
 });
 
 /*------------------------------------------
@@ -136,7 +153,7 @@ Route::middleware(['auth', 'user-access:dipca_admin', 'prevent-back-history', 'i
 All Departments Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history', 'is_active'])->group(function () {
+Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history'])->group(function () {
 
     Route::get('/departments/home', [HomeController::class, 'departmentHome'])->name('departments.home');
     Route::get('/departments/create-new-advert', [AdvertController::class, 'create'])->name('departments.new_advert_form');
@@ -152,6 +169,8 @@ Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history
     Route::get('/departments/attachee-dismissal', AttacheeDismissal::class)->name('departments.attachee_dismissal');
     Route::get('/departments/notifications/', DepartmentNotifications::class)->name('departments.notifications');
     Route::get('/departments/notifications/{id}', DepartmentNotificationView::class)->name('departments.notification');
+    Route::get('/departments/recommendation-letters/upload', UploadRecommendationLetters::class)->name('departments.upload_recommendation_letter');
+    Route::get('/departments/recommendation-letters', RecommendationLetters::class)->name('departments.recommendation_letters');
 
 
     // Route::get('/departments/applicable-adverts/{id}/applications', DepartmentEditAdvert::class)->name('departments.edit_advert');
@@ -163,7 +182,7 @@ Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history
 All Central services Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-history', 'is_active'])->group(function () {
+Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-history'])->group(function () {
 
     Route::get('/central-services/home', [HomeController::class, 'centralServicesHome'])->name('central_services.home');
     Route::get('/central-services/view-adverts', [AdvertController::class, 'showCentralServicesAdvertsView'])->name('central_services.view_adverts');
@@ -183,7 +202,9 @@ Route::middleware(['auth', 'user-access:central_services_admin', 'prevent-back-h
     Route::get('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'getDipcaAdminCreationForm'])->name('central_services.dipca-admin-registration-form');
     Route::post('/central-services/department-admin-registration', [AdminUserRegistrationController::class, 'storeDepartmentAdmin'])->name('central_services.department-admin-registration');
     Route::post('/central-services/dipca-admin-registration', [AdminUserRegistrationController::class, 'storeDipcaAdmin'])->name('central_services.dipca-admin-registration');
-    Route::get('/central-services/applications-data', ApplicationsData::class)->name('central_services.applications_data');
+    Route::get('/central-services/applications-data', ApplicationsData::class)->name('central_services.applications_summary');
+    Route::get('/central-services/applications', Applications::class)->name('central_services.applications');
+    Route::get('/central-services/application-documents/{id}', ApplicationDocuments::class)->name('central_services.view_application_documents');
     Route::get('/central-services/evaluations', GenerateEvaluations::class)->name('central_services.evaluations');
     Route::get('/central-services/reports', GenerateReports::class)->name('central_services.reports');
     Route::post('/central-services/download-reports', [ReportsGenerationController::class, 'downloadReport'])->name('central_services.reports_download');

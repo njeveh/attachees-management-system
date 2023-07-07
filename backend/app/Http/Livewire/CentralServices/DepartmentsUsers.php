@@ -9,7 +9,7 @@ class DepartmentsUsers extends Users
     public function render()
     {
         $department_users = DepartmentAdmin::whereLike(['first_name', 'last_name', 'staff_id',], $this->search ?? '')
-            ->paginate(1);
+            ->paginate(10);
         return view('livewire.central-services.departments-users', ['department_users' => $department_users]);
     }
 }

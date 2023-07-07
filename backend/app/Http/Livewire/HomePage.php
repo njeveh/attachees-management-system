@@ -42,7 +42,7 @@ class HomePage extends Component
                 return $query->whereIn('department_id', $departments);
             })
             ->where('approval_status', 'approved')->where('is_active', 1)
-            ->where('cohort' . $this->next_year_quarter_data['quarter'] . '_vacancies', '>', 0)
+            ->where('cohort' . $this->next_year_quarter_data['quarter'] . '_vacancies', '>', 0)->latest()
             ->paginate(2);
         return view('livewire.home-page', ['adverts' => $adverts, 'departments' => $this->department_objects]);
     }

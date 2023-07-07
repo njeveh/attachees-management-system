@@ -125,7 +125,7 @@ class AdvertController extends Controller
      */
     public function showDepartmentAdverts(Request $request)
     {
-        $adverts = $request->user()->departmentAdmin->department->adverts;
+        $adverts = $request->user()->departmentAdmin->department->adverts->sortByDesc('created_at');
         return view('departments.view-adverts', ['data' => $adverts]);
     }
 
@@ -161,9 +161,9 @@ class AdvertController extends Controller
      */
     public function showCentralServicesAdvertsView(Request $request)
     {
-        $approved_adverts = Advert::where('approval_status', 'approved')->get();
-        $disapproved_adverts = Advert::where('approval_status', 'disapproved')->get();
-        $pending_adverts = Advert::where('approval_status', 'pending approval')->get();
+        $approved_adverts = Advert::where('approval_status', 'approved')->latest()->get();
+        $disapproved_adverts = Advert::where('approval_status', 'disapproved')->latest()->get();
+        $pending_adverts = Advert::where('approval_status', 'pending approval')->latest()->get();
         return view('central_services.view-adverts', [
             'approved_adverts' => $approved_adverts,
             'disapproved_adverts' => $disapproved_adverts,

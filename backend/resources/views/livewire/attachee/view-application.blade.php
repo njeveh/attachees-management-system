@@ -65,7 +65,7 @@
                                     <td>
                                         <div class="btn-group btn-group-sm">
                                             @if ($application->status == 'pending')
-                                                @if ($application_accompaniment->name != 'application_letter' || $application_accompaniment->status == 'pending_review')
+                                                @if ($application_accompaniment->status == 'pending_review' || $application_accompaniment->status == 'rejected')
                                                     <button class="btn btn-primary" data-bs-toggle="collapse"
                                                         data-bs-target="#update-form-{{ $application_accompaniment->id }}">Update</button>
                                                 @endif

@@ -102,27 +102,25 @@
                     </thead>
                     <tbody>
                         @if ($attachees)
-                            @for ($i = 0; $i < 20; ++$i)
-                                @foreach ($attachees as $attachee)
-                                    <tr>
-                                        <td>{{ $attachee->applicant->first_name }}&nbsp;
-                                            {{ $attachee->applicant->second_name }}
-                                        </td>
-                                        <td>{{ $attachee->applicant->phone_number }}</td>
-                                        <td>{{ $attachee->applicant->national_id }}</td>
-                                        <td>{{ $attachee->applicant->applicantBiodata->sex }}</td>
-                                        <td>
-                                            @php
-                                                echo $attachee->applicant->applicantBiodata->disability == null ? 'No' : 'Yes';
-                                            @endphp
-                                        </td>
-                                        <td>{{ $attachee->applicant->institution }}</td>
-                                        <td>{{ $attachee->department->name }}</td>
-                                        <td>{{ $attachee->applicant->applicantBiodata->course_of_study }}</td>
-                                        <td>{{ $attachee->applicant->applicantBiodata->level_of_study }}</td>
-                                    </tr>
-                                @endforeach
-                            @endfor
+                            @foreach ($attachees as $attachee)
+                                <tr>
+                                    <td>{{ $attachee->applicant->first_name }}&nbsp;
+                                        {{ $attachee->applicant->second_name }}
+                                    </td>
+                                    <td>{{ $attachee->applicant->phone_number }}</td>
+                                    <td>{{ $attachee->applicant->national_id }}</td>
+                                    <td>{{ $attachee->applicant->applicantBiodata->sex }}</td>
+                                    <td>
+                                        @php
+                                            echo $attachee->applicant->applicantBiodata->disability == null ? 'No' : 'Yes';
+                                        @endphp
+                                    </td>
+                                    <td>{{ $attachee->applicant->institution }}</td>
+                                    <td>{{ $attachee->department->name }}</td>
+                                    <td>{{ $attachee->applicant->applicantBiodata->course_of_study }}</td>
+                                    <td>{{ $attachee->applicant->applicantBiodata->level_of_study }}</td>
+                                </tr>
+                            @endforeach
                         @else
                             <tr>
                                 <td colspan="10">

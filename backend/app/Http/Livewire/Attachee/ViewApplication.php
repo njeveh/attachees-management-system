@@ -116,7 +116,7 @@ class ViewApplication extends Component
             $target->status = 'pending_review';
             $target->save();
         } catch (\Exception $e) {
-            Log::info($e);
+            //Log::info($e);
             $this->feedback_header = 'Error Updating Document!!';
             $this->feedback = 'Something went wrong while updating the document. Please try again and if the error persists contact support team to resolve the issue';
             $this->alert_class = 'alert-danger';

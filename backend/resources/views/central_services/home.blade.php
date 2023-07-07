@@ -8,16 +8,8 @@
             <main id="main-content" class="mb-5">
                 <section class="welcome-banner">
                     <div>
-                        <p>Welcome to your</p>
+                        <p>Welcome to Central Services</p>
                         <h2>Dashboard</h2>
-                    </div>
-                </section>
-                <section class="notifications-section">
-                    <div class="page-title">
-                        <h5>Notifications</h5>
-                    </div>
-                    <div class="notifications-display ">
-                        <p>No new notifications</p>
                     </div>
                 </section>
                 <section class="statistics-section">
@@ -33,12 +25,12 @@
                         </div>
                         <div class="summary-cards">
                             <div class="pending-approvals">
-                                <p class="summary-card-title">Pending approvals</p>
-                                <p class="summary-number">5</p>
+                                <p class="summary-card-title">Adverts Pending approval</p>
+                                <p class="summary-number">{{ $pending_applications }}</p>
                             </div>
                             <div class="ongoing">
-                                <p class="summary-card-title">Ongoing Attachments</p>
-                                <p class="summary-number">1</p>
+                                <p class="summary-card-title">Currently Active Attachees</p>
+                                <p class="summary-number">{{ $active_attachees }}</p>
                             </div>
                         </div>
                     </div>

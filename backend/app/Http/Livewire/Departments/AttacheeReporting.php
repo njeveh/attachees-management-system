@@ -23,6 +23,7 @@ class AttacheeReporting extends Component
     public $confirmed_action_parameter;
 
     public $search = '';
+    public $next_quarter;
 
     public function mount()
     {
@@ -37,11 +38,12 @@ class AttacheeReporting extends Component
         } else {
             $this->year = date('Y') - 1 . '/' . date('Y');
         }
+        $this->next_quarter = Utilities::get_next_quarter_data()['quarter'];
         $applications = $this->department->applications;
         if ($applications->count()) {
             $applications = Application::whereIn('id', $applications->modelkeys())
                 ->whereLike(['applicant.first_name', 'applicant.second_name', 'advert.title', 'applicant.national_id', 'applicant.institution'], $this->search ?? '')
-                ->where('quarter', $this->quarter['quarter'] + 1)
+                ->where('quarter', $this->next_quarter)
                 ->where('status', 'accepted')->get();
             if ($applications->count()) {
                 $applications = $applications->filter(function ($application) {

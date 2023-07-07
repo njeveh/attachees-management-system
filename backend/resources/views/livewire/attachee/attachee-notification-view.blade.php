@@ -10,7 +10,9 @@
                     <h2>{{ $notification->data['from'] }} ({{ $notification->data['title'] }})</h2>
                 </div>
                 <div>{{ $notification->data['message'] }}</div>
-
+                @if ($notification->data['revocation_reasons'] != '')
+                    <div class="m-3">{{ $notification->data['revocation_reasons'] }}</div>
+                @endif
                 <div>
                     @if ($notification->data['title'] == 'Application Response')
                         @foreach ($notification->data['links'] as $key => $link)
