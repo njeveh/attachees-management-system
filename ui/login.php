@@ -28,22 +28,21 @@ include_once(ROOT_PATH . '/includes/header.php');
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" placeholder="Enter your password">
                             </div>
-                            <di style="margin:20px 5px;display: flex; flex-direction:row; justify-content:space-between; align-items:center;">
+                            <div style="margin:20px 5px;display: flex; flex-direction:row; justify-content:space-between; align-items:center;">
                                 <div>
                                     <small><a href="#"> Forgot your password?</a></small>
                                 </div>
                                 <div class="text-right">
                                     <input name="signinBtn" type="submit" value="Login" class="btn btn-primary" style="color:white; background-color:green;" class="panel text-right">
                                 </div>
-
+                            </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
                 <div class="panel panel-footer text-center">
                     <small>Don't have an account : <a href="<?php echo BASE_URL . "/register.php" ?>"> Register </a> </small>
                 </div>
             </div>
-        </div>
         </div>
         <div class="panel panel-footer text-center" style=" position: absolute;bottom: 0;width: 100%;text-align: center; padding-bottom:30px;">
             <large>JKUAT &copy; 2022. All Rights Reserved.</large>
