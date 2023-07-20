@@ -26,7 +26,7 @@
                         <div class="summary-cards">
                             <div class="pending-approvals">
                                 <p class="summary-card-title">Adverts Pending approval</p>
-                                <p class="summary-number">{{ $pending_applications }}</p>
+                                <p class="summary-number">{{ $pending_adverts }}</p>
                             </div>
                             <div class="ongoing">
                                 <p class="summary-card-title">Currently Active Attachees</p>

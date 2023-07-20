@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advert;
 use App\Models\Application;
 use App\Models\Attachee;
 use Illuminate\Http\Request;
@@ -69,9 +70,9 @@ class HomeController extends Controller
      */
     public function centralServicesHome()
     {
-        $pending_applications = Application::where('status', 'pending')->count();
+        $pending_adverts = Advert::where('approval_status', 'pending')->count();
         $active_attachees = Attachee::where('status', 'active')->count();
-        return view('central_services.home', ['pending_applications' => $pending_applications,
+        return view('central_services.home', ['pending_adverts' => $pending_adverts,
         'active_attachees' => $active_attachees]);
     }
 
