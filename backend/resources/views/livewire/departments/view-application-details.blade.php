@@ -19,10 +19,10 @@
                             class="nav-link">Biodata</a>
                     </li>
                     <li class="nav-item">
-                        <button type="button" wire:click="updateTab('all')" class="nav-link">Profile</button>
+                         <a href={{ route('departments.view_applicant_profile', $application->id) }}
+                            class="nav-link">Profile</a>
                     </li>
                 </ul>
-            </div>
             <div id="sticky-btns-department-view-application-docs"
                 class="d-flex align-items-center justify-content-between p-3">
 
@@ -75,6 +75,7 @@
                     @break
                 @endswitch
             </div>
+            </div>
             <form>
                 <div wire:ignore.self class="form-group mb-3 collapse bg-dark text-light p-2"
                     id="revocation-form-{{ $application->id }}">
@@ -100,12 +101,14 @@
             </form>
             <main id="main-content" class="pb-5">
                 <div class="page-title">
-                    <h3>{{ $application->advert->title }}/ Ref: {{ $application->advert->reference_number }}
+                    <h3>{{ $application->advert->studyArea->title }}/ Ref: {{ $application->advert->reference_number }}
                     </h3>
                 </div>
                 <div class="page-title">
                     <h3>Applicant's Name: {{ $application->applicant->first_name }}
                         {{ $application->applicant->second_name }}</h3>
+                    <div>Prefered starting date: {{ $application->desired_start_date }}</div>
+                    <div>Application expiry date: {{ $application->expiry_date }}</div>
                 </div>
                 <section class="">
                     <table class="table">

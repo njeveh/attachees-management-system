@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
 
-                                    <th scope="col">Title</th>
+                                    <th scope="col">Study Area</th>
                                     <th scope="col">Reference</th>
                                     <th scope="col">Year</th>
                                     <th scope="col">Approval Status</th>
@@ -30,9 +30,15 @@
                             <tbody>
                                 @foreach ($data as $advert)
                                     <tr>
-                                        <th scope="row"><span><img src="/assets/static/logo.png" alt="JKUAT Logo"
-                                                    style="width: 30px" /></span><span
-                                                class="ml-2">{{ $advert->title }}</span></th>
+                                        <th scope="row">
+                                            <span>
+                                                <img src="/assets/static/logo.png" alt="JKUAT Logo"
+                                                        style="width: 30px" />
+                                            </span>
+                                            <span class="ml-2">
+                                                {{ $advert->studyArea->title }}
+                                            </span>
+                                        </th>
                                         <td>{{ $advert->reference_number }}</td>
                                         <td>{{ $advert->year }}</td>
                                         <td>{{ $advert->approval_status }}</td>
@@ -46,7 +52,7 @@
                             </tbody>
                         </table>
                     @else
-                        <div class="d-flex justify-content-center">No adverts to show yet.</div>
+                        <div class="d-flex justify-content-center">No adverts to show.</div>
                     @endif
                 </section>
             </div>

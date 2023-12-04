@@ -20,13 +20,16 @@
                             </div>
 
                             <div class="card-body">
-                                @if (session('status'))
-                                    <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
+                                @if (session('status') == 'password-updated')
+                                    <div class="alert alert-success d-flex flex-row justify-content-between">
+                                        <div>{{ __('Password updated successfully.') }}</div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                     </div>
                                 @endif
                                 <form method="POST" action="{{ route('password.change_password') }}">
                                     @csrf
+                                    @method('put')
+
                                     <div class="row mb-3">
                                         <label for="current-password"
                                             class="col-md-4 col-form-label text-md-end">{{ __('Current Password') }}</label>

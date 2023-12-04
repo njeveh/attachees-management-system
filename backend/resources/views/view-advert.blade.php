@@ -13,7 +13,7 @@
                     <span>
                         <!-- JOMO KENYATTA UNIVERSITY OF AGRICULTURE AND TECHNOLOGY
                                                                                                                                                             <br /> -->
-                        <h5 style="color: white; text-decoration:none;">JKUAT ATTACHMENT PORTAL</h5>
+                        <h5 style="color: white; text-decoration:none;">JKUAT INDUSTRIAL ATTACHMENT PORTAL</h5>
                     </span>
                 </div>
             </a>
@@ -47,7 +47,7 @@
         </div>
     </nav>
     <div class="guest-content-wrapper d-flex flex-column">
-        <main class="advert-view-main mb-5">
+        <main class="advert-view-main py-5 mb-5 px-3">
             <header class="header">
                 <div align="center" class="logo justified">
                     <img src="/assets/static/logo.png" alt="JKUAT LOGO" width="100px">
@@ -62,31 +62,29 @@
             </header>
             <section class="m-2 advert card">
                 <div class="card-header">
-                    <h3>{{ $advert->title }}/Ref: {{ $advert->reference_number }}</h3>
+                    <h3>{{ $advert->studyArea->title }}</h3>
+                    <h3>Ref: {{ $advert->reference_number }}</h3>
                 </div>
                 <div class="card-body">
+                    {{-- <div>
+                        <h5>Year:</h5>
+                        <div> {{ $advert->year }}</div>
+                    </div>
+                    <div class='my-3'>
+                        <h5>No. of Vacancies:</h5>
+                        <ul>
+                            <li>Quarter 1 (Jul-Sep):&nbsp &nbsp {{ $advert->quarter1_vacancies }}</li>
+                            <li>Quarter 2 (Oct-Dec): &nbsp {{ $advert->quarter2_vacancies }}</li>
+                            <li>Quarter 3 (Jan-Mar): &nbsp {{ $advert->quarter3_vacancies }}</li>
+                            <li>Quarter 4 (Apr-Jun): &nbsp {{ $advert->quarter4_vacancies }}</li>
+                        </ul>
+                    </div> --}}
                     {{ $advert->description }}
-                    @if (count($gen_reqs) > 0)
-                        <h4>General Requirements</h4>
+                    @if (count($requirements) > 0)
+                        <h4 class='mt-3'>Requirements:</h4>
                         <ul>
-                            @foreach ($gen_reqs as $gen_req)
-                                <li>{{ $gen_req->value }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                    @if (count($prof_reqs) > 0)
-                        <h4>Professional Requirements</h4>
-                        <ul>
-                            @foreach ($prof_reqs as $prof_req)
-                                <li>{{ $prof_req->value }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                    @if (count($responsibilities) > 0)
-                        <h4>Attachee Responsibilities</h4>
-                        <ul>
-                            @foreach ($responsibilities as $responsibility)
-                                <li>{{ $responsibility->value }}</li>
+                            @foreach ($requirements as $requirement)
+                                <li>{{ $requirement->value }}</li>
                             @endforeach
                         </ul>
                     @endif
@@ -94,11 +92,12 @@
                 <div class="card-footer">
                     <h5>How to Apply</h5>
                     <div>
-                        Please apply in English saving your CV and Motivation letter as a single document
-                        indicating
-                        the area you are interested in and the location. To apply, please visit our website at
-                        https://kenya..net/. The deadline for receiving applications is 15th February 2022. Only
-                        shortlisted applicants will be considered for interview.
+                        Click the Apply button link below to apply. You will be required to log into an applicant
+                        account if you already have one for you to be able to apply, otherwise you have to create an
+                        applicant account
+                        first then log into it and proceed to apply. Access profile and biodata forms from the menu and
+                        fill them with the required
+                        information for they will act as your CV.
 
                     </div>
                     <div class="d-flex justify-content-end align-items-center m-2">

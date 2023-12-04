@@ -13,29 +13,29 @@ class ViewApplicantBiodata extends Component
     public $alert_class;
     public $feedback_header;
     public $date_of_birth;
-    public $address;
-    public $sex;
+    public $gender;
     public $level_of_study;
     public $course_of_study;
+    public $year_of_study;
+    public $address;
     public $phone_number;
     public $has_disability;
     public $disability;
+    public $disability_input_collapse;
     public Collection $emergency_contacts;
-    public $professional_summary;
     public Collection $education_levels;
-    public Collection $skills;
+    public Collection $areas_of_interest;
     public Collection $referees;
     public $applicant;
-    public $biodata;
     public $application;
+    public $biodata;
     // public $biodata_id;
 
     public function mount($id)
     {
         $this->fill([
             'emergency_contacts' => collect([]),
-            'education_levels' => collect([]),
-            'skills' => collect([]),
+            'areas_of_interest' => collect([]),
             'referees' => collect([]),
         ]);
         $this->application = Application::find($id);
@@ -47,15 +47,14 @@ class ViewApplicantBiodata extends Component
             $this->phone_number = $this->biodata->phone_number;
             $this->has_disability = !($this->biodata->disability == null);
             $this->disability = $this->biodata->disability;
-            $this->professional_summary = $this->biodata->professional_summary;
-            $this->sex = $this->biodata->sex;
+            $this->gender = $this->biodata->gender;
             $this->course_of_study = $this->biodata->course_of_study;
             $this->level_of_study = $this->biodata->level_of_study;
+            $this->year_of_study = $this->biodata->year_of_study;
         }
 
         $emergency_contacts = $this->applicant->applicantEmergencyContacts;
-        $education_levels = $this->applicant->applicantEducationLevels;
-        $skills = $this->applicant->applicantSkills;
+        $areas_of_interest = $this->applicant->applicantInterestArea;
         $referees = $this->applicant->applicantReferees;
 
         if (count($emergency_contacts)) {
@@ -76,29 +75,12 @@ class ViewApplicantBiodata extends Component
                 'id' => null,
             ]);
         }
-        if (count($education_levels)) {
-            $education_levels->map(function ($level, $key) {
-                $this->education_levels->push([
-                    'education_level' => $level->education_level,
-                    'start_date' => $level->start_date,
-                    'end_date' => $level->end_date,
-                    'id' => $level->id
-                ]);
+        if (count($areas_of_interest)) {
+            $areas_of_interest->map(function ($area_of_interest, $key) {
+                $this->areas_of_interest->push(['area_of_interest' => $area_of_interest->area_of_interest, 'id' => $area_of_interest->id]);
             });
         } else {
-            $this->education_levels->push([
-                'education_level' => '',
-                'start_date' => '',
-                'end_date' => '',
-                'id' => null,
-            ]);
-        }
-        if (count($skills)) {
-            $skills->map(function ($skill, $key) {
-                $this->skills->push(['skill' => $skill->skill, 'id' => $skill->id]);
-            });
-        } else {
-            $this->skills->push(['skill' => '', 'id' => null,]);
+            $this->areas_of_interest->push(['area_of_interest' => '', 'id' => null,]);
         }
         if (count($referees)) {
             $referees->map(function ($referee, $key) {

@@ -83,7 +83,9 @@
         </header>
         <section class="">
             <div class="page-title">
-                <h2>Attachee Quarterly Attendance Report</h2>
+                <h2>Attachee {{ $quarter !== null ? 'Quarterly' : 'Annual' }} Attendance Report</h2>
+                <h4>{{ $year }}{{ $department_name !== '' ? '-' . $department_name : '-All Departments' }}{{ $quarter !== null ? '/Q' . $quarter : '/All Quarters' }}
+                </h4>
             </div>
             <div class="container-fluid">
                 <table>
@@ -92,12 +94,14 @@
                             <th class="" scope="col">ATTACHEE NAME</th>
                             <th scope="col">CONTACT</th>
                             <th scope="col">ID/NO</th>
-                            <th scope="col">SEX</th>
+                            <th scope="col">GENDER</th>
                             <th scope="col">PWDS</th>
                             <th scope="col">INSTITUTION</th>
                             <th scope="col">SECTION ATTACHED</th>
                             <th scope="col">AREA OF STUDY</th>
                             <th scope="col">LEVEL OF EDUCATION</th>
+                            <th class="" scope="col">Date Started</th>
+                            <th class="" scope="col">Date Ended</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,7 +113,7 @@
                                     </td>
                                     <td>{{ $attachee->applicant->phone_number }}</td>
                                     <td>{{ $attachee->applicant->national_id }}</td>
-                                    <td>{{ $attachee->applicant->applicantBiodata->sex }}</td>
+                                    <td>{{ $attachee->applicant->applicantBiodata->gender }}</td>
                                     <td>
                                         @php
                                             echo $attachee->applicant->applicantBiodata->disability == null ? 'No' : 'Yes';
@@ -119,6 +123,8 @@
                                     <td>{{ $attachee->department->name }}</td>
                                     <td>{{ $attachee->applicant->applicantBiodata->course_of_study }}</td>
                                     <td>{{ $attachee->applicant->applicantBiodata->level_of_study }}</td>
+                                    <td>{{ date_format(date_create($attachee->date_started), 'd/m/y') }}</td>
+                                    <td>{{ date_format(date_create($attachee->date_terminated), 'd/m/y') }}</td>
                                 </tr>
                             @endforeach
                         @else

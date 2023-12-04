@@ -22,8 +22,10 @@ class Application extends Model
         'advert_id',
         'status',
         //pending, rejected, accepted, canceled
-        'quarter',
+        'desired_start_date', //date the applicant would like to start their attachment
+        'expiry_date', //date beyond which the application is invalid as per the applicant
         'date_replied',
+        'offer_accepted'
     ];
 
     /**

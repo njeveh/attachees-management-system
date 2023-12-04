@@ -15,60 +15,81 @@
                              <a href="/departments/edit-advert/{{ $advert->id }}"
                                  class=" btn btn-primary action-button">{{ __('Edit Advert') }}</a>
                          </div>
-                         <div style="display: flex; flex-direction:row; align-items:center; margin:0 0 20px 20px;">
+                         <div
+                             style="display: flex; flex-wrap: wrap; flex-direction:row; align-items:center; margin:0 0 20px 20px;">
                              <img src="/assets/static/logo.png" alt="Logo"
                                  style="height: 40px; width:40px; margin-right:20px;">
-                             <h4>{{ $advert->title }}</h4>
+                             <h4>{{ $advert->studyArea->title }}</h4>
                          </div>
                      </div>
                      <div style="margin-bottom: 20px;">
-                         <div>
+                         <div class='mb-3'>
                              <h5>Year: {{ $advert->year }}</h5>
                          </div>
-                         <div>
-                             <h5>No. of Vacancies</h5>
-                             <ul>
-                                 <li>Cohort 1: {{ $advert->cohort1_vacancies }}</li>
-                                 <li>Cohort 2: {{ $advert->cohort2_vacancies }}</li>
-                                 <li>Cohort 3: {{ $advert->cohort3_vacancies }}</li>
-                                 <li>Cohort 4: {{ $advert->cohort4_vacancies }}</li>
-                             </ul>
+
+                         <div class='mb-3'>
+                             <h5>Vacancies:</h5>
                          </div>
+                         <section class="overflow-auto">
+                             <table class="table table-hover table-responsive-sm mb-3">
+                                 <thead>
+                                     <tr class="bg-dark text-light">
+                                         <th scope="col">Quarter.</th>
+                                         <th scope="col">Declared Vacancies</th>
+                                         <th scope="col">Occupied</th>
+                                         <th scope="col">Vacant</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <td>Quarter 1 (Jul-Sept)</td>
+                                         <td>{{ $advert->quarter1_vacancies }}</td>
+                                         <td>{{ $advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 1)->count() }}
+                                         </td>
+                                         <td>{{ $advert->quarter1_vacancies -$advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 1)->count() }}
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>Quarter 2 (Oct-Dec)</td>
+                                         <td>{{ $advert->quarter2_vacancies }}</td>
+                                         <td>{{ $advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 2)->count() }}
+                                         </td>
+                                         <td>{{ $advert->quarter2_vacancies -$advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 2)->count() }}
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>Quarter 3 (Jan-Mar)</td>
+                                         <td>{{ $advert->quarter3_vacancies }}</td>
+                                         <td>{{ $advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 3)->count() }}
+                                         </td>
+                                         <td>{{ $advert->quarter3_vacancies -$advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 3)->count() }}
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>Quarter 4 (Apr-Jun)</td>
+                                         <td>{{ $advert->quarter4_vacancies }}</td>
+                                         <td>{{ $advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 4)->count() }}
+                                         </td>
+                                         <td>{{ $advert->quarter4_vacancies -$advert->attachees->where('applicant.engagement_level', 5)->where('quarter', 4)->count() }}
+                                         </td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </section>
                      </div>
 
                      <div>
                          <h5>Description : </h5>
                          <div class="advert-view">
                              <div>{{ $advert->description }}</div>
-                             @if (count($gen_reqs) > 0)
-                                 <h5>General Requirements</h5>
+                             @if (count($requirements) > 0)
+                                 <h5 class="mt-4">Requirements:</h5>
                                  <ul>
-                                     @foreach ($gen_reqs as $gen_req)
-                                         <li>{{ $gen_req->value }}</li>
+                                     @foreach ($requirements as $requirement)
+                                         <li>{{ $requirement->value }}</li>
                                      @endforeach
                                  </ul>
                              @endif
-                             @if (count($prof_reqs) > 0)
-                                 <h5>Professional Requirements</h5>
-                                 <ul>
-                                     @foreach ($prof_reqs as $prof_req)
-                                         <li>{{ $prof_req->value }}</li>
-                                     @endforeach
-                                 </ul>
-                             @endif
-                             @if (count($responsibilities) > 0)
-                                 <h5>Attachee Responsibilities</h5>
-                                 <ul>
-                                     @foreach ($responsibilities as $responsibility)
-                                         <li>{{ $responsibility->value }}</li>
-                                     @endforeach
-                                 </ul>
-                             @endif
-
-                             <h5>How to Apply</h5>
-                             <div>
-                                 {{ $advert->how_to_apply }}
-                             </div>
                          </div>
                      </div>
                      <div class="d-flex justify-content-end align-content-center m-2 pe-2">

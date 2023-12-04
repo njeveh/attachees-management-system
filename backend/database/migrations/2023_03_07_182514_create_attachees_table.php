@@ -19,12 +19,12 @@ return new class extends Migration {
             $table->foreignUuid('department_id')->nullable(true)
                 ->constrained()->cascadeOnDelete();
             $table->string('year')->nullable(true); //the finacial/academic year they are attached
-            $table->unsignedTinyInteger('cohort')->nullable(true); //1,2,3,4
+            $table->unsignedTinyInteger('quarter')->nullable(true); //1,2,3,4
             /**
              * active, terminated_before_completion, completed,
              */
             $table->string('status')->nullable(false)->default('active');
-            $table->string('position')->nullable();
+            $table->string('study_area')->nullable();
             $table->timestamp('date_started')->nullable();
             $table->timestamp('date_terminated')->nullable();
             $table->string('termination_reason')->nullable();

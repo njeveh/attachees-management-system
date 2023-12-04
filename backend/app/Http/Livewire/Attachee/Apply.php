@@ -26,6 +26,8 @@ class Apply extends Component
     public $national_id_back;
     public $advert;
     public $application;
+    public $desired_start_date;
+    public $application_expiry_date; //date beyond which applicant can't accept offer
     public $user;
     public $link;
     public $quarter;
@@ -36,6 +38,8 @@ class Apply extends Component
         'insurance_cover' => 'required|file|mimes:pdf,jpg,jpeg,png',
         'national_id_front' => 'required|file|mimes:pdf,jpg,jpeg,png,',
         'national_id_back' => 'required|file|mimes:pdf,jpg,jpeg,png,',
+        'desired_start_date'  => 'required|date|after_or_equal:today',
+        'application_expiry_date' => 'required|date|after_or_equal:desired_start_date', //date beyond which applicant can't accept offer
     ];
     public function mount($advert_id)
     {
@@ -51,7 +55,6 @@ class Apply extends Component
 
     public function apply()
     {
-        Log::info('application');
         $this->validate();
         if (
             Application::where('applicant_id', $this->user->applicant->id)
@@ -78,6 +81,8 @@ class Apply extends Component
                 'applicant_id' => $this->user->applicant->id,
                 'advert_id' => $this->advert->id,
                 'quarter' => $this->quarter['quarter'],
+                'desired_start_date'  => $this->desired_start_date,
+                'expiry_date' =>$this->application_expiry_date,
             ]);
             $collection->map(function ($item, int $key) {
                 $path = $item[1]->storePubliclyAs(

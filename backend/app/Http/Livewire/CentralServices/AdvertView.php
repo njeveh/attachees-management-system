@@ -28,11 +28,8 @@ class AdvertView extends Component
     public function render()
     {
         $advert = Advert::find($this->advert_id);
-        $gen_reqs = $advert->accompaniments->where('type', 'general_requirement');
-        $prof_reqs = $advert->accompaniments->where('type', 'professional_requirement');
-        $responsibilities = $advert->accompaniments->where('type', 'intern_responsibility');
-        return view('livewire.central-services.advert-view', ['advert' => $advert, 'gen_reqs' => $gen_reqs,
-        'prof_reqs' => $prof_reqs, 'responsibilities' => $responsibilities,]);
+        $requirements = $advert->advertAccompaniments->where('type', 'requirement');
+        return view('livewire.central-services.advert-view', ['advert' => $advert, 'requirements' => $requirements,]);
     }
 
 

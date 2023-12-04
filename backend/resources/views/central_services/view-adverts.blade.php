@@ -32,7 +32,7 @@
                                     @foreach ($pending_adverts as $pending_advert)
                                         <tr>
                                             <th scope="row">{{ $pending_advert->reference_number }}</th>
-                                            <td>{{ $pending_advert->title }}</td>
+                                            <td>{{ $pending_advert->studyArea->title }}</td>
                                             <td>{{ date_format($pending_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Pending</td>
                                             <td><a
@@ -66,7 +66,7 @@
                                     @foreach ($approved_adverts as $approved_advert)
                                         <tr>
                                             <th scope="row">{{ $approved_advert->reference_number }}</th>
-                                            <td>{{ $approved_advert->title }}</td>
+                                            <td>{{ $approved_advert->studyArea->title }}</td>
                                             <td>{{ date_format($approved_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Approved</td>
                                             <td><a
@@ -100,7 +100,7 @@
                                     @foreach ($disapproved_adverts as $disapproved_advert)
                                         <tr>
                                             <th scope="row">{{ $disapproved_advert->reference_number }}</th>
-                                            <td>{{ $disapproved_advert->title }}</td>
+                                            <td>{{ $disapproved_advert->studyArea->title }}</td>
                                             <td>{{ date_format($disapproved_advert->created_at, 'Y-M-d') }}</td>
                                             <td>Disapproved</td>
                                             <td><a

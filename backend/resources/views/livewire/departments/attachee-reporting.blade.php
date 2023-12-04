@@ -19,7 +19,7 @@
             <div id="main-content" class="tab">
                 <main>
                     <div class="page-title">
-                        <h3>{{ $year }} Cohort {{ $quarter['quarter'] }} Attachee reporting.
+                        <h3>{{ $year }} Attachee reporting.
                         </h3>
                     </div>
                     {{-- Applications table --}}
@@ -30,7 +30,7 @@
                                     <th scope="col">No.</th>
                                     <th scope="col">ID. No.</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Position</th>
+                                    <th scope="col">Study Area</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -47,7 +47,7 @@
                                                 {{ $application->applicant->first_name }}
                                                 {{ $application->applicant->second_name }}</th>
                                             <td class="align-middle">
-                                                {{ $application->advert->title }}
+                                                {{ $application->advert->studyArea->title }}
 
                                             </td>
 

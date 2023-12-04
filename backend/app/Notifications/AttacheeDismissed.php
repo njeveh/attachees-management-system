@@ -56,11 +56,11 @@ class AttacheeDismissed extends Notification
         return [
             'from' => $this->attachee->department->name,
             'date' => date('jS-m-Y'),
-            'title' => 'End of Attachment/Internship Notice',
+            'title' => 'End of Attachment Notice',
             'attachee_id' => $this->attachee->id,
             'message' => $this->message,
             'links' => [
-                'Evaluation Form' => $this->reason == 'completed' ? env('APP_URL') . '/attachee/evaluation-form/' . $this->attachee->id : null,
+                'Evaluation Form' => $this->reason == 'completed' ? '/attachee/evaluation-form/' . $this->attachee->id : null,
             ],
         ];
     }

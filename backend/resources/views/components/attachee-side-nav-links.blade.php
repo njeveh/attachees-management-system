@@ -1,6 +1,6 @@
 <x-side-nav>
     <x-slot:heading>
-        JKUAT Attachment <br /> Portal
+        JKUAT Industrial <br /> Attachment Portal
     </x-slot:heading>
     <x-slot:links>
     <li>

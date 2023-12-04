@@ -52,7 +52,7 @@ class Applicant extends Model
     }
 
     /**
-     * get applications associated with this attcahee
+     * get applications associated with this applicant
      */
     public function applications(): HasMany
     {
@@ -78,9 +78,9 @@ class Applicant extends Model
     /**
      * get skills associated with this applicant
      */
-    public function applicantSkills(): HasMany
+    public function applicantInterestArea(): HasMany
     {
-        return $this->hasMany(ApplicantSkill::class);
+        return $this->hasMany(ApplicantInterestArea::class);
     }
 
     /**
@@ -89,14 +89,6 @@ class Applicant extends Model
     public function applicantEmergencyContacts(): HasMany
     {
         return $this->hasMany(ApplicantEmergencyContact::class);
-    }
-
-    /**
-     * get education levels associated with this applicant
-     */
-    public function applicantEducationLevels(): HasMany
-    {
-        return $this->hasMany(ApplicantEducationLevel::class);
     }
 
     /**

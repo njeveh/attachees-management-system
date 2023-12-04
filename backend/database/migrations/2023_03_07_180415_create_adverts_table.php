@@ -15,15 +15,15 @@ return new class extends Migration {
             $table->timestamps();
             $table->foreignUuid('department_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
+            $table->foreignUuid('study_area_id')->nullable(false)
+                ->constrained()->cascadeOnDelete();                
             $table->string('reference_number')->nullable(false)->default('JKUAT#ANoNyMoUs');
-            $table->string('title')->nullable(false)->fulltext('title');
             $table->text('description')->fulltext('description');
             $table->string('year')->nullable(false);
-            $table->smallInteger('cohort1_vacancies');
-            $table->smallInteger('cohort2_vacancies');
-            $table->smallInteger('cohort3_vacancies');
-            $table->smallInteger('cohort4_vacancies');
-            $table->text('how_to_apply')->nullable();
+            $table->smallInteger('quarter1_vacancies');
+            $table->smallInteger('quarter2_vacancies');
+            $table->smallInteger('quarter3_vacancies');
+            $table->smallInteger('quarter4_vacancies');
             $table->string('author');
             $table->string('last_updated_by')->nullable();
             $table->string('last_approval_action_done_by')->nullable();

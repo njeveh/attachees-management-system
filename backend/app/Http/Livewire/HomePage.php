@@ -25,7 +25,7 @@ class HomePage extends Component
     {
         $this->department_objects = Department::all();
         $this->side_menu_class = '';
-        $this->next_year_quarter_data = Utilities::get_next_quarter_data();
+        //$this->next_year_quarter_data = Utilities::get_next_quarter_data();
 
     }
     public function render()
@@ -34,7 +34,7 @@ class HomePage extends Component
          * whereLike is a query builder macro defined on /Providers/AppserviceProvider boot method
          * 
          */
-        $adverts = Advert::whereLike(['title', 'description', 'reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
+        $adverts = Advert::whereLike(['studyArea.title', 'description', 'reference_number', 'department.name', 'advertAccompaniments.value'], $this->search ?? '')
             ->when($this->department, function ($query, $department) {
                 return $query->where('department_id', $department);
             })
@@ -42,8 +42,8 @@ class HomePage extends Component
                 return $query->whereIn('department_id', $departments);
             })
             ->where('approval_status', 'approved')->where('is_active', 1)
-            ->where('cohort' . $this->next_year_quarter_data['quarter'] . '_vacancies', '>', 0)->latest()
-            ->paginate(15);
+            //->where('quarter' . $this->next_year_quarter_data['quarter'] . '_vacancies', '>', 0)
+            ->latest()->paginate(20);
         return view('livewire.home-page', ['adverts' => $adverts, 'departments' => $this->department_objects]);
     }
 
@@ -82,17 +82,4 @@ class HomePage extends Component
         $this->reset('department');
     }
 
-    // public function resetDepartmentFilters()
-    // {
-    //     $this->reset('departments');
-    //     $this->reset('department');
-    // }
-    public function toggleClass()
-    {
-        if ($this->side_menu_class == '') {
-            $this->side_menu_class = 'active';
-        } else {
-            $this->side_menu_class = '';
-        }
-    }
 }

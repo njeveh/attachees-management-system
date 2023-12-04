@@ -51,6 +51,11 @@
                             <li>
                                 <a class="dropdown-item" href="{{ route('password.change') }}">Change Password</a>
                             </li>
+                            @if(Auth::user()->type == 'attachee')
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Manage Account</a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
                     {{-- <script>

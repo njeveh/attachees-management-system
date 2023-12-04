@@ -11,12 +11,13 @@
 
                     <div class="row">
                         <div class="col form-group mb-3">
-                            <label for="cohort">Cohort:</label>
-                            <select class="form-select" id="cohort" wire:model='cohort'>
-                                <option value="1">Cohort 1</option>
-                                <option value="2">Cohort 2</option>
-                                <option value="3">Cohort 3</option>
-                                <option value="4">Cohort 4</option>
+                            <label for="quarter">Quarter:</label>
+                            <select class="form-select" id="quarter" wire:model='quarter'>
+                                <option value="">All Quarters</option>
+                                <option value="1">Quarter 1</option>
+                                <option value="2">Quarter 2</option>
+                                <option value="3">Quarter 3</option>
+                                <option value="4">Quarter 4</option>
                             </select>
                         </div>
                         <div class="col form-group mb-3">
@@ -48,49 +49,65 @@
                 </div>
                 <section class="">
                     <div class="page-title">
-                        <h2>Attachee Quarterly Attendance Report</h2>
+                        <h2>Attachee {{ $quarter !== '' ? 'Quarterly' : 'Annual' }} Attendance Report</h2>
+                        <h4>{{ $year }}{{ $department !== '' ? '-' . $department_name : '-All Departments' }}{{ $quarter !== '' ? '/Q' . $quarter : '/All Quarters' }}
+                        </h4>
                     </div>
                     <div class="container-fluid">
                         <table class="table table-bordered table-responsive">
                             <thead>
                                 <tr>
+                                    <th class="" scope="col">No.</th>
                                     <th class="" scope="col">ATTACHEE NAME</th>
                                     <th class="" scope="col">CONTACT</th>
                                     <th class="" scope="col">ID/NO</th>
-                                    <th class="" scope="col">SEX</th>
+                                    <th class="" scope="col">GENDER</th>
                                     <th class="" scope="col">PWDS</th>
                                     <th class="" scope="col">INSTITUTION</th>
                                     <th class="" scope="col">SECTION ATTACHED</th>
                                     <th class="" scope="col">AREA OF STUDY</th>
                                     <th class="" scope="col">LEVEL OF EDUCATION</th>
-                                    <th scope="col">Action</th>
+                                    <th class="" scope="col">Date Started</th>
+                                    <th class="" scope="col">Date Ended</th>
+                                    {{-- <th scope="col">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @if ($attachees->count())
-                                    @foreach ($attachees as $attachee)
+                                    @foreach ($attachees as $key => $attachee)
                                         <tr>
+                                            <td>{{ $key + 1 }}</td>
                                             <td>{{ $attachee->applicant->first_name }}&nbsp;
                                                 {{ $attachee->applicant->second_name }}
                                             </td>
                                             <td>{{ $attachee->applicant->phone_number }}</td>
                                             <td>{{ $attachee->applicant->national_id }}</td>
-                                            <td>{{ $attachee->applicant->applicantBiodata->sex }}</td>
+                                            <td>{{ $attachee->applicant->applicantBiodata ? $attachee->applicant->applicantBiodata->gender : '' }}
+                                            </td>
                                             <td>
                                                 @php
-                                                    echo $attachee->applicant->applicantBiodata->disability == null ? 'No' : 'Yes';
+                                                    if ($attachee->applicant->applicantBiodata !== null) {
+                                                        echo $attachee->applicant->applicantBiodata->disability == null ? 'No' : 'Yes';
+                                                    } else {
+                                                        echo '';
+                                                    }
                                                 @endphp
                                             </td>
                                             <td>{{ $attachee->applicant->institution }}</td>
                                             <td>{{ $attachee->department->name }}</td>
-                                            <td>{{ $attachee->applicant->applicantBiodata->course_of_study }}</td>
-                                            <td>{{ $attachee->applicant->applicantBiodata->level_of_study }}</td>
-                                            <td>
+                                            <td>{{ $attachee->applicant->applicantBiodata ? $attachee->applicant->applicantBiodata->course_of_study : '' }}
+                                            </td>
+                                            <td>{{ $attachee->applicant->applicantBiodata ? $attachee->applicant->applicantBiodata->level_of_study : '' }}
+                                            </td>
+                                            <td>{{ date_format(date_create($attachee->date_started), 'd/m/y') }}</td>
+                                            <td>{{ date_format(date_create($attachee->date_terminated), 'd/m/y') }}
+                                            </td>
+                                            {{-- <td>
                                                 <a href="{{ Storage::url($attachee->application->applicationAccompaniments->where('name', 'offer_acceptance_form')->first()->path) }}"
                                                     class="btn btn-success text-nowrap">
                                                     Acceptance Letter
                                                 </a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @else
@@ -109,12 +126,12 @@
                             @csrf
                             <input type="hidden" name="department" value="{{ $department }}">
                             <input type="hidden" name="year" value="{{ $year }}">
-                            <input type="hidden" name="cohort" value="{{ $cohort }}">
+                            <input type="hidden" name="quarter" value="{{ $quarter }}">
                             <button type="submit" class="btn btn-primary m-2">Generate
                                 Report</button>
                         </form>
-                        <button type="button" class="btn btn-primary m-2"
-                            wire:click='downloadAcceptanceLetters'>Download Acceptance Letters</button>
+                        {{-- <button type="button" class="btn btn-primary m-2"
+                            wire:click='downloadAcceptanceLetters'>Download Acceptance Letters</button> --}}
                     </div>
                 </section>
             </main>

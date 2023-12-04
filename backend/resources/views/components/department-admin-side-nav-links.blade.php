@@ -16,6 +16,28 @@
                 <span>Notifications</span>
             </a>
         </li>
+
+        <li>
+            <a href="#studyAreasSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>
+                <span>Study Areas</span>
+            </a>
+            <ul class="collapse list-unstyled" id="studyAreasSubmenu">
+                <li>
+                    <a href="{{ route('departments.new_study_area_form') }}">
+                        <span class="icon"><i class="fas fa-plus-circle" style="width: 10%;"></i></span>
+                        <span>New Study Area</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('departments.study_areas') }}">
+                        <span class="icon"><i class="fas fa-eye" style="width: 10%;"></i></span>
+                        <span>View Study areas</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         <li>
             <a href="#advertsSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <span class="icon"><i class="fas fa-edit" style="width: 10%;"></i></span>

@@ -23,9 +23,6 @@ class AdvertApplications extends Component
     public $next_quarter;
     public $tab_filter;
     public $status_filter;
-    public $active_tab_class;
-    public $inactive_tab_class;
-    public $all_tab_class;
     public $search = '';
     public $feedback;
     public $alert_class;
@@ -49,9 +46,6 @@ class AdvertApplications extends Component
     {
         $this->table_title = 'All Applications';
         $this->table_title_bg_color = 'bg-primary';
-        $this->active_tab_class = 'active bg-secondary text-light';
-        $this->inactive_tab_class = 'text-dark';
-        $this->all_tab_class = 'text-dark';
         $this->status_filter = '';
         $this->next_quarter = Utilities::get_next_quarter_data()['quarter'];
         $this->advert = Advert::find($id);
@@ -59,44 +53,13 @@ class AdvertApplications extends Component
     }
     public function render()
     {
-        $applications = Application::where('advert_id', $this->advert->id)->whereLike(['applicant.first_name', 'applicant.second_name', 'quarter', 'advert.year', 'status',], $this->search ?? '')
-            ->when($this->tab_filter == 'active', function ($query) {
-                return $query->whereIn('quarter', [$this->next_quarter, $this->next_quarter - 1]);
-            })
-            ->when($this->tab_filter == 'inactive', function ($query) {
-                return $query->whereNotIn('quarter', [$this->next_quarter, $this->next_quarter - 1]);
-            })
+        $applications = Application::where('advert_id', $this->advert->id)->whereLike(['applicant.first_name', 'applicant.second_name', 'advert.year', 'status',], $this->search ?? '')
             ->when($this->status_filter, function ($query, $status) {
                 return $query->where('status', $status);
             })->latest()->paginate(10);
         return view('livewire.departments.advert-applications', ['applications' => $applications]);
     }
 
-    public function updateTab($value)
-    {
-        switch ($value) {
-            case 'active':
-                $this->active_tab_class = 'active bg-secondary text-light';
-                $this->reset(['inactive_tab_class', 'all_tab_class',]);
-                $this->resetToTabDefault();
-                $this->tab_filter = 'active';
-
-                break;
-            case 'inactive':
-                $this->inactive_tab_class = 'active bg-secondary text-light';
-                $this->reset(['active_tab_class', 'all_tab_class',]);
-                $this->resetToTabDefault();
-                $this->tab_filter = 'inactive';
-                break;
-            case 'all':
-                $this->all_tab_class = 'active bg-secondary text-light';
-                $this->reset(['inactive_tab_class', 'active_tab_class',]);
-                $this->resetToTabDefault();
-                $this->tab_filter = 'all';
-                break;
-        }
-
-    }
     public function updatedStatusFilter()
     {
         switch ($this->status_filter) {
@@ -133,9 +96,6 @@ class AdvertApplications extends Component
     {
         $this->table_title = 'All Applications';
         $this->table_title_bg_color = 'bg-primary';
-        $this->active_tab_class = 'active bg-secondary text-light';
-        $this->inactive_tab_class = 'text-dark';
-        $this->all_tab_class = 'text-dark';
         $this->status_filter = '';
         $this->tab_filter = 'active';
         $this->search = '';
@@ -239,8 +199,7 @@ class AdvertApplications extends Component
                 $applicant->save();
             }
             $application->refresh();
-            $message = 'Congratulations ' . $applicant->first_name . ', your application has been successfully Processed. Please follow the link(s) below to get your response letter and offer acceptance form.
-            You are expected to fill the acceptance form and upload a scanned copy of it on the upload link provided below ';
+            $message = 'Congratulations ' . $applicant->first_name . ', your application has been successfully Processed. Click on the response letter link below to access your response letter and the accept offer link to accept offer.';
             ApplicationReplied::dispatch($application, $message);
         } catch (\Exception $e) {
             $this->feedback_header = 'Error performing requested action!!';

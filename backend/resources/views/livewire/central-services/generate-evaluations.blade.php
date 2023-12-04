@@ -23,13 +23,13 @@
                         <form wire:submit.prevent="exportCSVFile">
                             @csrf
                             <div class="form-group mb-3">
-                                <label for="cohort">Cohort:</label>
-                                <select class="form-select" id="cohort" wire:model='cohort'>
-                                    <option value="">All cohorts</option>
-                                    <option value="1">Cohort 1</option>
-                                    <option value="2">Cohort 2</option>
-                                    <option value="3">Cohort 3</option>
-                                    <option value="4">Cohort 4</option>
+                                <label for="quarter">Quarter:</label>
+                                <select class="form-select" id="quarter" wire:model='quarter'>
+                                    <option value="">All quarters</option>
+                                    <option value="1">Quarter 1</option>
+                                    <option value="2">Quarter 2</option>
+                                    <option value="3">Quarter 3</option>
+                                    <option value="4">Quarter 4</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">

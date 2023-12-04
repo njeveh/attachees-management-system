@@ -18,7 +18,7 @@
                          <div style="display: flex; flex-direction:row; align-items:center; margin:0 0 20px 20px;">
                              <img src="/assets/static/logo.png" alt="Logo"
                                  style="height: 40px; width:40px; margin-right:20px;">
-                             <h4>{{ $advert->title }}</h4>
+                             <h4>{{ $advert->studyArea->title }}</h4>
                          </div>
                      </div>
                      <div style="margin-bottom: 20px;">
@@ -28,10 +28,10 @@
                          <div>
                              <h5>No. of Vacancies</h5>
                              <ul>
-                                 <li>Cohort 1: {{ $advert->cohort1_vacancies }}</li>
-                                 <li>Cohort 2: {{ $advert->cohort2_vacancies }}</li>
-                                 <li>Cohort 3: {{ $advert->cohort3_vacancies }}</li>
-                                 <li>Cohort 4: {{ $advert->cohort4_vacancies }}</li>
+                                 <li>Quarter 1: {{ $advert->quarter1_vacancies }}</li>
+                                 <li>Quarter 2: {{ $advert->quarter2_vacancies }}</li>
+                                 <li>Quarter 3: {{ $advert->quarter3_vacancies }}</li>
+                                 <li>Quarter 4: {{ $advert->quarter4_vacancies }}</li>
                              </ul>
                          </div>
                      </div>
@@ -40,37 +40,14 @@
                          <h5>Description : </h5>
                          <div class="advert-view">
                              <div>{{ $advert->description }}</div>
-                             <h5>Requirements</h5>
-                             {{ $advert->description }}
-                             @if (count($gen_reqs) > 0)
-                                 <h5>General Requirements</h5>
+                             @if (count($requirements) > 0)
+                                 <h5 class='mt-4'>Requirements:</h5>
                                  <ul>
-                                     @foreach ($gen_reqs as $gen_req)
-                                         <li>{{ $gen_req->value }}</li>
+                                     @foreach ($requirements as $requirement)
+                                         <li>{{ $requirement->value }}</li>
                                      @endforeach
                                  </ul>
                              @endif
-                             @if (count($prof_reqs) > 0)
-                                 <h5>Professional Requirements</h5>
-                                 <ul>
-                                     @foreach ($prof_reqs as $prof_req)
-                                         <li>{{ $prof_req->value }}</li>
-                                     @endforeach
-                                 </ul>
-                             @endif
-                             @if (count($responsibilities) > 0)
-                                 <h5>Attachee Responsibilities</h5>
-                                 <ul>
-                                     @foreach ($responsibilities as $responsibility)
-                                         <li>{{ $responsibility->value }}</li>
-                                     @endforeach
-                                 </ul>
-                             @endif
-
-                             <h5>How to Apply</h5>
-                             <div>
-                                 {{ $advert->how_to_apply }}
-                             </div>
                          </div>
                      </div>
                      <div class="d-flex justify-content-end align-content-center m-2 pe-2">

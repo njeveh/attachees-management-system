@@ -6,7 +6,8 @@
             <div class="container">
                 <div class="mb-3">
                     <h4>Upload Documents </h4>
-                    <p class="text-danger">(All documents should be of either of these mime types: pdf, jpg, jpeg or png)</p>
+                    <p class="text-danger">(All documents should be of either of these mime types: pdf, jpg, jpeg or png)
+                    </p>
                     <div class="form-group mb-3">
                         <label for="application-letter" class="form-label">{{ __('Application Letter') }}</label>
                         <input type="file" wire:model="application_letter" class="form-control" id="application-letter"
@@ -61,9 +62,27 @@
                             </span>
                         @enderror
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="desired-start-date" class="form-label">{{ __('Select the date you would want to start your attachment.') }}</label>
+                        <input type="date" wire:model="desired_start_date" class="form-control" id="desired-start-date">
+                        @error('desired_start_date')
+                            <span class="error">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="application-expiry-date" class="form-label">{{ __('Select the date beyond which you can\'t start your attachment.') }}</label>
+                        <input type="date" wire:model="application_expiry_date" class="form-control" id="application-expiry-date">
+                        @error('application_expiry_date')
+                            <span class="error">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="container text-right mb-3">
-                    <button type="submit" class="btn btn-primary">{{ __('Upload') }}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
                 </div>
         </form>
     </section>

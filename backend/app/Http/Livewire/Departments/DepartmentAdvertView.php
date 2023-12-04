@@ -30,14 +30,10 @@ class DepartmentAdvertView extends Component
     public function render()
     {
         $advert = Advert::find($this->advert_id);
-        $gen_reqs = $advert->accompaniments->where('type', 'general_requirement');
-        $prof_reqs = $advert->accompaniments->where('type', 'professional_requirement');
-        $responsibilities = $advert->accompaniments->where('type', 'intern_responsibility');
+        $requirements = $advert->advertAccompaniments->where('type', 'requirement');
         return view('livewire.departments.department-advert-view', [
             'advert' => $advert,
-            'gen_reqs' => $gen_reqs,
-            'prof_reqs' => $prof_reqs,
-            'responsibilities' => $responsibilities,
+            'requirements' => $requirements,
         ]);
     }
     public function warn($action)

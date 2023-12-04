@@ -12,7 +12,7 @@ class GenerateEvaluations extends Component
 {
     public $departments;
     public $year;
-    public $cohort;
+    public $quarter;
     public $evaluations;
     public $department;
     public $file_name;
@@ -23,7 +23,7 @@ class GenerateEvaluations extends Component
         $this->departments = Department::all();
         $this->department = "";
         $this->year = "";
-        $this->cohort = "";
+        $this->quarter = "";
         $this->file_extension = 'csv';
     }
     public function render()
@@ -44,7 +44,7 @@ class GenerateEvaluations extends Component
             'recommendable_to_friends',
             'reasons_if_not_recommendable',
             'recommendations_to_university',
-            'cohort',
+            'quarter',
             'year',
         )->
             when($this->department != "", function ($query) {
@@ -53,8 +53,8 @@ class GenerateEvaluations extends Component
             ->when($this->year != "", function ($query) {
                 return $query->where('year', $this->year);
             })
-            ->when($this->cohort != "", function ($query) {
-                return $query->where('cohort', $this->cohort);
+            ->when($this->quarter != "", function ($query) {
+                return $query->where('quarter', $this->quarter);
             })->get();
         if ($records->count()) {
             $to_export = new ExportEvaluations($records);

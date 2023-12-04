@@ -20,7 +20,7 @@ class Advert extends Model
      */
     protected $fillable = [
         'department_id',
-        'title',
+        'study_area_id',
         'reference_number',
         'author',
         'last_updated_by',
@@ -28,11 +28,10 @@ class Advert extends Model
         'last_activation_action_done_by',
         'description',
         'year',
-        'cohort1_vacancies',
-        'cohort2_vacancies',
-        'cohort3_vacancies',
-        'cohort4_vacancies',
-        'how_to_apply',
+        'quarter1_vacancies',
+        'quarter2_vacancies',
+        'quarter3_vacancies',
+        'quarter4_vacancies',
         'approval_status',
         //pending_approval || approved || disapproved
         'is_active' // 0 || 1
@@ -49,7 +48,7 @@ class Advert extends Model
     /**
      * get the advert accompaniments
      */
-    public function accompaniments(): HasMany
+    public function advertAccompaniments(): HasMany
     {
         return $this->hasMany(AdvertAccompaniment::class);
     }
@@ -60,6 +59,15 @@ class Advert extends Model
     {
         return $this->belongsTo(Department::class);
     }
+
+    /**
+     * get the advert study area
+     */
+    public function studyArea(): BelongsTo
+    {
+        return $this->belongsTo(StudyArea::class);
+    }
+
     /**
      * get the applications made to this advert
      */
@@ -71,9 +79,9 @@ class Advert extends Model
     /**
      * get the applicants to this advert
      */
-    public function applicants(): HasManyThrough
+    public function applicants()
     {
-        return $this->hasManyThrough(Applicant::class, Application::class);
+        //return;
     }
 
     /**

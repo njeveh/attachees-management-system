@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ApplicantSkill extends Model
+class StudyAreaAccompaniment extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +17,9 @@ class ApplicantSkill extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'applicant_id',
-        'skill',
+        'study_area_id',
+        'value',
+        'type', //eg. general_requirement || professional_requirement || intern_responsibility.
     ];
 
     /**
@@ -30,10 +32,10 @@ class ApplicantSkill extends Model
     ];
 
     /**
-     * get the attachee associated with this skill
+     * get the study area related to this accompaniment
      */
-    public function attachee(): BelongsTo
+    public function studyArea(): BelongsTo
     {
-        return $this->belongsTo(Attachee::class);
+        return $this->belongsTo(StudyArea::class);
     }
 }

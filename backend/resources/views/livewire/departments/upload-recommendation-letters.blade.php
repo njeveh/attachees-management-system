@@ -30,8 +30,8 @@
                                     <th scope="col">ID. No.</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Year</th>
-                                    <th scope="col">Cohort</th>
-                                    <th scope="col">Position</th>
+                                    <th scope="col">Quarter</th>
+                                    <th scope="col">Study Area</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -48,9 +48,9 @@
                                                 {{ $attachee->applicant->first_name }}
                                                 {{ $attachee->applicant->second_name }}</th>
                                             <td class="align-middle">{{ $attachee->year }}</td>
-                                            <td class="align-middle">{{ $attachee->cohort }}</td>
+                                            <td class="align-middle">{{ $attachee->quarter }}</td>
                                             <td class="align-middle">
-                                                {{ $attachee->position }}
+                                                {{ $attachee->study_area }}
 
                                             </td>
 

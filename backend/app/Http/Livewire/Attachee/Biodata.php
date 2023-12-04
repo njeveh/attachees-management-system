@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Attachee;
 use App\Models\ApplicantBiodata;
 use App\Models\ApplicantEducationLevel;
 use App\Models\ApplicantEmergencyContact;
+use App\Models\ApplicantInterestArea;
 use App\Models\ApplicantReferee;
 use App\Models\ApplicantSkill;
 use Exception;
@@ -19,18 +20,18 @@ class Biodata extends Component
     public $alert_class;
     public $feedback_header;
     public $date_of_birth;
-    public $sex;
+    public $gender;
     public $level_of_study;
     public $course_of_study;
+    public $year_of_study;
     public $address;
     public $phone_number;
     public $has_disability;
     public $disability;
     public $disability_input_collapse;
     public Collection $emergency_contacts;
-    public $professional_summary;
     public Collection $education_levels;
-    public Collection $skills;
+    public Collection $areas_of_interest;
     public Collection $referees;
     public $applicant;
     public $biodata;
@@ -40,19 +41,19 @@ class Biodata extends Component
         'date_of_birth' => 'required|date',
         'address' => 'required|string',
         'phone_number' => 'required|string',
-        'sex' => 'required',
+        'gender' => 'required',
         'level_of_study' => 'required|string',
         'course_of_study' => 'required|string',
+        'year_of_study' => 'required|integer',
         'has_disability' => 'required|boolean',
         'disability' => 'required_if:has_disability,true|exclude_if:has_disability,false',
         'emergency_contacts.*.name' => 'required|string',
         'emergency_contacts.*.relationship' => 'required|string',
         'emergency_contacts.*.phone_number' => 'required|string',
-        'professional_summary' => 'string',
         'education_levels.*.education_level' => 'required|string',
         'education_levels.*.start_date' => 'required|date',
         'education_levels.*.end_date' => 'required|date',
-        'skills.*.skill' => 'required|string',
+        'areas_of_interest.*.area_of_interest' => 'string',
         'referees.*.name' => 'required|string|min:3',
         'referees.*.relationship' => 'required|string',
         'referees.*.phone_number' => 'required|string',
@@ -64,10 +65,7 @@ class Biodata extends Component
         'emergency_contacts.*.name' => 'emergency contact name',
         'emergency_contacts.*.relationship' => 'emergency contact relationship',
         'emergency_contacts.*.phone_number' => 'emergency contact phone number',
-        'education_levels.*.education_level' => 'education level',
-        'education_levels.*.start_date' => 'education level start date',
-        'education_levels.*.end_date' => 'education level end date',
-        'skills.*.skill' => 'skill',
+        'areas_of_interest.*.area_of_interest' => 'area of interest',
         'referees.*.name' => 'referee name',
         'referees.*.relationship' => 'referee relationship',
         'referees.*.phone_number' => 'referee phone number',
@@ -79,8 +77,7 @@ class Biodata extends Component
     {
         $this->fill([
             'emergency_contacts' => collect([]),
-            'education_levels' => collect([]),
-            'skills' => collect([]),
+            'areas_of_interest' => collect([]),
             'referees' => collect([]),
         ]);
         $this->applicant = auth()->user()->applicant;
@@ -91,15 +88,14 @@ class Biodata extends Component
             $this->phone_number = $this->biodata->phone_number;
             $this->has_disability = !($this->biodata->disability == null);
             $this->disability = $this->biodata->disability;
-            $this->professional_summary = $this->biodata->professional_summary;
-            $this->sex = $this->biodata->sex;
+            $this->gender = $this->biodata->gender;
             $this->course_of_study = $this->biodata->course_of_study;
             $this->level_of_study = $this->biodata->level_of_study;
+            $this->year_of_study = $this->biodata->year_of_study;
         }
 
         $emergency_contacts = $this->applicant->applicantEmergencyContacts;
-        $education_levels = $this->applicant->applicantEducationLevels;
-        $skills = $this->applicant->applicantSkills;
+        $areas_of_interest = $this->applicant->applicantInterestArea;
         $referees = $this->applicant->applicantReferees;
 
         if (count($emergency_contacts)) {
@@ -120,29 +116,12 @@ class Biodata extends Component
                 'id' => null,
             ]);
         }
-        if (count($education_levels)) {
-            $education_levels->map(function ($level, $key) {
-                $this->education_levels->push([
-                    'education_level' => $level->education_level,
-                    'start_date' => $level->start_date,
-                    'end_date' => $level->end_date,
-                    'id' => $level->id
-                ]);
+        if (count($areas_of_interest)) {
+            $areas_of_interest->map(function ($area_of_interest, $key) {
+                $this->areas_of_interest->push(['area_of_interest' => $area_of_interest->area_of_interest, 'id' => $area_of_interest->id]);
             });
         } else {
-            $this->education_levels->push([
-                'education_level' => '',
-                'start_date' => '',
-                'end_date' => '',
-                'id' => null,
-            ]);
-        }
-        if (count($skills)) {
-            $skills->map(function ($skill, $key) {
-                $this->skills->push(['skill' => $skill->skill, 'id' => $skill->id]);
-            });
-        } else {
-            $this->skills->push(['skill' => '', 'id' => null,]);
+            $this->areas_of_interest->push(['area_of_interest' => '', 'id' => null,]);
         }
         if (count($referees)) {
             $referees->map(function ($referee, $key) {
@@ -208,16 +187,8 @@ class Biodata extends Component
                     'id' => null,
                 ]);
                 break;
-            case 'education_level':
-                $this->education_levels->push([
-                    'education_level' => '',
-                    'start_date' => '',
-                    'end_date' => '',
-                    'id' => null,
-                ]);
-                break;
-            case 'skill':
-                $this->skills->push(['skill' => '', 'id' => null,]);
+            case 'area_of_interest':
+                $this->areas_of_interest->push(['area_of_interest' => '', 'id' => null,]);
                 break;
             case 'referee':
                 $this->referees->push([
@@ -251,32 +222,18 @@ class Biodata extends Component
                     $this->emergency_contacts->pull($key);
                 }
                 break;
-            case 'education_level':
-                if (!is_null($this->education_levels[$key]['id'])) {
-                    if (ApplicantEducationLevel::destroy($this->education_levels[$key]['id'])) {
-                        $this->education_levels->pull($key);
+            case 'area_of_interest':
+                if (!is_null($this->areas_of_interest[$key]['id'])) {
+                    if (ApplicantInterestArea::destroy($this->areas_of_interest[$key]['id'])) {
+                        $this->areas_of_interest->pull($key);
                     } else {
                         $this->feedback_header = 'Error deleting field!!';
-                        $this->feedback = 'Something went wrong. The education level could not be deleted from the database';
+                        $this->feedback = 'Something went wrong. The area of interest could not be deleted from the database';
                         $this->alert_class = 'alert-danger';
                         $this->dispatchBrowserEvent('biodata_action_feedback');
                     }
                 } else {
-                    $this->education_levels->pull($key);
-                }
-                break;
-            case 'skill':
-                if (!is_null($this->skills[$key]['id'])) {
-                    if (ApplicantSkill::destroy($this->skills[$key]['id'])) {
-                        $this->skills->pull($key);
-                    } else {
-                        $this->feedback_header = 'Error deleting field!!';
-                        $this->feedback = 'Something went wrong. The skill could not be deleted from the database';
-                        $this->alert_class = 'alert-danger';
-                        $this->dispatchBrowserEvent('biodata_action_feedback');
-                    }
-                } else {
-                    $this->skills->pull($key);
+                    $this->areas_of_interest->pull($key);
                 }
                 break;
 
@@ -311,10 +268,10 @@ class Biodata extends Component
                         'address' => $this->address,
                         'phone_number' => $this->phone_number,
                         'disability' => $this->disability,
-                        'professional_summary' => $this->professional_summary,
-                        'sex' => $this->sex,
+                        'gender' => $this->gender,
                         'level_of_study' => $this->level_of_study,
                         'course_of_study' => $this->course_of_study,
+                        'year_of_study' => $this->year_of_study,
                     ]);
             } else {
                 $this->biodata = ApplicantBiodata::create([
@@ -323,10 +280,10 @@ class Biodata extends Component
                     'address' => $this->address,
                     'phone_number' => $this->phone_number,
                     'disability' => $this->disability,
-                    'professional_summary' => $this->professional_summary,
-                    'sex' => $this->sex,
+                    'gender' => $this->gender,
                     'level_of_study' => $this->level_of_study,
                     'course_of_study' => $this->course_of_study,
+                    'year_of_study' => $this->year_of_study,
                 ]);
             }
             if (count($this->emergency_contacts)) {
@@ -347,34 +304,16 @@ class Biodata extends Component
                     }
                 });
             }
-            if (count($this->education_levels)) {
-                $this->education_levels->map(function ($level, $key) {
-                    if (!is_null($this->education_levels[$key]['id'])) {
-                        ApplicantEducationLevel::where('id', $this->education_levels[$key]['id'])->update([
-                            'education_level' => $this->education_levels[$key]['education_level'],
-                            'start_date' => $this->education_levels[$key]['start_date'],
-                            'end_date' => $this->education_levels[$key]['end_date'],
+            if (count($this->areas_of_interest)) {
+                $this->areas_of_interest->map(function ($area_of_interest, $key) {
+                    if (!is_null($this->areas_of_interest[$key]['id'])) {
+                        ApplicantInterestArea::where('id', $this->areas_of_interest[$key]['id'])->update([
+                            'area_of_interest' => $this->areas_of_interest[$key]['area_of_interest'],
                         ]);
                     } else {
-                        ApplicantEducationLevel::create([
+                        ApplicantInterestArea::create([
                             'applicant_id' => $this->applicant->id,
-                            'education_level' => $this->education_levels[$key]['education_level'],
-                            'start_date' => $this->education_levels[$key]['start_date'],
-                            'end_date' => $this->education_levels[$key]['end_date'],
-                        ]);
-                    }
-                });
-            }
-            if (count($this->skills)) {
-                $this->skills->map(function ($skill, $key) {
-                    if (!is_null($this->skills[$key]['id'])) {
-                        ApplicantSkill::where('id', $this->skills[$key]['id'])->update([
-                            'skill' => $this->skills[$key]['skill'],
-                        ]);
-                    } else {
-                        ApplicantSkill::create([
-                            'applicant_id' => $this->applicant->id,
-                            'skill' => $this->skills[$key]['skill'],
+                            'area_of_interest' => $this->areas_of_interest[$key]['area_of_interest'],
                         ]);
                     }
                 });

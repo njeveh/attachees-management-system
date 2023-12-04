@@ -33,30 +33,30 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="sex" class="form-label">
-                    {{ __('Sex') }}</label>
-                <div id="sex" class="@error('sex') is-invalid @enderror">
+                <label for="gender" class="form-label">
+                    {{ __('Gender') }}</label>
+                <div id="gender" class="@error('gender') is-invalid @enderror">
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="sex" value="M">M
+                            <input type="radio" class="form-check-input" wire:model="gender" value="M">M
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="sex" value="F">F
+                            <input type="radio" class="form-check-input" wire:model="gender" value="F">F
                         </label>
                     </div>
                 </div>
-                @error('sex')
+                @error('gender')
                     <span class="invalid-feedback text-danger">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
             </div>
 
-            <p class="disability-field">
+            <div class="disability-field">
                 Do you have any disability?
-            </p>
+            </div>
             <div class="form-check">
                 <label for="has-disability" class="form-check-label">{{ __('No') }}</label>
                 <input type="radio" wire:model="has_disability" value='0' class="form-check-input"
@@ -87,52 +87,6 @@
                         </span>
                     @enderror
                 </div>
-            </div>
-            <div class="mb-3 form-group">
-                <label for="level-of-study" class="form-label">Level of Study (tick appropriately
-                    below):</label>
-                <div id="level-of-study" class="@error('level_of_study') is-invalid @enderror">
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                value="masters">Masters
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                value="bachelors">Bachelors
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                value="diploma">Diploma
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                value="certificate">Certificate
-                        </label>
-                    </div>
-                </div>
-                @error('level_of_study')
-                    <span class="invalid-feedback text-danger">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-            <div class="form-group mb-3">
-                <label for="course-of-study"
-                    class="form-label">{{ __('which course are you currently pursuing?') }}</label>
-                <input type="text" wire:model="course_of_study" class="form-control" id="course-of-study"
-                    required>
-                @error('course_of_study')
-                    <span class="error">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
             </div>
             {{-- Emergency Contacts --}}
             <div class="">
@@ -240,156 +194,103 @@
                     </button>
                 </div>
             </div>
-            {{-- Professional summary --}}
-            <div class="form-group mb-3">
-                <label for="professional-summary" class="form-label">{{ __('Professional Summary') }}</label>
-                <textarea class="form-control" wire:model="professional_summary" id="professional-summary" rows="5" required></textarea>
-                @error('professional_summary')
-                    <span class="error">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
 
             {{-- Education --}}
             <div class="">
-                <h4>{{ __('Education') }}</h4>
-                <ol class='input-group-list'>
-                    @foreach ($education_levels as $key => $education_level)
-                        @if ($key > 0)
-                            <li>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_level"
-                                        class="form-lable">{{ __('Level of Education') }}
-                                    </label>
-                                    <input type="text" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_level"
-                                        wire:model.defer="education_levels.{{ $key }}.education_level"
-                                        required>
-                                    @error('education_levels.' . $key . '.education_level')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_start_date"
-                                        class="form-lable">{{ __('Start Date') }}
-                                    </label>
-                                    <input type="date" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_start_date"
-                                        wire:model.defer="education_levels.{{ $key }}.start_date" required>
-                                    @error('education_levels.' . $key . '.start_date')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_end_date"
-                                        class="form-lable">{{ __('End Date') }}
-                                    </label>
-                                    <input type="date" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_end_date"
-                                        wire:model.defer="education_levels.{{ $key }}.end_date" required>
-                                    @error('education_levels.' . $key . '.end_date')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <button type="button" class="btn btn-outline-danger btn-block mb-3 form-control"
-                                    wire:click="removeInput({{ $key }},'education_level')">
-                                    <span><i class="fas fa-times"></i></span>
-                                </button>
-                            </li>
-                        @else
-                            <li>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_level"
-                                        class="form-lable">{{ __('Level of Education') }}
-                                    </label>
-                                    <input type="text" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_level"
-                                        wire:model.defer="education_levels.{{ $key }}.education_level"
-                                        required>
-                                    @error('education_levels.' . $key . '.education_level')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_start_date"
-                                        class="form-lable">{{ __('Start Date') }}
-                                    </label>
-                                    <input type="date" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_start_date"
-                                        wire:model.defer="education_levels.{{ $key }}.start_date" required>
-                                    @error('education_levels.' . $key . '.start_date')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="mb-2 form-group">
-                                    <label for="education_levels_{{ $key }}_end_date"
-                                        class="form-lable">{{ __('End Date') }}
-                                    </label>
-                                    <input type="date" class="form-control mb-3"
-                                        id="education_levels_{{ $key }}_end_date"
-                                        wire:model.defer="education_levels.{{ $key }}.end_date" required>
-                                    @error('education_levels.' . $key . '.end_date')
-                                        <span class="error">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </li>
-                        @endif
-                    @endforeach
-                </ol>
-                <div class="container  d-flex justify-content-end align-content-center  mb-3">
-                    <button class="btn btn-success" wire:click="addInput('education_level')"type="button">
-                        {{ __('Add education Level') }}
-                    </button>
+            <h4>{{ __('Education') }}</h4>
+                <div class="mb-3 form-group">
+                    <label for="level-of-study" class="form-label">Level of Study (tick appropriately
+                        below):</label>
+                    <div id="level-of-study" class="@error('level_of_study') is-invalid @enderror">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                    value="masters">Masters
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                    value="bachelors">Bachelors
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                    value="diploma">Diploma
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                    value="certificate">Certificate
+                            </label>
+                        </div>
+                    </div>
+                    @error('level_of_study')
+                        <span class="invalid-feedback text-danger">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
+                <div class="form-group mb-3">
+                    <label for="course-of-study"
+                        class="form-label">{{ __('which course are you currently pursuing?') }}</label>
+                    <input type="text" wire:model="course_of_study" class="form-control" id="course-of-study"
+                        required>
+                    @error('course_of_study')
+                        <span class="error">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="year-of-study"
+                        class="form-label">{{ __('which year of study are you in currently?') }}</label>
+                    <input type="number" wire:model="year_of_study" class="form-control" id="year-of-study"
+                        max='7' min='0' required>
+                    @error('year_of_study')
+                        <span class="error">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>                
             </div>
 
-            {{-- Skills --}}
+            {{-- Areas of interest --}}
             <div class="">
-                <h4>{{ __('Skills') }}</h4>
+                <h4>{{ __('Areas of Interest') }}</h4>
                 <ol class='input-group-list'>
-                    @foreach ($skills as $key => $skill)
+                    @foreach ($areas_of_interest as $key => $area_of_interest)
                         @if ($key > 0)
                             <li>
                                 <div class="mb-2 form-group">
-                                    <label for="skills_{{ $key }}_skill"
-                                        class="form-lable">{{ __('Skills') }}
+                                    <label for="areas_of_interest_{{ $key }}_area_of_interest"
+                                        class="form-lable">{{ __('Area of interest') }}
                                     </label>
-                                    <textarea type="text" class="form-control mb-3" id="skills_{{ $key }}_skill"
-                                        wire:model.defer="skills.{{ $key }}.skill" required></textarea>
-                                    @error('skills.' . $key . '.skill')
+                                    <textarea type="text" class="form-control mb-3" id="areas_of_interest_{{ $key }}_area_of_interest"
+                                        wire:model.defer="areas_of_interest.{{ $key }}.area_of_interest" required></textarea>
+                                    @error('areas_of_interest.' . $key . '.area_of_interest')
                                         <span class="error">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                                 <button type="button" class="btn btn-outline-danger btn-block mb-3 form-control"
-                                    wire:click="removeInput({{ $key }},'skill')">
+                                    wire:click="removeInput({{ $key }},'area_of_interest')">
                                     <span><i class="fas fa-times"></i></span>
                                 </button>
                             </li>
                         @else
                             <li>
                                 <div class="mb-2 form-group">
-                                    <label for="skills_{{ $key }}_skill"
-                                        class="form-lable">{{ __('Skill') }}
+                                    <label for="areas_of_interest_{{ $key }}_area_of_interest"
+                                        class="form-lable">{{ __('Area of interest') }}
                                     </label>
                                     <input type="text" class="form-control mb-3"
-                                        id="skills_{{ $key }}_skill"
-                                        wire:model.defer="skills.{{ $key }}.skill" required>
-                                    @error('skills.' . $key . '.skill')
+                                        id="areas_of_interest_{{ $key }}_area_of_interest"
+                                        wire:model.defer="areas_of_interest.{{ $key }}.area_of_interest">
+                                    @error('areas_of_interest.' . $key . '.area_of_interest')
                                         <span class="error">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -400,8 +301,8 @@
                     @endforeach
                 </ol>
                 <div class="container  d-flex justify-content-end align-content-center  mb-3">
-                    <button class="btn btn-success" wire:click="addInput('skill')"type="button">
-                        {{ __('Add skill') }}
+                    <button class="btn btn-success" wire:click="addInput('area_of_interest')"type="button">
+                        {{ __('Add Area of Interest') }}
                     </button>
                 </div>
             </div>

@@ -26,7 +26,7 @@ class ExportEvaluations implements FromCollection, WithHeadings
         foreach ($this->records as $record) {
             $data = array(
                 $record->year,
-                $record->cohort,
+                $record->quarter,
                 $record->course_being_pursued,
                 Department::find($record->department_id)->name,
                 $record->supervisor_name,
@@ -51,7 +51,7 @@ class ExportEvaluations implements FromCollection, WithHeadings
     {
         return [
             'Year',
-            'Cohort',
+            'Quarter',
             'Course Being Pursued',
             'Department Attached',
             'Supervisor Name',

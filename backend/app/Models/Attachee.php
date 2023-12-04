@@ -24,8 +24,8 @@ class Attachee extends Model
         'department_id',
         'application_id',
         'year',
-        'cohort',
-        'position',
+        'quarter',
+        'study_area',
         'status',
         //active, terminated_before_completion, 'completed'.
         'date_started',

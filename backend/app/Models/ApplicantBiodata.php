@@ -22,10 +22,10 @@ class ApplicantBiodata extends Model
         'address',
         'phone_number',
         'disability',
-        'sex',
+        'gender',
         'level_of_study',
         'course_of_study',
-        'professional_summary',
+        'year_of_study',
 
     ];
 

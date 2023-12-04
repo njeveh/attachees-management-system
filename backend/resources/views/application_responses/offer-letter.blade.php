@@ -90,17 +90,9 @@
                 <div>
                     <h4 id="salutation">Dear {{ $application->applicant->first_name }},</h4>
                     <div id="main-body">
-                        JKUAT {{ $application->advert->department->name }} is delighted to offer you the attachment
-                        position of {{ $application->advert->title }}
-                        starting from {{ $quarter['start_date'] }} to {{ $quarter['end_date'] }}, upon a successful
+                        JKUAT {{ $application->advert->department->name }} is delighted to offer you attachment
+                        in the {{ $application->advert->studyArea->title }} area of study upon a successful
                         scrutiny of your application.
-
-                        As the {{ $application->advert->title }}, you will be responsible for the following:<br><br>
-                        <ul>
-                            @foreach ($responsibilities as $responsibility)
-                                <li>{{ $responsibility->value }}</li>
-                            @endforeach
-                        </ul>
 
                         <br> <br>
 
@@ -109,9 +101,7 @@
                         You and JKUAT are free to terminate this offer at any time, with or without cause or advance
                         notice. This offer letter is not a contract.
 
-                        Please confirm your acceptance by filling signing and uploading a scanned copy of the offer
-                        acceptance form on the
-                        JKUAT attachment portal via the link provided. <br><br>
+                        Please confirm your acceptance by clicking the accept offer link provided. <br><br>
 
 
                         <div id="signature"> [Candidate Signature] </div>

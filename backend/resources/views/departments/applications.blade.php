@@ -26,7 +26,7 @@
                             @foreach ($adverts as $advert)
                                 <tr>
                                     <th scope="row">{{ $advert->reference_number }}</th>
-                                    <td>{{ $advert->title }}</td>
+                                    <td>{{ $advert->studyArea->title }}</td>
                                     <td>{{ $advert->applications->where('status', 'pending')->count() }}/{{ $advert->applications->count() }}
                                     </td>
                                     <td><a href="{{ route('departments.advert_applications', $advert->id) }}"

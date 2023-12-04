@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('level_of_study');
             $table->foreignUuid('department_id')->constrained()->cascadeOnDelete();
             $table->string('year');
-            $table->tinyInteger('cohort');
+            $table->tinyInteger('quarter');
             $table->string('supervisor_name');
             $table->smallInteger('attachment_duration'); //weeks
             $table->text('part1_quiz');

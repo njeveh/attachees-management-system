@@ -23,8 +23,8 @@
                     <form class="mt-3 needs-validation" wire:submit.prevent="createEvaluation">
                         @csrf
                         <div class="container">
-                            <h4>Details</h4>
-                            <div class="mb-3 form-group">
+                            {{-- <h4>Details</h4> --}}
+                            {{-- <div class="mb-3 form-group">
                                 <label for="course-being-pursued" class="form-label">Name of Course being
                                     pursued</label>
                                 <input type="text" id="course-being-pursued" wire:model='course_being_pursued'
@@ -35,8 +35,8 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                            <div class="mb-3 form-group">
+                            </div> --}}
+                            {{-- <div class="mb-3 form-group">
                                 <label for="department-attached" class="form-label">Department Attached</label>
                                 <select class="form-select" id="department-attached" wire:model="department_attached">
                                     <option value={{ $attachee->department->id }}>
@@ -55,9 +55,9 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="mb-3 form-group">
-                                <label for="supervisor-name" class="form-label">Name of Departmental Supervisor</label>
+                                <label for="supervisor-name" class="form-label">Name of Departmental Supervisor:</label>
                                 <input type="text" id="supervisor-name" wire:model='supervisor_name'
                                     class="form-control @error('supervisor_name') is-invalid @enderror"
                                     value="{{ old('supervisor_name') }}" required>
@@ -67,7 +67,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="mb-3 form-group">
+                            {{-- <div class="mb-3 form-group">
                                 <label for="level-of-study" class="form-label">Level of Study (tick appropriately
                                     below):</label>
                                 <div id="level-of-study" class="@error('level_of_study') is-invalid @enderror">
@@ -101,8 +101,8 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                            <div class="mb-3 form-group">
+                            </div> --}}
+                            {{-- <div class="mb-3 form-group">
                                 <label for="attachment-duration" class="form-label">Duration of
                                     Attachment(weeks)</label>
                                 <input type="number" id="attachment-duration" wire:model='attachment_duration'
@@ -113,7 +113,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             <div class="mb-3">
                                 <h4>PART I: ORGANIZATIONAL ENVIRONMENT AND RESOURCES</h4>

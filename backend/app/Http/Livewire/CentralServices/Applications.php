@@ -15,7 +15,7 @@ class Applications extends Component
     public $departments;
     public $department;
     public $year;
-    public $cohort;
+    //public $quarter;
     public $search = '';
     protected $attachees;
     public $status_filter;
@@ -23,13 +23,13 @@ class Applications extends Component
     {
         $this->departments = Department::all();
         $this->year = "";
-        $this->cohort = "";
+        //$this->quarter = "";
         $this->department = "";
         $this->status_filter = '';
     }
     public function render()
     {
-        $applications = Application::whereLike(['applicant.first_name', 'applicant.second_name', 'quarter', 'advert.year', 'status',], $this->search ?? '')
+        $applications = Application::whereLike(['applicant.first_name', 'applicant.second_name', 'advert.year', 'status',], $this->search ?? '')
         ->where(function ($query) {
             $query
             ->when($this->department != "", (function ($query) {
@@ -38,11 +38,11 @@ class Applications extends Component
                 ->when($this->year != null, (function ($query) {
                     return $query->whereRelation('advert', 'year', $this->year);
                 }))
-                ->when(
-                    $this->cohort != null,
-                    (function ($query) {
-                        return $query->where('quarter', $this->cohort);
-                    }))
+                // ->when(
+                //     $this->quarter != null,
+                //     (function ($query) {
+                //         return $query->where('quarter', $this->quarter);
+                //     }))
                 ->when($this->status_filter, function ($query, $status) {
                     return $query->where('status', $status);
             });
@@ -54,7 +54,7 @@ class Applications extends Component
     {
         $this->department = '';
         $this->search = '';
-        $this->cohort = '';
+        //$this->quarter = '';
         $this->year = '';
         $this->search = '';
         $this->status_filter = '';

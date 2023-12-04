@@ -23,7 +23,7 @@ class AttacheeReporting extends Component
     public $confirmed_action_parameter;
 
     public $search = '';
-    public $next_quarter;
+    //public $next_quarter;
 
     public function mount()
     {
@@ -38,18 +38,17 @@ class AttacheeReporting extends Component
         } else {
             $this->year = date('Y') - 1 . '/' . date('Y');
         }
-        $this->next_quarter = Utilities::get_next_quarter_data()['quarter'];
+        // $this->next_quarter = Utilities::get_next_quarter_data()['quarter'];
         $applications = $this->department->applications;
         if ($applications->count()) {
             $applications = Application::whereIn('id', $applications->modelkeys())
-                ->whereLike(['applicant.first_name', 'applicant.second_name', 'advert.title', 'applicant.national_id', 'applicant.institution'], $this->search ?? '')
-                ->where('quarter', $this->next_quarter)
+                ->whereLike(['applicant.first_name', 'applicant.second_name', 'applicant.national_id', 'applicant.institution'], $this->search ?? '')
+                ->where('offer_accepted', 1)
                 ->where('status', 'accepted')->get();
             if ($applications->count()) {
                 $applications = $applications->filter(function ($application) {
                     return $application->applicationAccompaniments->doesntContain('status', '!==', 'accepted') &&
-                        $application->applicationAccompaniments->contains('name', 'offer_acceptance_form')
-                        && $application->applicant->engagement_level > 3 &&
+                        $application->applicant->engagement_level > 3 &&
                         !$application->attachee;
                 });
             }
@@ -73,14 +72,14 @@ class AttacheeReporting extends Component
         DB::beginTransaction();
         try {
             $application = Application::find($id);
-            $position = $application->advert->title;
+            $study_area = $application->advert->studyArea->title;
             Attachee::create([
                 'applicant_id' => $applicant->id,
                 'application_id' => $application->id,
                 'department_id' => $this->department->id,
                 'year' => $this->year,
-                'cohort' => $this->quarter['quarter'],
-                'position' => $position,
+                'quarter' => $this->quarter['quarter'],
+                'study_area' => $study_area,
                 'advert_id' => $application->advert->id,
                 'date_started' => \Carbon\Carbon::now(),
                 'status' => 'active',

@@ -19,13 +19,14 @@
                             class="nav-link active bg-secondary text-light">Biodata</a>
                     </li>
                     <li class="nav-item">
-                        <button type="button" class="nav-link">Profile</button>
+                         <a href={{ route('departments.view_applicant_profile', $application->id) }}
+                            class="nav-link">Profile</a>
                     </li>
                 </ul>
             </div>
             <main id="main-content" class="pb-5">
 
-                <form class="mt-3" wire:submit.prevent="createUpdateBiodata">
+                <form class="mt-3">
                     <!-- Edit Advert -->
                     <div class="container">
                         <div class="form-group mb-3">
@@ -45,18 +46,18 @@
                                 disabled>
                         </div>
                         <div class="form-group">
-                            <label for="sex" class="form-label">
-                                {{ __('Sex') }}</label>
-                            <div id="sex">
+                            <label for="gender" class="form-label">
+                                {{ __('Gender') }}</label>
+                            <div id="gender">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="sex" value="M"
+                                        <input type="radio" class="form-check-input" wire:model="gender" value="M"
                                             disabled>M
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="sex" value="F"
+                                        <input type="radio" class="form-check-input" wire:model="gender" value="F"
                                             disabled>F
                                     </label>
                                 </div>
@@ -79,41 +80,6 @@
                         <div class="form-group mb-3">
                             <label for="disability" class="form-label">{{ __('Disability if Yes') }}</label>
                             <textarea wire:model="disability" class="form-control" id="disability" rows="3" disabled></textarea>
-                        </div>
-                        <div class="mb-3 form-group">
-                            <label for="level-of-study" class="form-label">Level of Study:</label>
-                            <div id="level-of-study">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                            value="masters" disabled>Masters
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                            value="bachelors" disabled>Bachelors
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                            value="diploma" disabled>Diploma
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
-                                            value="certificate" disabled>Certificate
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="course-of-study"
-                                class="form-label">{{ __('Current Course of Study') }}</label>
-                            <input type="text" wire:model="course_of_study" class="form-control"
-                                id="course-of-study" disabled>
                         </div>
                         {{-- Emergency Contacts --}}
                         <div class="">
@@ -151,63 +117,65 @@
                                 @endforeach
                             </ol>
                         </div>
-                        {{-- Professional summary --}}
-                        <div class="form-group mb-3">
-                            <label for="professional-summary"
-                                class="form-label">{{ __('Professional Summary') }}</label>
-                            <textarea class="form-control" wire:model="professional_summary" id="professional-summary" rows="5" disabled></textarea>
-                        </div>
 
                         {{-- Education --}}
                         <div class="">
                             <h4>{{ __('Education') }}</h4>
-                            <ol class='input-group-list'>
-                                @foreach ($education_levels as $key => $education_level)
-                                    <li>
-                                        <div class="mb-2 form-group">
-                                            <label for="education_levels_{{ $key }}_level"
-                                                class="form-lable">{{ __('Level of Education') }}
-                                            </label>
-                                            <input type="text" class="form-control mb-3"
-                                                id="education_levels_{{ $key }}_level"
-                                                wire:model.defer="education_levels.{{ $key }}.education_level"
-                                                disabled>
-                                        </div>
-                                        <div class="mb-2 form-group">
-                                            <label for="education_levels_{{ $key }}_start_date"
-                                                class="form-lable">{{ __('Start Date') }}
-                                            </label>
-                                            <input type="date" class="form-control mb-3"
-                                                id="education_levels_{{ $key }}_start_date"
-                                                wire:model.defer="education_levels.{{ $key }}.start_date"
-                                                disabled>
-                                        </div>
-                                        <div class="mb-2 form-group">
-                                            <label for="education_levels_{{ $key }}_end_date"
-                                                class="form-lable">{{ __('End Date') }}
-                                            </label>
-                                            <input type="date" class="form-control mb-3"
-                                                id="education_levels_{{ $key }}_end_date"
-                                                wire:model.defer="education_levels.{{ $key }}.end_date"
-                                                disabled>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ol>
+                        <div class="mb-3 form-group">
+                            <label for="level-of-study" class="form-label">Level of Study:</label>
+                            <div id="level-of-study">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="masters" disabled>Masters
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="bachelors" disabled>Bachelors
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="diploma" disabled>Diploma
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" wire:model="level_of_study"
+                                            value="certificate" disabled>Certificate
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="course-of-study"
+                                class="form-label">{{ __('Current Course of Study') }}</label>
+                            <input type="text" wire:model="course_of_study" class="form-control"
+                                id="course-of-study" disabled>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="year-of-study"
+                                class="form-label">{{ __('Year of Study') }}</label>
+                            <input type="text" wire:model="year_of_study" class="form-control"
+                                id="year-of-study" disabled>
+                        </div>
                         </div>
 
-                        {{-- Skills --}}
+                        {{-- areas of interest --}}
                         <div class="">
-                            <h4>{{ __('Skills') }}</h4>
+                            <h4>{{ __('Areas of Interest') }}</h4>
                             <ol class='input-group-list'>
-                                @foreach ($skills as $key => $skill)
+                                @foreach ($areas_of_interest as $key => $area_of_interest)
                                     <li>
                                         <div class="mb-2 form-group">
-                                            <label for="skills_{{ $key }}_skill"
-                                                class="form-lable">{{ __('Skills') }}
+                                            <label for="skills_{{ $key }}_area_of_interest"
+                                                class="form-lable">{{ __('Area of interest') }}
                                             </label>
-                                            <textarea type="text" class="form-control mb-3" id="skills_{{ $key }}_skill"
-                                                wire:model.defer="skills.{{ $key }}.skill" disabled></textarea>
+                                            <textarea type="text" class="form-control mb-3" id="skills_{{ $key }}_area_of_interest"
+                                                wire:model.defer="areas_of_interest.{{ $key }}.area_of_interest" disabled></textarea>
                                         </div>
                                     </li>
                                 @endforeach

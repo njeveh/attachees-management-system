@@ -33,8 +33,9 @@ class UploadRecommendationLetters extends Component
         $attachees = $this->department->attachees;
         if ($attachees->count()) {
             $attachees = Attachee::whereIn('id', $attachees->modelkeys())
-                ->whereLike(['applicant.first_name', 'applicant.second_name', 'cohort', 'year', 'applicant.national_id', 'position',], $this->search ?? '')
+                ->whereLike(['applicant.first_name', 'applicant.second_name', 'quarter', 'year', 'applicant.national_id', 'study_area',], $this->search ?? '')
                 ->where('status', 'completed')
+                ->where('has_filled_evaluation_form', 1)
                 ->doesntHave('recommendationLetter')
                 ->get();
         }

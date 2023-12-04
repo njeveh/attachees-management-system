@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Attachee;
 use App\Models\Attachee;
 use App\Models\Department;
 use App\Models\Evaluation;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Validator;
 use Livewire\Component;
 
@@ -30,11 +32,7 @@ class EvaluationForm extends Component
 
 
     protected $rules = [
-        'course_being_pursued' => 'required|string',
-        'department_attached' => 'required|exists:departments,id',
         'supervisor_name' => 'required|string',
-        'level_of_study' => 'required|string',
-        'attachment_duration' => 'required|numeric',
         'part1_quiz.*' => 'required|numeric',
         'part2_quiz.*' => 'required|numeric',
         'recommendable_to_friends' => 'required|numeric|max:1,min:0',
@@ -76,24 +74,34 @@ class EvaluationForm extends Component
 
     public function createEvaluation()
     {
+        if ($this->attachee->has_filled_evaluation_form == 1){
+            $this->feedback_header = 'Evaluation already done!!';
+            $this->feedback = "You can't submit evaluation form more than once.";
+            $this->alert_class = 'alert-warning';
+            $this->dispatchBrowserEvent('action_feedback');
+            return;
+        }
         $this->validate();
         if ($this->recommendable_to_friends == 1) {
             $this->reasons_if_not_recommendable = null;
         }
         DB::beginTransaction();
         try {
+            $date_terminated = date_timestamp_get(date_create($this->attachee->date_terminated));
+            $date_started = date_timestamp_get(date_create($this->attachee->date_started));
+            $duration = intval(ceil(($date_terminated - $date_started)/(7*24*60*60))); //get attachment duration in weeks
             Evaluation::create([
-                'course_being_pursued' => $this->course_being_pursued,
-                'department_id' => $this->department_attached,
+                'course_being_pursued' => $this->attachee->applicant->applicantBiodata->course_of_study,
+                'department_id' => $this->attachee->department_id,
                 'supervisor_name' => $this->supervisor_name,
-                'level_of_study' => $this->level_of_study,
-                'attachment_duration' => $this->attachment_duration,
+                'level_of_study' => $this->attachee->applicant->applicantBiodata->level_of_study,
+                'attachment_duration' => $duration,
                 'part1_quiz' => $this->part1_quiz,
                 'part2_quiz' => $this->part2_quiz,
                 'recommendable_to_friends' => $this->recommendable_to_friends,
                 'reasons_if_not_recommendable' => $this->reasons_if_not_recommendable,
                 'recommendations_to_university' => $this->recommendations,
-                'cohort' => $this->attachee->cohort,
+                'quarter' => $this->attachee->quarter,
                 'year' => $this->attachee->year,
             ]);
             $this->attachee->has_filled_evaluation_form = 1;

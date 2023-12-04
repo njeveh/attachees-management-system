@@ -32,25 +32,19 @@ main {
 /* ---------------------------------------------------
     SEARCHPAGE 
 ---------------------------------------------------*/
-#main-page-nav {
+#home-page-wrapper {
+  min-height: 100vh;
   position: relative;
-}
-#main-page-nav nav {
-  position: fixed;
-  width: 100%;
-  min-height: 5vh;
-  background-color: var(--primary-color);
-  color: white !important;
-  z-index: 1000;
 }
 #guest-nav {
     background-color: var(--primary-color);
   color: white !important;
+  width: 100vw;
 }
-.guest-content-wrapper {
-  height: 100%;
+div.guest-content-wrapper {
+  width: 100vw;
+  min-height: 100vh;
   position: relative;
-  margin-top: 85px;
 }
 .navbar-brand .logo-brand .logo img {
     height: 45px;
@@ -59,16 +53,8 @@ main {
 #guest-nav h5 {
   margin: 0;
 }
-#main-page-nav img {
-  height: 45px;
-  width: 45px;
-}
-#main-page-nav .navbar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0;
-}
+
+
 .logo-brand {
   display: flex;
   flex-direction: row;
@@ -123,13 +109,13 @@ header {
   margin-top: -50px;
   height: 60px;
 }
-.search-section {
+/* .search-section {
   padding-bottom: 5vh;
-}
+} */
 .search-form form {
   height: fit-content;
   margin: auto;
-  width: 90vw;
+  width: 80%;
   align-items: center;
   background-color: var(--font-white);
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
@@ -137,9 +123,10 @@ header {
   border-radius: 7px;
 }
 .search-form form input {
-  width: 50vw;
   line-height: 5vh;
-  border: none;
+}
+.search-area-search-field, .search-area-department-filter{ 
+  width: 45%;
 }
 
 .search-display > div {
@@ -271,22 +258,40 @@ SEARCH FILTERS
   font-size: medium;
   font-weight: 300;
 }
-.filters-reset {
+.filters-reset-btn {
+  width: fit-content;
   margin-top: 20px;
 }
-.filters-reset button {
-  border: none;
-  background-color: white;
-  transition: all ease-in-out 0.2s;
-  padding: 5px 15px;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
-    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+/**
+filter-side-nav
+*/
+.filter-sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: inherit;
+  overflow-x: hidden;
+  transition: 0.5s;
+  margin-top: 100px;
 }
-.filters-reset button:hover {
-  background-color: var(--primary-color);
-  color: var(--font-white);
+
+
+.filter-sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
 }
+
+#home-main {
+  transition: margin-left .5s;
+}
+
 
 /*-------------------
 modal styling
@@ -377,16 +382,6 @@ modal styling
   color: var(--font-white);
   background-color: var(--primary-color) !important;
 }
-/*-------------------
-footer styling
--------------------*/
-footer {
-  margin-top: 10px;
-  color: var(--font-white);
-  background-color: var(--dark-grey-background);
-}
-
-
 
 /*------------------------------
 other styles
@@ -421,7 +416,6 @@ a:focus {
 }
 
 .navbar {
-  padding: 15px 10px;
   background: #fff;
   border: none;
   border-radius: 0;
@@ -607,10 +601,7 @@ a.article:hover {
   position: relative;
   min-height: 100vh;
 }
-#footer{
-  position: absolute;
-  bottom: 0;
-}
+
 #main-content .page-title {
   border-bottom: 1px solid var(--light-grey-border);
   padding: 10px 0 5px 20px;
@@ -619,16 +610,14 @@ a.article:hover {
 /* ---------------------------------------------------
     FOOTER STYLE
 ----------------------------------------------------- */
-footer {
-  background-color: none;
+#footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 10px 0 0 0;
   text-align: center;
-}
-footer div p {
-  margin: 0;
+  color: var(--font-white);
+  background-color: var(--dark-grey-background);
 }
 
 /* ---------------------------------------------------
@@ -650,56 +639,10 @@ div.search-area {
   margin-top: 30px;
 }
 
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-  #sidenav {
-    margin-left: -250px;
-  }
-  #sidenav.active {
-    margin-left: 0;
-  }
-  #sidenavCollapse span {
-    display: none;
-  }
-  #sidenav-btn {
-    display: none;
-  }
-  #sidenav-btn.display {
-    display: inline;
-  }
-  div.home-page-buttons {
-    margin-top: 70px;
-  }
-  #side-menu {
-    margin-left: -250px;
-  }
-  #side-menu.active {
-    margin-left: 0;
-  }
-
-* {
-    font-size: 15px;
-  }
-  #guest-nav h5 {
-    margin: 0;
-    font-size: 15px;
-  }
-  div.sticky-btns {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    z-index: 10;
-    top: 110px;
-    background-color: white;
-  }
-}
-
 
 .posts-wrapper {
   display: flex;
-  width: 100%;
+  width: 100vw;
   align-items: stretch;
 }
 
@@ -779,7 +722,7 @@ div.search-area {
   position: -webkit-sticky;
   position: sticky;
   z-index: 10;
-  top: 70px;
+  top: 55px;
   background-color: white;
 }
 
@@ -788,7 +731,7 @@ div.search-area {
   position: sticky;
   z-index: 10;
   top: 70px;
-  background-color: white;
+  background-color: inherit;
 }
 
 .btns-hidden {
@@ -799,10 +742,6 @@ div.search-area {
   background-color: #cee0f3;
 }
 #sticky-btns-department-view-application-docs{
-    position: -webkit-sticky;
-  position: sticky;
-  z-index: 5;
-  top: 110px;
   background-color: white;
   margin: 0;
 }
@@ -921,4 +860,56 @@ div.search-area {
 }
 .summary-cards .ongoing {
   background-color: #fc908d;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+
+@media (max-width: 768px) {
+  h5.logo-text {
+    font-size: 10px;
+  }
+  #sidenav {
+    margin-left: -250px;
+  }
+  #sidenav.active {
+    margin-left: 0;
+  }
+  #sidenavCollapse span {
+    display: none;
+  }
+  #sidenav-btn {
+    display: none;
+  }
+  #sidenav-btn.display {
+    display: inline;
+  }
+  div.home-page-buttons {
+    margin-top: 70px;
+  }
+  #side-menu {
+    margin-left: -250px;
+  }
+  #side-menu.active {
+    margin-left: 0;
+  }
+
+
+* {
+    font-size: 12px;
+  }
+
+  div.sticky-btns {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    z-index: 10;
+    top: 100px;
+    background-color: white;
+  }
+
+  .search-area-search-field, .search-area-department-filter{ 
+    width: 100%;
+  }
+  .filter-sidenav {padding-top: 15px;}
 }

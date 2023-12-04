@@ -7,13 +7,7 @@ use Illuminate\Http\Request;
 
 class AttacheeBiodataController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -23,43 +17,4 @@ class AttacheeBiodataController extends Controller
         return view('attachee.biodata');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(AttacheeBiodata $attacheeBiodata)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(AttacheeBiodata $attacheeBiodata)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, AttacheeBiodata $attacheeBiodata)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(AttacheeBiodata $attacheeBiodata)
-    {
-        //
-    }
 }

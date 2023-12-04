@@ -3,7 +3,7 @@
         <!-- Sidebar  -->
         <x-attachee-side-nav-links />
         <!-- Page Content  -->
-        <div id="content">
+        <div id="content-wrapper">
             <x-navbar />
             <div id="main-content">
                 <div class="page-title">

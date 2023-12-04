@@ -11,12 +11,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('applicant_skills', function (Blueprint $table) {
+        Schema::create('applicant_interest_areas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->foreignUuid('applicant_id')->nullable(false)
                 ->constrained()->cascadeOnDelete();
-            $table->string('skill', 500)->nullable(false);
+            $table->string('area_of_interest')->nullable(false);
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('applicant_skills');
+        Schema::dropIfExists('applicant_interest_areas');
     }
 };

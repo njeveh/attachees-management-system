@@ -9,20 +9,6 @@
         <div id="content">
             <x-navbar />
             <div class="fixed-filters bg-light">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="nav-item">
-                        <button type="button" wire:click="updateTab('active')"
-                            class="nav-link {{ $active_tab_class }}">Active</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" wire:click="updateTab('inactive')"
-                            class="nav-link {{ $inactive_tab_class }}">Inactive</button>
-                    </li>
-                    <li class="nav-item">
-                        <button type="button" wire:click="updateTab('all')"
-                            class="nav-link {{ $all_tab_class }}">All</button>
-                    </li>
-                </ul>
 
                 <x-loading-state-indicators />
 
@@ -57,7 +43,7 @@
             <div id="main-content" class="tab">
                 <main>
                     <div class="page-title">
-                        <h5>Applications for Advert : {{ $advert->title . ' /Ref: ' . $advert->reference_number }}
+                        <h5>Applications for Advert : {{ $advert->studyArea->title . ' /Ref: ' . $advert->reference_number }}
                         </h5>
                     </div>
                     {{-- Applications table --}}
@@ -78,7 +64,6 @@
                                 <tr class="bg-dark text-light">
                                     <th scope="col">No.</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Quarter</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -94,7 +79,6 @@
                                             <td class="align-middle">
                                                 {{ $application->applicant->first_name }}
                                                 {{ $application->applicant->second_name }}</th>
-                                            <td class="align-middle">{{ $application->quarter }}</td>
                                             <td class="align-middle">
                                                 @switch($application->status)
                                                     @case('pending')

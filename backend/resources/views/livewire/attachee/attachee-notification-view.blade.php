@@ -9,8 +9,18 @@
                 <div class="page-title">
                     <h2>{{ $notification->data['from'] }} ({{ $notification->data['title'] }})</h2>
                 </div>
+                @if (session()->has('success'))
+                    <div class="alert alert-success m-5">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session()->has('server_error'))
+                    <div class="alert alert-danger m-5">
+                        {{ session('server_error') }}
+                    </div>
+                @endif
                 <div>{{ $notification->data['message'] }}</div>
-                @if ($notification->data['revocation_reasons'] != '')
+                @if ($notification->data['title'] !== 'End of Attachment Notice' && $notification->data['revocation_reasons'] != '')
                     <div class="m-3">{{ $notification->data['revocation_reasons'] }}</div>
                 @endif
                 <div>
@@ -24,7 +34,7 @@
                             @endif
                         @endforeach
                     @endif
-                    @if ($notification->data['title'] == 'End of Attachment/Internship Notice')
+                    @if ($notification->data['title'] == 'End of Attachment Notice')
                         @foreach ($notification->data['links'] as $key => $link)
                             @if ($link != null)
                                 <a href="{{ $link }}"

@@ -15,7 +15,7 @@
                     <div class="mt-4">
                         <h3>My Applications</h3>
                         <div class="d-flex flex-row flex-wrap mb-5">
-                            <div class="d-flex bg-primary flex-grow-1 rounded mb-3 p-3">
+                            <div class="d-flex bg-primary flex-grow-1 flex-wrap rounded mb-3 p-3">
                                 <div class="p-2 bg-info flex-fill d-flex justify-content-center align-items-center">Pending {{ $pending_applications}}</div>
                                 <div class="p-2 bg-success flex-fill d-flex justify-content-center align-items-center">Approved {{ $approved_applications}}</div>
                                 <div class="p-2 bg-warning flex-fill d-flex justify-content-center align-items-center">Cancelled {{ $cancelled_applications}}</div>

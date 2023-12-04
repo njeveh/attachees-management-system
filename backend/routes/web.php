@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecommendationLetterController;
 use App\Http\Controllers\ReportsGenerationController;
+use App\Http\Controllers\StudyAreaController;
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\Applicant\Home;
 use App\Http\Livewire\Attachee\Apply;
@@ -43,9 +44,12 @@ use App\Http\Livewire\Departments\DepartmentAdvertView;
 use App\Http\Livewire\Departments\DepartmentEditAdvert;
 use App\Http\Livewire\Departments\DepartmentNotifications;
 use App\Http\Livewire\Departments\DepartmentNotificationView;
+use App\Http\Livewire\Departments\EditStudyArea;
 use App\Http\Livewire\Departments\RecommendationLetters;
+use App\Http\Livewire\Departments\StudyAreaView;
 use App\Http\Livewire\Departments\UploadRecommendationLetters;
 use App\Http\Livewire\Departments\ViewApplicantBiodata;
+use App\Http\Livewire\Departments\ViewApplicantProfile;
 use App\Http\Livewire\Departments\ViewApplicationDetails;
 use App\Http\Livewire\Dipca\GenerateReports as DipcaGenerateReports;
 use App\Http\Livewire\Dipca\Notifications as DipcaNotifications;
@@ -69,6 +73,9 @@ Route::get('/test', function () {
 });
 Route::get('/pdf', [GeneratePDFController::class, 'generatePdf']);
 Route::get('/', HomePage::class)->name('welcome.page');
+Route::get('/home-page', function () {
+    return view('home');
+})->name('home');
 Route::get('/adverts/{id}', [WelcomePageController::class, 'show'])->name('guest.view_advert');
 Route::get('/registration-successful', function () {
     return view('notifications.registration-success');
@@ -86,7 +93,7 @@ Route::middleware(['auth', 'is_active'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('change-password', [PasswordController::class, 'changePassword'])->name('password.change_password');
+    Route::put('change-password', [PasswordController::class, 'changePassword'])->name('password.change_password');
 
 });
 // Route::post(
@@ -120,9 +127,10 @@ Route::middleware(['auth', 'user-access:attachee', 'prevent-back-history', 'veri
     Route::get('/attachee/notifications/', AttacheeNotifications::class)->name('attachee.notifications');
     Route::get('/attachee/notifications/{id}', AttacheeNotificationView::class)->name('attachee.notification');
     Route::get('/attachee/application-response-letter/{id}', [ApplicationResponseController::class, 'generateApplicationResponseLetter']);
-    Route::get('/attachee/offer-acceptance-form/{id}', [ApplicationResponseController::class, 'generateOfferAcceptanceForm']);
-    Route::get('/attachee/offer-acceptance-form-upload-page/{id}', [ApplicationResponseController::class, 'showOfferAcceptanceFormUploadPage']);
-    Route::post('/attachee/offer-acceptance-form-upload/{id}', [ApplicationResponseController::class, 'uploadOfferAcceptanceForm']);
+    //Route::get('/attachee/offer-acceptance-form/{id}', [ApplicationResponseController::class, 'generateOfferAcceptanceForm']);
+    //Route::get('/attachee/offer-acceptance-form-upload-page/{id}', [ApplicationResponseController::class, 'showOfferAcceptanceFormUploadPage']);
+    //Route::post('/attachee/offer-acceptance-form-upload/{id}', [ApplicationResponseController::class, 'uploadOfferAcceptanceForm']);
+    Route::get('/attachee/offer-acceptance/{id}', [ApplicationResponseController::class, 'acceptOffer']);
     Route::get('/attachee/evaluation-form/{id}', EvaluationForm::class)->name('attachee.evaluation_form');
     Route::get('/attachee/evaluation-done', function () {
         return view('attachee.notify-evaluation-done');
@@ -156,8 +164,15 @@ All Departments Routes List
 Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history'])->group(function () {
 
     Route::get('/departments/home', [HomeController::class, 'departmentHome'])->name('departments.home');
+
+    Route::get('/departments/create-study-areas-notification', [StudyAreaController::class, 'createStudyAreasNotification'])->name('departments.create_study_areas_notification');
+    Route::get('/departments/create-new-study-area', [StudyAreaController::class, 'create'])->name('departments.new_study_area_form');
+    Route::get('/departments/study-areas', [StudyAreaController::class, 'showDepartmentStudyAreas'])->name('departments.study_areas');
+    Route::get('/departments/study-areas/{id}', StudyAreaView::class)->name('departments.view_study_area');
+    Route::get('/departments/edit-study-area/{id}', EditStudyArea::class)->name('departments.edit_study_area');
+
     Route::get('/departments/create-new-advert', [AdvertController::class, 'create'])->name('departments.new_advert_form');
-    Route::post('/departments/create-new-advert', [AdvertController::class, 'store'])->name('departments.new_advert_create');
+    // Route::post('/departments/create-new-advert', [AdvertController::class, 'store'])->name('departments.new_advert_create');
     Route::get('/departments/view-adverts', [AdvertController::class, 'showDepartmentAdverts'])->name('departments.view_adverts');
     Route::get('/departments/applicable-adverts', [AdvertController::class, 'getDepartmentApplicableAdverts'])->name('departments.applicable_adverts');
     Route::get('/departments/view-advert/{id}', DepartmentAdvertView::class)->name('departments.view_advert');
@@ -165,6 +180,7 @@ Route::middleware(['auth', 'user-access:department_admin', 'prevent-back-history
     Route::get('/departments/applicable-adverts/{id}/applications', AdvertApplications::class)->name('departments.advert_applications');
     Route::get('/departments/view-application-details/{id}', ViewApplicationDetails::class)->name('departments.view_application_details');
     Route::get('/departments/view-applicant-biodata/{id}', ViewApplicantBiodata::class)->name('departments.view_applicant_biodata');
+    Route::get('/departments/view-applicant-profile/{id}', ViewApplicantProfile::class)->name('departments.view_applicant_profile');
     Route::get('/departments/attachee-reporting', AttacheeReporting::class)->name('departments.attachee_reporting');
     Route::get('/departments/attachee-dismissal', AttacheeDismissal::class)->name('departments.attachee_dismissal');
     Route::get('/departments/notifications/', DepartmentNotifications::class)->name('departments.notifications');

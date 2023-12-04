@@ -76,6 +76,7 @@ class Profile extends Component
                 $this->user->email = $this->email;
                 $this->user->email_verified_at = null;
                 $this->user->save();
+        
             }
             DB::commit();
             return back()->with('message', 'Profile updated successfully');

@@ -45,6 +45,14 @@ class Department extends Model
     }
 
     /**
+     * get department study areas
+     */
+    public function studyAreas(): HasMany
+    {
+        return $this->hasMany(StudyArea::class);
+    }
+
+    /**
      * get department adverts applications
      */
     public function applications(): HasManyThrough

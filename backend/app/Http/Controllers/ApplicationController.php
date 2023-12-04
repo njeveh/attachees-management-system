@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Advert;
 use App\Models\Applicant;
+use App\Models\ApplicantBiodata;
 use App\Models\Application;
 use App\Models\Attachee;
 use Illuminate\Http\Request;
@@ -32,6 +33,14 @@ class ApplicationController extends Controller
                 'message' => "You can't apply to this post more than once",
                 'link' => '/attachee/my-applications/' . $application_id . '/view-application/',
                 'link_text' => 'view my application',
+                'alert_class' => 'alert-danger'
+            ]);}
+        elseif (!ApplicantBiodata::where('applicant_id', $applicant->id)->exists()) {
+            return view('attachee.feedback', [
+                'header' => 'Biodata not Updated!',
+                'message' => "Please update your bio data before you make any application.",
+                'link' => '/attachee/biodata/',
+                'link_text' => 'Update Biodata',
                 'alert_class' => 'alert-danger'
             ]);
         } else {

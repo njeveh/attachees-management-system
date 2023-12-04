@@ -95,25 +95,25 @@ class ViewApplicationDetails extends AdvertApplications
 
                         ]);
                     break;
-                case 'offer_acceptance_form':
-                    ApplicationAccompaniment::where('application_id', $this->application->id)
-                        ->where('name', 'offer_acceptance_form')->update([
-                            'status' => $this->intended_status,
-                            'review_remarks' => $this->review_remarks == '' ? 'no remarks' : $this->review_remarks,
+                // case 'offer_acceptance_form':
+                //     ApplicationAccompaniment::where('application_id', $this->application->id)
+                //         ->where('name', 'offer_acceptance_form')->update([
+                //             'status' => $this->intended_status,
+                //             'review_remarks' => $this->review_remarks == '' ? 'no remarks' : $this->review_remarks,
 
-                        ]);
-                    if ($this->intended_status === 'accepted') {
-                        if ($this->application->applicant->engagement_level < 4) {
-                            $this->application->applicant->engagement_level = 4;
-                            $this->application->applicant->save();
-                        }
-                    } elseif ($this->intended_status === 'rejected') {
-                        if ($this->application->applicant->engagement_level < 5 && $this->application->applicant->engagement_level != 3) {
-                            $this->application->applicant->engagement_level = 2;
-                            $this->application->applicant->save();
-                        }
-                    }
-                    break;
+                //         ]);
+                //     if ($this->intended_status === 'accepted') {
+                //         if ($this->application->applicant->engagement_level < 4) {
+                //             $this->application->applicant->engagement_level = 4;
+                //             $this->application->applicant->save();
+                //         }
+                //     } elseif ($this->intended_status === 'rejected') {
+                //         if ($this->application->applicant->engagement_level < 5 && $this->application->applicant->engagement_level != 3) {
+                //             $this->application->applicant->engagement_level = 2;
+                //             $this->application->applicant->save();
+                //         }
+                //     }
+                //     break;
             }
 
         } catch (\Exception $e) {

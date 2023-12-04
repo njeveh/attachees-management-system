@@ -66,8 +66,7 @@ class ApplicationResponse extends Notification implements ShouldQueue
             'message' => $this->message,
             'links' => [
                 'response_letter' => $this->revocation_reasons == '' ? '/attachee/application-response-letter/' . $this->application->id : '/attachee/application-response-letter/',
-                'offer_acceptance_form' => $this->application->status == 'accepted' ? '/attachee/offer-acceptance-form/' . $this->application->id : null,
-                'offer_acceptance_form_upload_link' => $this->application->status == 'accepted' ? '/attachee/offer-acceptance-form-upload-page/' . $this->application->id : null,
+                'accept_offer' => $this->application->status == 'accepted' ? '/attachee/offer-acceptance/' . $this->application->id : null,
             ],
         ];
     }

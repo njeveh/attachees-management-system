@@ -12,16 +12,16 @@
                 <x-loading-state-indicators />
 
                 <div class="row">
-                    <div class="col form-group mb-1">
-                        <label for="cohort">Cohort:</label>
-                        <select class="form-select" id="cohort" wire:model='cohort'>
-                        <option value="">All Cohorts</option>
-                            <option value="1">Cohort 1</option>
-                            <option value="2">Cohort 2</option>
-                            <option value="3">Cohort 3</option>
-                            <option value="4">Cohort 4</option>
+                    {{-- <div class="col form-group mb-1">
+                        <label for="quarter">Quarter:</label>
+                        <select class="form-select" id="quarter" wire:model='quarter'>
+                        <option value="">All Quarters</option>
+                            <option value="1">Quarter 1</option>
+                            <option value="2">Quarter 2</option>
+                            <option value="3">Quarter 3</option>
+                            <option value="4">Quarter 4</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="col form-group mb-1">
                         <label for="year">Year:</label>
                         <select class="form-select" id="year" wire:model="year">
@@ -91,7 +91,7 @@
                                 <tr class="bg-dark text-light">
                                     <th scope="col">No.</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Position</th>
+                                    <th scope="col">Area of Study</th>
                                     <th scope="col">Department</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
@@ -108,7 +108,7 @@
                                             <td class="align-middle">
                                                 {{ $application->applicant->first_name }}
                                                 {{ $application->applicant->second_name }}</th>
-                                            <td class="align-middle">{{ $application->advert->title }}</td>
+                                            <td class="align-middle">{{ $application->advert->studyArea->title }}</td>
                                             <td class="align-middle">{{ $application->advert->department->name }}</td>
                                             <td class="align-middle">
                                                 @switch($application->status)

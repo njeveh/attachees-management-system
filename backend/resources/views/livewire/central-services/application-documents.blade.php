@@ -10,12 +10,14 @@
             <x-navbar />
             <main id="main-content" class="pb-5">
                 <div class="page-title">
-                    <h3>{{ $application->advert->title }}/ Ref: {{ $application->advert->reference_number }}
+                    <h3>{{ $application->advert->studyArea->title }}/ Ref: {{ $application->advert->reference_number }}
                     </h3>
                 </div>
                 <div class="page-title">
                     <h3>Applicant's Name: {{ $application->applicant->first_name }}
                         {{ $application->applicant->second_name }}</h3>
+                    <div>Prefered starting date: {{ $application->desired_start_date }}</div>
+                    <div>Application expiry date: {{ $application->expiry_date }}</div>
                 </div>
                 <section class="">
                     <table class="table">

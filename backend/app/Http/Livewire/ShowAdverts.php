@@ -59,7 +59,7 @@ class ShowAdverts extends Component
          * whereLike is a query builder macro defined on /Providers/AppserviceProvider boot method
          * 
          */
-        $adverts = Advert::whereLike(['title', 'description', 'reference_number', 'department.name', 'accompaniments.value'], $this->search ?? '')
+        $adverts = Advert::whereLike(['studyArea.title', 'description', 'reference_number', 'department.name', 'advertAccompaniments.value'], $this->search ?? '')
             ->when($this->department_id, function ($query, $department_id) {
                 return $query->where('department_id', $department_id);
             })
@@ -67,7 +67,7 @@ class ShowAdverts extends Component
                 return $query->orWhereIn('department_id', $departments);
             })
             ->where('approval_status', 'approved')->where('is_active', 1)
-            ->where('cohort' . $this->next_quarter . '_vacancies', '>', 0)
+            ->where('quarter' . $this->next_quarter . '_vacancies', '>', 0)
             ->latest()->get();
         return view('livewire.show-adverts', ['adverts' => $adverts, 'departments' => $this->department_objects]);
     }

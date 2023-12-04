@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ApplicantEducationLevel extends Model
+class ApplicantInterestArea extends Model
 {
     use HasFactory;
 
@@ -17,9 +17,7 @@ class ApplicantEducationLevel extends Model
      */
     protected $fillable = [
         'applicant_id',
-        'education_level',
-        'start_date',
-        'end_date',
+        'area_of_interest',
     ];
 
     /**
@@ -32,10 +30,10 @@ class ApplicantEducationLevel extends Model
     ];
 
     /**
-     * get the attachee associated with this education level
+     * get the applicant associated with this skill
      */
-    public function attachee(): BelongsTo
+    public function applicant(): BelongsTo
     {
-        return $this->belongsTo(Attachee::class);
+        return $this->belongsTo(Applicant::class);
     }
 }

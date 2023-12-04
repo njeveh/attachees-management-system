@@ -24,6 +24,10 @@ class AdvertController extends Controller
      */
     public function create()
     {
+        $study_areas = auth()->user()->departmentAdmin->department->studyAreas;
+        if ($study_areas->count() == 0) {
+            return redirect()->route('departments.create_study_areas_notification');
+        }
         return view('departments.create-new-advert');
     }
 

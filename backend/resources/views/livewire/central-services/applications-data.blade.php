@@ -50,17 +50,18 @@
                                         <th colspan='13'>
                                             <div class="d-flex align-content-center justify-content-start">
                                                 <div>
-                                                    <button class="btn btn-secondary" wire:click="resetAllFilters()">Reset
+                                                    <button class="btn btn-secondary"
+                                                        wire:click="resetAllFilters()">Reset
                                                         Filters</button>
                                                 </div>
                                             </div>
                                         </th>
                                     </tr>
                                     <tr>
-                                        <th class="custom-border" scope="col">Advert Title</th>
+                                        <th class="custom-border" scope="col">No.</th>                                        
+                                        <th class="custom-border" scope="col">Area of Study</th>
                                         <th class="custom-border" scope="col">Department</th>
                                         <th class="custom-border" scope="col">Year</th>
-                                        <th class="custom-border" scope="col">Cohort</th>
                                         <th class="custom-border" scope="col">Vacancies</th>
                                         <th class="custom-border" scope="col">Applications</th>
                                         <th class="custom-border" scope="col">Processed</th>
@@ -73,74 +74,53 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($adverts as $advert)
-                                    @for ($i = 1; $i < 5; ++$i)
-                                        @php
-                                            switch ($i) {
-                                                case 1:
-                                                    $declared_vacancies = $advert->cohort1_vacancies;
-                                                    break;
-                                                case 2:
-                                                    $declared_vacancies = $advert->cohort2_vacancies;
-                                                    break;
-                                                case 3:
-                                                    $declared_vacancies = $advert->cohort3_vacancies;
-                                                    break;
-                                                case 4:
-                                                    $declared_vacancies = $advert->cohort4_vacancies;
-                                                    break;
-                                            }
-                                            $number_of_applications = $advert->applications->where('quarter', $i)->count();
-                                            $number_of_processed_applications = $advert->applications
-                                                ->where('quarter', $i)
-                                                ->where('status', '!=', 'pending')
-                                                ->count();
-                                            $number_of_pending_applications = $advert->applications
-                                                ->where('quarter', $i)
-                                                ->where('status', 'pending')
-                                                ->count();
-                                            $number_of_accepted_applications = $advert->applications
-                                                ->where('quarter', $i)
-                                                ->where('status', 'accepted')
-                                                ->count();
-                                            $number_of_rejected_applications = $advert->applications
-                                                ->where('quarter', $i)
-                                                ->where('status', 'rejected')
-                                                ->count();
-                                            $number_of_revoked_applications = $advert->applications
-                                                ->where(function ($query) {
-                                                    $query->where('status', 'revoked');
-                                                })
-                                                ->count();
-                                            $number_of_reported_applicants = $advert->attachees->where('cohort', $i)->count();
-                                            $number_of_completed_applicants = $advert->attachees
-                                                ->where('cohort', $i)
-                                                ->where('status', 'completed')
-                                                ->count();
-                                            
-                                            $number_of_applicants_dismissed_before_completion = $advert->attachees
-                                                ->where('cohort', $i)
-                                                ->where('status', 'terminated_before_completion')
-                                                ->count();
-                                            
-                                        @endphp
-                                        <tr>
-                                            <td>{{ $advert->title }}</td>
-                                            <td>{{ $advert->department->name }}</td>
-                                            <td>{{ $advert->year }}</td>
-                                            <td>{{ $i }}</td>
-                                            <td>{{ $declared_vacancies }}</td>
-                                            <td>{{ $number_of_applications }}</td>
-                                            <td>{{ $number_of_processed_applications }}</td>
-                                            <td>{{ $number_of_pending_applications }}</td>
-                                            <td>{{ $number_of_accepted_applications }}</td>
-                                            <td>{{ $number_of_revoked_applications }}</td>
-                                            <td>{{ $number_of_rejected_applications }}</td>
-                                            <td>{{ $number_of_reported_applicants }}</td>
-                                            <td>{{ $number_of_completed_applicants }}</td>
-                                        </tr>
-                                    @endfor
-                                @endforeach
+                                    @foreach ($adverts as $key => $advert)
+                                            @php
+                                                $declared_vacancies = $advert->quarter1_vacancies + $advert->quarter2_vacancies + $advert->quarter3_vacancies + $advert->quarter4_vacancies;
+                                                $number_of_applications = $advert->applications->count();
+                                                $number_of_processed_applications = $advert->applications
+                                                    ->where('status', '!=', 'pending')
+                                                    ->count();
+                                                $number_of_pending_applications = $advert->applications
+                                                    ->where('status', 'pending')
+                                                    ->count();
+                                                $number_of_accepted_applications = $advert->applications
+                                                    ->where('status', 'accepted')
+                                                    ->count();
+                                                $number_of_rejected_applications = $advert->applications
+                                                    ->where('status', 'rejected')
+                                                    ->count();
+                                                $number_of_revoked_applications = $advert->applications
+                                                    ->where(function ($query) {
+                                                        $query->where('status', 'revoked');
+                                                    })
+                                                    ->count();
+                                                $number_of_reported_applicants = $advert->attachees->count();
+                                                $number_of_completed_applicants = $advert->attachees
+                                                    ->where('status', 'completed')
+                                                    ->count();
+                                                
+                                                $number_of_applicants_dismissed_before_completion = $advert->attachees
+                                                    ->where('status', 'terminated_before_completion')
+                                                    ->count();
+                                                
+                                            @endphp
+                                            <tr>
+                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <td>{{ $advert->studyArea->title }}</td>
+                                                <td>{{ $advert->department->name }}</td>
+                                                <td>{{ $advert->year }}</td>
+                                                <td>{{ $declared_vacancies }}</td>
+                                                <td>{{ $number_of_applications }}</td>
+                                                <td>{{ $number_of_processed_applications }}</td>
+                                                <td>{{ $number_of_pending_applications }}</td>
+                                                <td>{{ $number_of_accepted_applications }}</td>
+                                                <td>{{ $number_of_revoked_applications }}</td>
+                                                <td>{{ $number_of_rejected_applications }}</td>
+                                                <td>{{ $number_of_reported_applicants }}</td>
+                                                <td>{{ $number_of_completed_applicants }}</td>
+                                            </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="mb-5">

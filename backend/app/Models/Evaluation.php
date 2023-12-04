@@ -25,7 +25,7 @@ class Evaluation extends Model
         'recommendable_to_friends',
         'reasons_if_not_recommendable',
         'recommendations_to_university',
-        'cohort',
+        'quarter',
         'year',
 
     ];
