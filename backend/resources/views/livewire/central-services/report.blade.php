@@ -91,6 +91,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th class="" scope="col">No.</th>
                             <th class="" scope="col">ATTACHEE NAME</th>
                             <th scope="col">CONTACT</th>
                             <th scope="col">ID/NO</th>
@@ -106,8 +107,9 @@
                     </thead>
                     <tbody>
                         @if ($attachees)
-                            @foreach ($attachees as $attachee)
+                            @foreach ($attachees as $key => $attachee)
                                 <tr>
+                                    <td>{{ $key + 1 }}</td>
                                     <td>{{ $attachee->applicant->first_name }}&nbsp;
                                         {{ $attachee->applicant->second_name }}
                                     </td>

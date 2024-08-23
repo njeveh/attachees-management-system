@@ -19,6 +19,7 @@ return new class extends Migration {
                 ->constrained()->nullOnDelete();
             $table->date('desired_start_date'); //date the applicant would like to start their attachment
             $table->date('expiry_date'); //date beyond which the application is invalid as per the applicant
+            $table->date('desired_end_date'); //date the applicant would like to end their attachment
             $table->string('status')->nullable(false)->default('pending'); //pending, accepted, rejected or canceled
             $table->timestamp('date_replied')->nullable();
             $table->unsignedTinyInteger('offer_accepted')->nullable(false)->default(0);

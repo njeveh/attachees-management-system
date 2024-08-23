@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot:title>
-        {{ __('Advert View') }}
+        {{ __('Contacts') }}
     </x-slot:title>
     <nav id="guest-nav" class="navbar navbar-expand-sm navbar-dark fixed-top">
         <div class="container-fluid">
@@ -22,14 +22,14 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ms-auto nav-buttons">
-                    @if (Route::has('login'))
+                    @if(Route::has('login'))
                         @auth
                             <li class="nav-item">
                                 <a href="{{ url('/dashboard') }}"
                                     class="nav-link font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
                             </li>
                         @else
-                            @if (Route::has('applicant.registration'))
+                            @if(Route::has('applicant.registration'))
                                 <li class="nav-item">
                                     <a href="{{ route('applicant.registration') }}"
                                         class="nav-link ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
@@ -42,10 +42,6 @@
                             </li>
                         @endauth
                     @endif
-                    <li class="nav-item">
-                        <a href="{{ route('contacts') }}"
-                            class="nav-link font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Contacts</a>
-                    </li>                    
                 </ul>
             </div>
         </div>
@@ -66,63 +62,26 @@
             </header>
             <section class="m-2 advert card">
                 <div class="card-header">
-                    <h3>{{ $advert->studyArea->title }}</h3>
-                    <h3>Ref: {{ $advert->reference_number }}</h3>
                 </div>
                 <div class="card-body">
-                    {{-- <div>
-                        <h5>Year:</h5>
-                        <div> {{ $advert->year }}</div>
+                    <div class="d-flex flex-row flex-wrap align-items-center text-sm gap-2 p-4">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <x-phone_icon class="w-8 fill-blue-600" />
+                            <h3 class="text-blue-600">Phone:</h3>
+                        </div>
+                        <div>+2547xxxxxxxx</div>
                     </div>
-                    <div class='my-3'>
-                        <h5>No. of Vacancies:</h5>
-                        <ul>
-                            <li>Quarter 1 (Jul-Sep):&nbsp &nbsp {{ $advert->quarter1_vacancies }}</li>
-                            <li>Quarter 2 (Oct-Dec): &nbsp {{ $advert->quarter2_vacancies }}</li>
-                            <li>Quarter 3 (Jan-Mar): &nbsp {{ $advert->quarter3_vacancies }}</li>
-                            <li>Quarter 4 (Apr-Jun): &nbsp {{ $advert->quarter4_vacancies }}</li>
-                        </ul>
-                    </div> --}}
-                    {{ $advert->description }}
-                    @if (count($requirements) > 0)
-                        <h4 class='mt-3'>Requirements:</h4>
-                        <ul>
-                            @foreach ($requirements as $requirement)
-                                <li>{{ $requirement->value }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    <div class="d-flex flex-row flex-wrap align-items-center text-sm gap-2 p-4">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <x-email_icon class="w-8 fill-blue-600" />
+                            <h3 class="text-blue-600">Email:</h3>
+                        </div>
+                        <div>info@jkuat.ac.ke</div>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <h5>How to Apply</h5>
-                    <div>
-                        Click the Apply button link below to apply. You will be required to log into an applicant
-                        account if you already have one for you to be able to apply, otherwise you have to create an
-                        applicant account
-                        first then log into it and proceed to apply. Access profile and biodata forms from the menu and
-                        fill them with the required
-                        information for they will act as your CV.
-
-                    </div>
-                    <div class="d-flex justify-content-end align-items-center m-2">
-                        <a href="/adverts/{{ $advert->id }}/apply" class="btn btn-success">{{ __('Apply') }}</a>
-                    </div>
                 </div>
             </section>
-            <div class="mt-5"
-                style="display: flex; flex-direction:column; align-items: center; justify-content: center; background-color: white;">
-                <div class="d-flex flex-column align-items-center justify-content-center pt-4 px-5 mx-4"
-                    style="position: relative; width: fit-content;">
-                    <img src="/assets/static/iso-9001.jpg"
-                        style="position: absolute; top: -40px; right: -20px; width: 68px;">
-                    <img src="/assets/static/iso14001.png" alt=""
-                        style="position: absolute; top: -40px; left: -20px; width: 70px;">
-                    <div>JKUAT is ISO 9001:2015 and ISO 14001:2015
-                        Certified.</div>
-                    <div> Setting Trends in Higher Education,
-                        Research, Innovation and Entrepreneurship</div>
-                </div>
-            </div>
         </main>
         <x-footer />
     </div>

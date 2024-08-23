@@ -24,6 +24,7 @@ class Application extends Model
         //pending, rejected, accepted, canceled
         'desired_start_date', //date the applicant would like to start their attachment
         'expiry_date', //date beyond which the application is invalid as per the applicant
+        'desired_end_date', //date the applicant would like to end their attachment
         'date_replied',
         'offer_accepted'
     ];

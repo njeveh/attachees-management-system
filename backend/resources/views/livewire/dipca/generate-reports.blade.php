@@ -11,12 +11,12 @@
 
                     <div class="row">
                         <div class="col form-group mb-3">
-                            <label for="cohort">Cohort:</label>
-                            <select class="form-select" id="cohort" wire:model='cohort'>
-                                <option value="1">Cohort 1</option>
-                                <option value="2">Cohort 2</option>
-                                <option value="3">Cohort 3</option>
-                                <option value="4">Cohort 4</option>
+                            <label for="quarter">Quarter:</label>
+                            <select class="form-select" id="quarter" wire:model='quarter'>
+                                <option value="1">Quarter 1</option>
+                                <option value="2">Quarter 2</option>
+                                <option value="3">Quarter 3</option>
+                                <option value="4">Quarter 4</option>
                             </select>
                         </div>
                         <div class="col form-group mb-3">
@@ -85,12 +85,12 @@
                                             <td>{{ $attachee->department->name }}</td>
                                             <td>{{ $attachee->applicant->applicantBiodata->course_of_study }}</td>
                                             <td>{{ $attachee->applicant->applicantBiodata->level_of_study }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 <a href="{{ Storage::url($attachee->application->applicationAccompaniments->where('name', 'offer_acceptance_form')->first()->path) }}"
                                                     class="btn btn-success text-nowrap">
                                                     Acceptance Letter
                                                 </a>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @else
@@ -109,12 +109,12 @@
                             @csrf
                             <input type="hidden" name="department" value="{{ $department }}">
                             <input type="hidden" name="year" value="{{ $year }}">
-                            <input type="hidden" name="cohort" value="{{ $cohort }}">
+                            <input type="hidden" name="quarter" value="{{ $quarter }}">
                             <button type="submit" class="btn btn-primary m-2">Generate
                                 Report</button>
                         </form>
-                        <button type="button" class="btn btn-primary m-2"
-                            wire:click='downloadAcceptanceLetters'>Download Acceptance Letters</button>
+                        {{-- <button type="button" class="btn btn-primary m-2"
+                            wire:click='downloadAcceptanceLetters'>Download Acceptance Letters</button> --}}
                     </div>
                 </section>
             </main>

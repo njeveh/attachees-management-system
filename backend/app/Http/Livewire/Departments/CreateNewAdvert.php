@@ -125,7 +125,8 @@ class CreateNewAdvert extends Component
             }
             Log::info(1);
             DB::commit();
-            $this->advert->reference_number = $this->year . '-' . $this->department->name . '#Advert' . $this->advert->id;
+            // $this->advert->reference_number = $this->year . '-' . $this->department->name . '#Advert' . $this->advert->id;
+            $this->advert->reference_number = $this->year . '-' . $this->department->name . '#Advert' . rand(1000, 1000000);
             $this->advert->save();
         } catch (\Exception $e) {
             Log::info($e);

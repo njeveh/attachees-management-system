@@ -49,6 +49,16 @@ class ViewApplicationDetails extends AdvertApplications
         $this->intended_action = $action;
     }
 
+    public function acceptAll()
+    {
+        $docs = ['application_letter', 'attachment_letter', 'insurance_cover', 'national_id_front', 'national_id_back'];
+        $this->intended_status = 'accepted';
+        $this->review_remarks = '';
+        foreach ($docs as $key => $doc) {
+            $this->act($doc);
+        }
+    }
+
     public function act($field)
     {
         try {
@@ -95,25 +105,6 @@ class ViewApplicationDetails extends AdvertApplications
 
                         ]);
                     break;
-                // case 'offer_acceptance_form':
-                //     ApplicationAccompaniment::where('application_id', $this->application->id)
-                //         ->where('name', 'offer_acceptance_form')->update([
-                //             'status' => $this->intended_status,
-                //             'review_remarks' => $this->review_remarks == '' ? 'no remarks' : $this->review_remarks,
-
-                //         ]);
-                //     if ($this->intended_status === 'accepted') {
-                //         if ($this->application->applicant->engagement_level < 4) {
-                //             $this->application->applicant->engagement_level = 4;
-                //             $this->application->applicant->save();
-                //         }
-                //     } elseif ($this->intended_status === 'rejected') {
-                //         if ($this->application->applicant->engagement_level < 5 && $this->application->applicant->engagement_level != 3) {
-                //             $this->application->applicant->engagement_level = 2;
-                //             $this->application->applicant->save();
-                //         }
-                //     }
-                //     break;
             }
 
         } catch (\Exception $e) {

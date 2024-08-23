@@ -72,16 +72,19 @@ div.guest-content-wrapper {
   color: var(--font-white);
   cursor: pointer;
   text-decoration: none;
+  width: max-content;
 }
 #guest-nav .nav-buttons a:hover {
   color: var(--light-grey-border);
-}
-.nav-buttons .login-button {
   border: 1px solid rgba(176, 176, 176, 0.718) !important;
   width: 100px;
-  padding: 5px 20px;
+  padding: 5px;
   border-radius: 10px;
 }
+/* .nav-buttons .login-button {
+  width: 100px;
+} */
+
 header {
   padding-top: 5vh;
 }

@@ -17,7 +17,7 @@ class GenerateReports extends Component
     public $departments;
     public $department;
     public $year;
-    public $cohort;
+    public $quarter;
     protected $attachees;
     public function mount()
     {
@@ -27,7 +27,7 @@ class GenerateReports extends Component
         } else {
             $this->year = date('Y') - 1 . '/' . date('Y');
         }
-        $this->cohort = Utilities::get_current_quarter_data()['quarter'];
+        $this->quarter = Utilities::get_current_quarter_data()['quarter'];
         $this->department = "";
     }
     public function render()
@@ -40,9 +40,9 @@ class GenerateReports extends Component
                     return $query->where('year', $this->year);
                 }))
                 ->when(
-                    $this->cohort != null,
+                    $this->quarter != null,
                     (function ($query) {
-                        return $query->where('cohort', $this->cohort);
+                        return $query->where('quarter', $this->quarter);
                     })
                 );
         })->paginate(50);
@@ -59,16 +59,16 @@ class GenerateReports extends Component
                         return $query->where('year', $this->year);
                     }))
                     ->when(
-                        $this->cohort != null,
+                        $this->quarter != null,
                         (function ($query) {
-                            return $query->where('cohort', $this->cohort);
+                            return $query->where('quarter', $this->quarter);
                         })
                     );
             })->get();
             $zip = new \ZipArchive();
             //$tempFile = tmpfile();
             //$tempFileUri = stream_get_meta_data($tempFile)['uri'];
-            $fileName = 'acceptance' . '_' . preg_replace('/\//', '_', $this->year) . '_' . 'cohort_' . $this->cohort . '.zip';
+            $fileName = 'acceptance' . '_' . preg_replace('/\//', '_', $this->year) . '_' . 'quarter_' . $this->quarter . '.zip';
             if ($zip->open(public_path($fileName), \ZipArchive::CREATE) !== TRUE) {
                 return back()->with('message', 'Sorry, something went wrong. Please try again. 1');
             }

@@ -6,6 +6,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApplicationResponseController;
 use App\Http\Controllers\AttacheeBiodataController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\ContactPageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GeneratePDFController;
 use App\Http\Controllers\HomeController;
@@ -71,7 +72,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/test', function () {
     return (view('test'));
 });
-Route::get('/pdf', [GeneratePDFController::class, 'generatePdf']);
+// Route::get('/pdf', [GeneratePDFController::class, 'generatePdf']);
 Route::get('/', HomePage::class)->name('welcome.page');
 Route::get('/home-page', function () {
     return view('home');
@@ -88,6 +89,11 @@ Route::get(
     '/dashboard',
     [DashboardController::class, 'index']
 )->middleware(['auth', 'is_active'])->name('dashboard');
+
+Route::get(
+    '/contacts',
+    [ContactPageController::class, 'index']
+)->name('contacts');
 
 Route::middleware(['auth', 'is_active'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

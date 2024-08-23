@@ -25,7 +25,7 @@
             </div>
         </div>
         <div id="home-main" wire:ignore.self>
-            <nav id="guest-nav" class="navbar navbar-expand-md navbar-dark fixed-top">
+            <nav id="guest-nav" class="navbar navbar-expand-lg navbar-dark fixed-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ route('welcome.page') }}">
                         <div class="logo-brand">
@@ -69,11 +69,14 @@
                                     @endif
                                     <li class="nav-item">
                                         <a href="{{ route('login') }}"
-                                            class="nav-link login-button font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sign
-                                            in</a>
+                                            class="nav-link font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Sign in</a>
                                     </li>
                                 @endauth
                             @endif
+                                <li class="nav-item">
+                                    <a href="{{ route('contacts') }}"
+                                        class="nav-link font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Contacts</a>
+                                </li>
                         </ul>
                     </div>
                 </div>

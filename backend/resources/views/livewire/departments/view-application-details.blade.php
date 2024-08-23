@@ -115,8 +115,12 @@
                         <thead>
                             <tr>
                                 <th colspan='4' class="table-dark">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        Uploaded Application Documents
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Uploaded Application Documents
+                                        </div>
+                                        <button wire:click="acceptAll()"
+                                        class="btn btn-success">Accept all</button>
                                     </div>
                                 </th>
                             <tr>
