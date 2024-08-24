@@ -7,7 +7,7 @@
             <x-navbar />
             <main id="main-content">
                 <div class="page-title">
-                    <h3>{{ $advert->title . ' /Ref: ' . $advert->reference_number }}</h3>
+                    <h3>{{ $advert->studyArea->title . ' /Ref: ' . $advert->reference_number }}</h3>
                 </div>
                 @if (count($applications))
                     {{-- Active Applications --}}

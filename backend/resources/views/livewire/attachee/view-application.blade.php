@@ -7,7 +7,7 @@
             <x-navbar />
             <main id="main-content" class="pb-5">
                 <div class="page-title">
-                    <h3>{{ $application->advert->title }}/Ref: {{ $application->advert->reference_number }}</h3>
+                    <h3>{{ $application->advert->studyArea->title }}/Ref: {{ $application->advert->reference_number }}</h3>
                 </div>
                 @if ($application->status == 'canceled')
                     <div class="d-flex align-items-center justify-content-center">

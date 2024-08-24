@@ -21,8 +21,8 @@ class ViewApplication extends Component
     public $application_letter;
     public $attachment_letter;
     public $insurance_cover;
-    public $national_id_front;
-    public $national_id_back;
+    public $identification_document_front;
+    public $identification_document_back;
     public $advert;
     public $application;
     public $user;
@@ -34,8 +34,8 @@ class ViewApplication extends Component
         'application_letter' => 'file|mimes:pdf,jpg,jpeg,png',
         'attachment_letter' => 'file|mimes:pdf,jpg,jpeg,png',
         'insurance_cover' => 'file|mimes:pdf,jpg,jpeg,png',
-        'national_id_front' => 'file|mimes:pdf,jpg,jpeg,png,',
-        'national_id_back' => 'file|mimes:pdf,jpg,jpeg,png,',
+        'identification_document_front' => 'file|mimes:pdf,jpg,jpeg,png,',
+        'identification_document_back' => 'file|mimes:pdf,jpg,jpeg,png,',
     ];
 
     public function mount($id)
@@ -95,11 +95,11 @@ class ViewApplication extends Component
             case 'insurance_cover':
                 $to_be_updated = $this->insurance_cover;
                 break;
-            case 'national_id_front':
-                $to_be_updated = $this->national_id_front;
+            case 'identification_document_front':
+                $to_be_updated = $this->identification_document_front;
                 break;
-            case 'national_id_back':
-                $to_be_updated = $this->national_id_back;
+            case 'identification_document_back':
+                $to_be_updated = $this->identification_document_back;
                 break;
         }
         $this->validateOnly($field);
@@ -107,7 +107,7 @@ class ViewApplication extends Component
         try {
             $to_be_updated->storePubliclyAs(
                 preg_replace('/\s+/', '_', $this->application->advert->department->name) . '/' . 'application_docs/' .
-                preg_replace('/\//', '_', $this->application->advert->year) . '/' . 'quarter_' . $this->application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->title) . '/' .
+                preg_replace('/\//', '_', $this->application->advert->year) . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->studyArea->title) . '/' .
                 auth()->user()->applicant->national_id,
                 $field,
                 'public'

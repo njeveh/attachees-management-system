@@ -199,7 +199,7 @@
                                                             <div class="organization-logo">
                                                                 <img src="/assets/static/logo.png" alt="logo">
                                                             </div>
-                                                            <h5>{{ $advert->title }}</h5>
+                                                            <h5>{{ $advert->studyArea->title }}</h5>
                                                         </div>
                                                     </div>
                                                     <div

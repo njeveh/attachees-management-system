@@ -22,7 +22,7 @@
                                                     <img src="/assets/static/logo.png" alt="logo">
                                                 </div>
                                                 <h5>{{ $application->advert->department->name }} :
-                                                    {{ $application->advert->title }}</h5>
+                                                    {{ $application->advert->studyArea->title }}</h5>
                                             </div>
                                         </div>
                                         <div

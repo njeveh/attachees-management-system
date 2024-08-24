@@ -232,7 +232,7 @@ class AdvertApplications extends Component
                 $application->applicant->engagement_level = 3;
                 $application->applicant->save();
             }
-            $message = 'Dear ' . $application->applicant->first_name . ', Due to reasons stated below, your application acceptance for the post (' . $application->advert->title . ') has been revoked.
+            $message = 'Dear ' . $application->applicant->first_name . ', Due to reasons stated below, your application acceptance for the post (' . $application->advert->studyArea->title . ') has been revoked.
             You may contact us for more information.';
             ApplicationReplied::dispatch($application, $message, $this->revocation_reasons);
         } catch (\Exception $e) {

@@ -22,9 +22,9 @@ class Application extends Model
         'advert_id',
         'status',
         //pending, rejected, accepted, canceled
-        'desired_start_date', //date the applicant would like to start their attachment
-        'expiry_date', //date beyond which the application is invalid as per the applicant
-        'desired_end_date', //date the applicant would like to end their attachment
+        'attachment_start_date', //date the applicant would like to start their attachment
+        'minimum_attachment_weeks', //date beyond which the application is invalid as per the applicant
+        'attachment_end_date', //date the applicant would like to end their attachment
         'date_replied',
         'offer_accepted'
     ];

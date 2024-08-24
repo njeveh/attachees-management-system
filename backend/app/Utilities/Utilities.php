@@ -97,6 +97,26 @@ class Utilities
 
     }
 
+    /**
+     * get data for given quarter
+     */
+    public static function get_given_quarter_data($yearQuarter)
+    {
+        // $month = date("n");
+        // //Calculate the year quarter.
+        // $yearQuarter = ceil($month / 3);
+        switch ($yearQuarter) {
+            case 1:
+                return self::get_quarters_data()[3];
+            case 2:
+                return self::get_quarters_data()[4];
+            case 3:
+                return self::get_quarters_data()[1];
+            case 4:
+                return self::get_quarters_data()[2];
+        }
+
+    }
     public static function generateReport($data)
     {
         try {

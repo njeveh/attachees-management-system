@@ -90,7 +90,7 @@
                 <div>
                     <h4 id="salutation">Dear {{ $application->applicant->first_name }}</h4>
                     <div id="main-body">
-                        Thank you for your application for the {{ $application->advert->title }} internship/attachment
+                        Thank you for your application for the {{ $application->advert->studyArea->title }} internship/attachment
                         sposition at JKUAT
                         {{ $application->advert->department->name }}. We really
                         appreciate your interest in joining us and we want to thank you for the time and energy you

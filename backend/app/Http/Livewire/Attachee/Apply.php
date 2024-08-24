@@ -22,12 +22,13 @@ class Apply extends Component
     public $application_letter;
     public $attachment_letter;
     public $insurance_cover;
-    public $national_id_front;
-    public $national_id_back;
+    public $identification_document_front;
+    public $identification_document_back;
     public $advert;
     public $application;
-    public $desired_start_date;
-    public $application_expiry_date; //date beyond which applicant can't accept offer
+    public $attachment_start_date;
+    public $minimum_attachment_weeks;
+    public $attachment_end_date;
     public $user;
     public $link;
     public $quarter;
@@ -36,16 +37,17 @@ class Apply extends Component
         'application_letter' => 'required|file|mimes:pdf,docx,odt',
         'attachment_letter' => 'required|file|mimes:pdf,jpg,jpeg,png',
         'insurance_cover' => 'required|file|mimes:pdf,jpg,jpeg,png',
-        'national_id_front' => 'required|file|mimes:pdf,jpg,jpeg,png,',
-        'national_id_back' => 'required|file|mimes:pdf,jpg,jpeg,png,',
-        'desired_start_date'  => 'required|date|after_or_equal:today',
-        'application_expiry_date' => 'required|date|after_or_equal:desired_start_date', //date beyond which applicant can't accept offer
+        'identification_document_front' => 'required|file|mimes:pdf,jpg,jpeg,png,',
+        'identification_document_back' => 'sometimes|file|mimes:pdf,jpg,jpeg,png,',
+        'attachment_start_date'  => 'required|date',
+        'attachment_end_date'  => 'required|date|after:attachment_start_date|after:today',
+        'minimum_attachment_weeks' => 'required|numeric|integer|min:1|max:12',
     ];
     public function mount($advert_id)
     {
         $this->advert = Advert::find($advert_id);
         $this->user = auth()->user();
-        $this->quarter = Utilities::get_next_quarter_data();
+        $this->quarter = Utilities::get_current_quarter_data();
     }
 
     public function render()
@@ -68,26 +70,34 @@ class Apply extends Component
             return;
         }
 
+        $date=date_create($this->attachment_start_date);
+        $month = date_format($date,"n");
+        //Calculate the year quarter.
+        $yearQuarter = ceil($month / 3);
+        $this->quarter = Utilities::get_given_quarter_data($yearQuarter);
+
         DB::beginTransaction();
         try {
             $collection = collect([
                 ['application_letter', $this->application_letter],
                 ['attachment_letter', $this->attachment_letter],
                 ['insurance_cover', $this->insurance_cover],
-                ['national_id_front', $this->national_id_front],
-                ['national_id_back', $this->national_id_back]
+                ['identification_document_front', $this->identification_document_front],
             ]);
+            if (isset($this->identification_document_back)){
+                $collection->push(['identification_document_back', $this->identification_document_back]);
+            }
             $this->application = Application::create([
                 'applicant_id' => $this->user->applicant->id,
                 'advert_id' => $this->advert->id,
-                'quarter' => $this->quarter['quarter'],
-                'desired_start_date'  => $this->desired_start_date,
-                'expiry_date' =>$this->application_expiry_date,
+                'attachment_start_date'  => $this->attachment_start_date,
+                'minimum_attachment_weeks' =>$this->minimum_attachment_weeks,
+                'attachment_end_date'  => $this->attachment_end_date,
             ]);
             $collection->map(function ($item, int $key) {
                 $path = $item[1]->storePubliclyAs(
                     preg_replace('/\s+/', '_', $this->application->advert->department->name) . '/' . 'application_docs/' .
-                    preg_replace('/\//', '_', $this->application->advert->year) . '/' . 'quarter_' . $this->quarter['quarter'] . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->title) . '/' .
+                    preg_replace('/\//', '_', $this->application->advert->year) . '/' . preg_replace('/[\W\s\/]+/', '_', $this->application->advert->studyArea->title) . '/' .
                     $this->user->applicant->national_id, $item[0],
                     'public'
                 );

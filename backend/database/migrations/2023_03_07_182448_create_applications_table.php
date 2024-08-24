@@ -17,9 +17,9 @@ return new class extends Migration {
                 ->constrained()->cascadeOnDelete();
             $table->foreignUuid('advert_id')->nullable(true)
                 ->constrained()->nullOnDelete();
-            $table->date('desired_start_date'); //date the applicant would like to start their attachment
-            $table->date('expiry_date'); //date beyond which the application is invalid as per the applicant
-            $table->date('desired_end_date'); //date the applicant would like to end their attachment
+            $table->date('attachment_start_date'); // starting date of the attachment period
+            $table->smallInteger('minimum_attachment_weeks'); // minimum number of weeks the applicant is supposed to be attached
+            $table->date('attachment_end_date'); //// end date of the attachment period
             $table->string('status')->nullable(false)->default('pending'); //pending, accepted, rejected or canceled
             $table->timestamp('date_replied')->nullable();
             $table->unsignedTinyInteger('offer_accepted')->nullable(false)->default(0);

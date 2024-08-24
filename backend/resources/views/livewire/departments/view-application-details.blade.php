@@ -107,8 +107,9 @@
                 <div class="page-title">
                     <h3>Applicant's Name: {{ $application->applicant->first_name }}
                         {{ $application->applicant->second_name }}</h3>
-                    <div>Prefered starting date: {{ $application->desired_start_date }}</div>
-                    <div>Application expiry date: {{ $application->expiry_date }}</div>
+                    <div>Prefered attachment starting date: {{ $application->attachment_start_date }}</div>
+                    <div>Application expiry date: {{ $application->minimum_attachment_weeks }}</div>
+                    <div>Expected attachment ending date: {{ $application->minimum_attachment_weeks }}</div>
                 </div>
                 <section class="">
                     <table class="table">

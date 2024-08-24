@@ -90,7 +90,7 @@ class ApplicationResponseController extends Controller
     //     try {
     //         $path = $request->offer_acceptance_form->storePubliclyAs(
     //             preg_replace('/\s+/', '_', $application->advert->department->name) . '/offer_acceptance_forms/' .
-    //             preg_replace('/\//', '_', $application->advert->year) . '/' . 'quarter_' . $application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $application->advert->title) . '/' .
+    //             preg_replace('/\//', '_', $application->advert->year) . '/' . 'quarter_' . $application->quarter . '/' . preg_replace('/[\W\s\/]+/', '_', $application->advert->studyArea->title) . '/' .
     //             $application->applicant->national_id,
     //             'offer_acceptance_form',
     //             'public'

@@ -40,7 +40,7 @@ class CreateUsersSeeder extends Seeder
          ],
          [
             'name' => 'Central Services Admin',
-            'email' => 'central.services.admin@jkuat.com',
+            'email' => 'cs.admin@jkuat.com',
             'type' => 4,
             'password' => bcrypt('123456'),
          ],

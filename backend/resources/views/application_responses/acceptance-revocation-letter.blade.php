@@ -90,7 +90,7 @@
                 <div>
                     <h4 id="salutation">Dear {{ $application->applicant->first_name }}</h4>
                     <div id="main-body">
-                        Your acceptance to the attachment position ({{ $application->advert->title }}) advert reference:
+                        Your acceptance to the attachment position ({{ $application->advert->studyArea->title }}) advert reference:
                         {{ $application->advert->reference_number }} has been revoked due to reason(s) stated
                         below.<br><br>
 

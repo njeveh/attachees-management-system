@@ -51,7 +51,11 @@ class ViewApplicationDetails extends AdvertApplications
 
     public function acceptAll()
     {
-        $docs = ['application_letter', 'attachment_letter', 'insurance_cover', 'national_id_front', 'national_id_back'];
+        $docs = ['application_letter', 'attachment_letter', 'insurance_cover', 'identification_document_front'];
+        if (ApplicationAccompaniment::where('application_id', $this->application->id)
+                ->where('name', 'identification_document_back')->exists()){
+                array_push($docs, 'identification_document_back');
+        }
         $this->intended_status = 'accepted';
         $this->review_remarks = '';
         foreach ($docs as $key => $doc) {
@@ -89,17 +93,17 @@ class ViewApplicationDetails extends AdvertApplications
 
                         ]);
                     break;
-                case 'national_id_front':
+                case 'identification_document_front':
                     ApplicationAccompaniment::where('application_id', $this->application->id)
-                        ->where('name', 'national_id_front')->update([
+                        ->where('name', 'identification_document_front')->update([
                             'status' => $this->intended_status,
                             'review_remarks' => $this->review_remarks == '' ? 'no remarks' : $this->review_remarks,
 
                         ]);
                     break;
-                case 'national_id_back':
+                case 'identification_document_back':
                     ApplicationAccompaniment::where('application_id', $this->application->id)
-                        ->where('name', 'national_id_back')->update([
+                        ->where('name', 'identification_document_back')->update([
                             'status' => $this->intended_status,
                             'review_remarks' => $this->review_remarks == '' ? 'no remarks' : $this->review_remarks,
 
